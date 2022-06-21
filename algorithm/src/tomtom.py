@@ -1,17 +1,22 @@
 import requests
 import pandas as pd
-
+import networkx as nx
+import osmnx as ox
 
 # Gets the traffic data from tomtom for all the edges
-def get_full_traffic_data(edges):
+def get_full_traffic_data(G):
     
-    names = edges.name.value_counts().index
+    nodes, edges = ox.graph_to_gdfs(G)
+    edges.name = (edges.name).astype(str)
+    names = edges.name.unique()
     
     for name in names:
         get_specific_traffic_data(edges, name)
+        
+    new_attrs = ['current_speed_kmph', 'free_flow_speed_kmph', 'traffic_confidence', 'road_closure']
+    for attr in new_attrs:
+        nx.set_edge_attributes(G, edges[attr], attr)
 
-
-#TODO: Fix this for lists as name
 
 # Gets the traffic data from tomtom for a specific street (all edges with this street name)
 def get_specific_traffic_data(edges, name):
