@@ -5,7 +5,7 @@ import cvxpy as cp
 
 
 
-def optInvMILP(graph, desiredPath):
+def ISP(graph, desiredPath):
     # auxiliary variables
 
     inf = 1000000
