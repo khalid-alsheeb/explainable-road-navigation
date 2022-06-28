@@ -7,6 +7,20 @@ import cvxpy as cp
 
 #Shortest Path
 def shortestPath(graph, source, target):
+    """
+        This function calculates the shortest path of a multi-directed graph
+            using a Linear Program.
+
+    
+    Args:
+        graph: a multi directed graph.
+        source: the source vertex.
+        target: the target vertex.
+
+    Returns:
+        e: the dges of the shortest path.
+        n: the orderd traversed nodes in the shortest path.
+    """
 
     inf = 1000000
         

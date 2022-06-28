@@ -5,7 +5,7 @@ import cvxpy as cp
 
 
 
-def ISP(graph, desiredPath):
+def inverseShortestPath(graph, desiredPath):
     # auxiliary variables
 
     inf = 1000000
