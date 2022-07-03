@@ -13,10 +13,12 @@ def prepareGraph(graph):
 def calculateWeight(data):
     inf = 1e6
     
-    if data['speedOrMaxSpeed'] == 1:
-        weight = getInverse(data['speed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
-    else:
-        weight = getInverse(data['maxSpeed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
+    weight = (1 - data['speedOrMaxSpeed']) * getInverse(data['maxSpeed']) * data['length'] + data['speedOrMaxSpeed'] * getInverse(data['speed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
+    
+    # if data['speedOrMaxSpeed'] == 1:
+    #     weight = getInverse(data['speed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
+    # else:
+    #     weight = getInverse(data['maxSpeed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
         
     return weight
 

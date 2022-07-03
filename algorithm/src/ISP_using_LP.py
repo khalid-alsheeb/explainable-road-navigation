@@ -118,7 +118,7 @@ def inverseShortestPath(graph, desiredPath):
     
     noWay_ = cp.Variable(len(edges), boolean=True)
     areClosed_ = cp.Variable(len(edges), boolean=True)
-    inverseSpeeds_ = cp.Variable(len(inverseSpeeds_original))
+    inverseSpeeds_ = cp.Variable(len(edges))
     inverseMaxSpeeds_ = cp.Variable(len(edges))
     maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
     # If 1, then change speed, else if 0 change maxSpeed.
@@ -158,7 +158,6 @@ def inverseShortestPath(graph, desiredPath):
             if inverseMaxSpeeds_original[j] / inverseSpeeds_original[j] >= 3/4:
                 # Change maxSpeed
                 constraints.append( speedOrMaxSpeed_[j] == 0 )
-                #TODO: FIX THE ISSUE OF INFINITY MAX-SPEED. IT IS BECAUSE OF DIVIDING BY 0
                 constraints.append( inverseMaxSpeeds_[j] >= epsilon )
             else:
                 # Change speed
