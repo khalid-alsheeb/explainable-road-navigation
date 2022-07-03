@@ -46,7 +46,7 @@ def getEdgeExplanation(oldEdge, newEdge):
 
 def explanationsPrinter(explanations):
     
-    print("These are the explanations why the desired path is nont the optimal path, and how it would be an optimal path:")
+    print("These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:")
     
     for edge in explanations:
         print( "   -   " + explanations[edge] )
