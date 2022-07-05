@@ -2,15 +2,24 @@
 import networkx as nx
 import numpy as np
 import cvxpy as cp
+from pyrsistent import v
 
 def prepareGraph(graph):
-    cleanGraphAttributes(G)
-    updateGraphWeights(G)
+    cleanGraphAttributes(graph)
+    updateGraphWeights(graph)
     addReverseEdges(graph)
 
 
 
 def calculateWeight(data):
+    # print(type(data['speedOrMaxSpeed']))
+    # print(type(data['maxSpeed']))
+    # print(type(data['length']))
+    # print(type(data['speed']))
+    # print(type(data['noWay']))
+    # print(type(data['isClosed']))
+    
+    
     inf = 1e6
     
     weight = (1 - data['speedOrMaxSpeed']) * getInverse(data['maxSpeed']) * data['length'] + data['speedOrMaxSpeed'] * getInverse(data['speed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
@@ -73,3 +82,16 @@ def cleanGraphAttributes(graph):
     for (i, j) in graph.edges():
         if graph[i][j][0]['isClosed'] == 1:
             graph[i][j][0]['length'] = 0
+            
+            
+            
+def getOriginalAttributeTypes(graph):
+    
+    for (s, t) in graph.edges():
+        graph[s][t][0]['weight'] = float(graph[s][t][0]['weight'])
+        graph[s][t][0]['maxSpeed'] = int(graph[s][t][0]['maxSpeed'])
+        graph[s][t][0]['speed'] = float(graph[s][t][0]['speed'])
+        graph[s][t][0]['length'] = float(graph[s][t][0]['length'])
+        graph[s][t][0]['isClosed'] = int(float(graph[s][t][0]['isClosed']))
+        graph[s][t][0]['noWay'] = int(float(graph[s][t][0]['noWay']))
+        graph[s][t][0]['speedOrMaxSpeed'] = int(float(graph[s][t][0]['speedOrMaxSpeed']))

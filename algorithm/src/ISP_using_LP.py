@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 import cvxpy as cp
 
-from .graph_helpers import *
+from graph_helpers import *
 
 def inverseShortestPath(graph, desiredPath):
     # Constants
@@ -253,7 +253,9 @@ def inverseShortestPath(graph, desiredPath):
         
     updateGraphWeights(newGraph)
         
-        
+    
+    
+    # Final checks    
     sp = nx.shortest_path(newGraph, source=desiredPath[0], target=desiredPath[-1], weight="weight")
     
     desiredPathWeight = getPathWeight(desiredPath, newGraph)
