@@ -14,12 +14,16 @@ def getGraphExplanation(oldGraph, newGraph, path):
         
         exp = getEdgeExplanation(oldEdge, newEdge)
         
-        explanations[source, target] = "Edge ({}, {}) ".format(source, target) + exp
+        explanations[source, target] = exp
+        
+        #explanations[source, target] = "Edge ({}, {}) ".format(source, target) + exp
         
     return explanations
 
 
 def getEdgeExplanation(oldEdge, newEdge):
+    
+    exp = ''
     
     if oldEdge != newEdge:
     
@@ -34,8 +38,6 @@ def getEdgeExplanation(oldEdge, newEdge):
             
         elif oldEdge['speed'] != newEdge['speed']:
             exp = "has a current speed of {} (heavy traffic). If it had a current speed of {} (less traffic),".format(oldEdge['speed'], newEdge['speed'])
-            
-        exp += ' it would help make the path optimal.'
         
     else:
         # Default explanation, no change.
@@ -46,7 +48,11 @@ def getEdgeExplanation(oldEdge, newEdge):
 
 def explanationsPrinter(explanations):
     
-    print("These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:")
-    
-    for edge in explanations:
-        print( "   -   " + explanations[edge] )
+    s = ''
+    for edge, exp in explanations.items():
+        if len(explanations[edge]) != 0:
+            s +=  "   -   " + str(edge) + ': ' + explanations[edge] + '\n'
+            
+    if len(s) != 0:
+        print("These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:")
+        print(s)

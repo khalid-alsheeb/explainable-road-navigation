@@ -1,7 +1,7 @@
 import osmnx as ox
 import networkx as nx
 from data_retrieval import fixGraphData
-from graph_helpers import prepareGraph, getOriginalAttributeTypes
+from graph_helpers import prepareGraph, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG, shortenGraphForISP
 from ISP_using_LP import inverseShortestPath
 from graph_explanations import getGraphExplanation, explanationsPrinter
 
@@ -11,17 +11,30 @@ from graph_explanations import getGraphExplanation, explanationsPrinter
 # graph = fixGraphData(G)
 
 
-G = ox.load_graphml('../data/graph-5-7-22-2100.graphml')
-desrired_path = [25632859, 25632864, 25632855,1771426174, 20965803, 6369329166, 20965799, 2398924898, 1360122917, 104318, 7946372941, 1684437690, 1810130458, 1832129873, 5265953459, 5265953457, 5265953455, 6724775018, 2453947049, 4211515634, 104315, 25496762, 108903, 25503707, 108902, 973525136, 6060084833, 108901, 107830, 455705625, 1104473061, 1104473062, 107863, 107864, 107865, 11863161, 107999, 107992, 107987, 107990, 107989, 107995, 108021, 108012, 108043, 8253496132, 1685267218, 1685267214, 1685267212]
+G = ox.load_graphml('../data/graph-BH-1km-7-7-22-0130.graphml')
 
-getOriginalAttributeTypes(G)
+G = getOriginalAttributeTypes(G)
 
+G = fixWrongDataG(G)
+updateGraphWeights(G)
+dp = [1617596714, 256794594, 1707790024]
+desired_path = nx.shortest_path(G, source=dp[0], target=dp[1], weight="weight")[:-1] + nx.shortest_path(G, source=dp[1], target=dp[2], weight="weight")
+sp = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
+
+print(len(desired_path))
+print(desired_path)
+print(sp)
+print(len(sp))
 
 prepareGraph(G)
-sp = nx.shortest_path(G, source=desrired_path[0], target=desrired_path[-1], weight="weight")
-print(sp)
+new_graph = inverseShortestPath(G, desired_path)
 
-new_graph = inverseShortestPath(G, desrired_path)
-
-z = getGraphExplanation(G, new_graph, desrired_path)
+z = getGraphExplanation(G, new_graph, desired_path)
 explanationsPrinter(z)
+
+
+
+# # These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:
+# #    -   (455705625, 1104473061): has a current speed of 12.0 (heavy traffic). If it had a current speed of 12.858546960654117 (less traffic),
+# #    -   (25470853, 107852): has a current speed of 9.0 (heavy traffic). If it had a current speed of 20.0 (less traffic),
+# #    -   (108034, 108009): has a current speed of 8.0 (heavy traffic). If it had a current speed of 9.711571889677172 (less traffic),

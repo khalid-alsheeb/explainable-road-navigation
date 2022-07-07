@@ -2,14 +2,14 @@ import requests
 import pandas as pd
 import networkx as nx
 import osmnx as ox
+from graph_helpers import fixWrongDataE
 
 
 
 def fixGraphData(graph):
     nodes, edges = ox.graph_to_gdfs(graph)
     
-    edges.drop(columns=['highway', 'access', 'oneway', 'reversed', 'lanes', 'ref', 'tunnel', 'junction', 'bridge',
-       'width', 'est_width', 'service'], inplace=True)
+    edges = edges[['osmid', 'name', 'maxspeed', 'length', 'geometry', 'oneway']]
     
     edges.rename(columns={'maxspeed': 'maxSpeed'}, inplace=True)
     
@@ -29,6 +29,8 @@ def fixGraphData(graph):
     edges['speedOrMaxSpeed'] = int(1)
     
     add_full_traffic_data(edges)
+    
+    fixWrongDataE(edges)
     
     return ox.graph_from_gdfs(nodes, edges)
 
@@ -75,6 +77,7 @@ def add_specific_traffic_data(edges, name):
     request_url = BASE_URL + TRAFFIC_URL + API_KEY + "&" + location + PARAMS
     # Get data
     response = requests.get(request_url)
+    
     data = response.json()['flowSegmentData']
     traffic = pd.json_normalize(data)
     
@@ -83,3 +86,11 @@ def add_specific_traffic_data(edges, name):
     #edges.loc[edges['name'] == name, 'free_flow_speed'] = traffic.freeFlowSpeed[0]
     #edges.loc[edges['name'] == name, 'traffic_confidence'] = traffic.confidence[0]
     edges.loc[edges['name'] == name, 'isClosed'] = (traffic.roadClosure[0]).astype(int)
+    
+    
+    
+# address = '30 Aldwych, London WC2B 4BG'
+# G = ox.graph_from_address(address, network_type="drive")
+# G = fixGraphData(G)
+
+# ox.save_graphml(G)

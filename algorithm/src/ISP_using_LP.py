@@ -6,10 +6,11 @@ import cvxpy as cp
 from graph_helpers import *
 
 def inverseShortestPath(graph, desiredPath):
+    print('Formalising the problem')
     # Constants
     inf = 1e6
     epsilon = 1e-6
-    possibleMaxSpeeds = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+    possibleMaxSpeeds = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90]
     inversePossibleMaxSpeeds = [getInverse(s) for s in possibleMaxSpeeds] + [0]
     inversePossibleMaxSpeeds = np.asarray(inversePossibleMaxSpeeds)
     
@@ -155,7 +156,7 @@ def inverseShortestPath(graph, desiredPath):
             #constraints.append( inverseSpeeds_[j] >= inverseMaxSpeeds_original[j] )
             
             # if speed/maxSpeed >= 3/4 choose the maxSpeed to change, else the speed.
-            if inverseMaxSpeeds_original[j] / inverseSpeeds_original[j] >= 3/4:
+            if inverseMaxSpeeds_original[j] / inverseSpeeds_original[j] >= 4/3:#3/4:
                 # Change maxSpeed
                 constraints.append( speedOrMaxSpeed_[j] == 0 )
                 constraints.append( inverseMaxSpeeds_[j] >= epsilon )
@@ -204,17 +205,19 @@ def inverseShortestPath(graph, desiredPath):
     # Forming the problem
     prob = cp.Problem(cp.Minimize(cost), constraints)
     
+    print('Solving the problem')
+    
     # Solve the problem
     #prob.solve(solver=cp.GUROBI, verbose=True) #Detailed
     prob.solve(solver=cp.GUROBI) # using gurobi
     print("\nThe optimal value is", prob.value)
     
     #Helper print statements
-    print('original speedInv: ', inverseSpeeds_original)
-    print('optimal speedInv: ', inverseSpeeds_.value)
-    print('\n')
-    print('original speedMaxInv: ', inverseMaxSpeeds_original)
-    print('optimal speedMaxInv: ', inverseMaxSpeeds_.value)
+    # print('original speedInv: ', inverseSpeeds_original)
+    # print('optimal speedInv: ', inverseSpeeds_.value)
+    # print('\n')
+    # print('original speedMaxInv: ', inverseMaxSpeeds_original)
+    # print('optimal speedMaxInv: ', inverseMaxSpeeds_.value)
     # print('\n')
     # print('original noWay: ', noWay_original)
     # print('optimal noWay: ', noWay_.value)
@@ -225,6 +228,7 @@ def inverseShortestPath(graph, desiredPath):
     # print('original speedOrMaxSpeed: ', speedOrMaxSpeed_original)
     # print('optimal speedOrMaxSpeed: ', speedOrMaxSpeed_.value)
     
+    print('Creating the new Graph')
     
     # Creating the new Graph
     newGraph = nx.MultiDiGraph()
@@ -239,16 +243,16 @@ def inverseShortestPath(graph, desiredPath):
             ms = getInverse(inverseMaxSpeeds_original[index])
         else:
             ms = getInverse(inverseMaxSpeeds_.value[index])
-            
+        
         newGraph.add_edge(
                             i, j,
                             weight = np.nan, 
-                            noWay = noWay_.value[index], 
-                            isClosed = areClosed_.value[index], 
+                            noWay = int(noWay_.value[index]), 
+                            isClosed = int(areClosed_.value[index]), 
                             length = graph[i][j][0]['length'], 
                             speed = s,
-                            maxSpeed = ms,
-                            speedOrMaxSpeed = speedOrMaxSpeed_.value[index]
+                            maxSpeed = int(round(ms)),
+                            speedOrMaxSpeed = int((speedOrMaxSpeed_.value[index]))
                         )
         
     updateGraphWeights(newGraph)
@@ -279,4 +283,6 @@ def inverseShortestPath(graph, desiredPath):
     print('numbers after decimal point: ', len(str(desiredPathWeight).replace('.','')) - 1)
         
     return newGraph
+
+
 

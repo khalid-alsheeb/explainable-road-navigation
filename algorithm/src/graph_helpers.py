@@ -2,7 +2,7 @@
 import networkx as nx
 import numpy as np
 import cvxpy as cp
-from pyrsistent import v
+import osmnx as ox
 
 def prepareGraph(graph):
     cleanGraphAttributes(graph)
@@ -12,14 +12,6 @@ def prepareGraph(graph):
 
 
 def calculateWeight(data):
-    # print(type(data['speedOrMaxSpeed']))
-    # print(type(data['maxSpeed']))
-    # print(type(data['length']))
-    # print(type(data['speed']))
-    # print(type(data['noWay']))
-    # print(type(data['isClosed']))
-    
-    
     inf = 1e6
     
     weight = (1 - data['speedOrMaxSpeed']) * getInverse(data['maxSpeed']) * data['length'] + data['speedOrMaxSpeed'] * getInverse(data['speed']) * data['length'] + inf * data['noWay'] + inf * data['isClosed']
@@ -86,12 +78,47 @@ def cleanGraphAttributes(graph):
             
             
 def getOriginalAttributeTypes(graph):
+    nodes, edges = ox.graph_to_gdfs(graph)
+    edges['isClosed'] = edges['isClosed'].astype(float).astype(int)
+    edges['noWay'] = edges['noWay'].astype(float).astype(int)
+    edges['maxSpeed'] = edges['maxSpeed'].astype(float).astype(int)
+    edges['speedOrMaxSpeed'] = edges['speedOrMaxSpeed'].astype(float).astype(int)
+    edges['speed'] = edges['speed'].astype(float)
+    edges['length'] = edges['length'].astype(float)
+    edges['weight'] = edges['weight'].astype(float)
+        
+    return ox.graph_from_gdfs(nodes, edges)
+
+
+
+def fixWrongDataE(edges):
+    edges.loc[edges.speed > edges.maxSpeed, 'speed'] = edges.maxSpeed
+    return edges
+
+def fixWrongDataG(graph):
+    nodes, edges = ox.graph_to_gdfs(graph)
+    edges.loc[edges.speed > edges.maxSpeed, 'speed'] = edges.maxSpeed
     
-    for (s, t) in graph.edges():
-        graph[s][t][0]['weight'] = float(graph[s][t][0]['weight'])
-        graph[s][t][0]['maxSpeed'] = int(graph[s][t][0]['maxSpeed'])
-        graph[s][t][0]['speed'] = float(graph[s][t][0]['speed'])
-        graph[s][t][0]['length'] = float(graph[s][t][0]['length'])
-        graph[s][t][0]['isClosed'] = int(float(graph[s][t][0]['isClosed']))
-        graph[s][t][0]['noWay'] = int(float(graph[s][t][0]['noWay']))
-        graph[s][t][0]['speedOrMaxSpeed'] = int(float(graph[s][t][0]['speedOrMaxSpeed']))
+    return ox.graph_from_gdfs(nodes, edges)
+
+
+def shortenGraphForISP(G, shortestPath, desiredPath):
+    sp = []
+    for i in range(0, len(shortestPath)-1):
+        sp.append((shortestPath[i], shortestPath[i+1]))
+        
+    dp = []
+    for i in range(0, len(desiredPath)-1):
+        sp.append((desiredPath[i], desiredPath[i+1]))
+    
+    keep = sp + dp
+    remove = []
+    
+    for u, v in G.edges():
+        if (u, v) not in keep:
+            remove.append((u, v))
+    
+    G.remove_edges_from(remove)
+    
+    G.remove_nodes_from(list(nx.isolates(G)))
+    
