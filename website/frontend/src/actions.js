@@ -2,15 +2,19 @@ import { FETCH_DATA, ADD_TO_PLOT, REMOVE_TO_PLOT } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
 
+axios.defaults.baseURL = 'http://localhost:5000';
 
 export const getData = (params) => async (dispatch) => {
     try {
-        const { data } = await axios.get("/api/denoise/", {
-            params: params,
-            paramsSerializer: params => {
-                return qs.stringify(params, { arrayFormat: 'repeat' })
-            }
-        })
+        const { data } = await axios.get("/")
+            //, {
+            //params: params,
+            // paramsSerializer: params => {
+            //     return qs.stringify(params, { arrayFormat: 'repeat' })
+            // }
+        //})
+
+        console.log(data);
 
         dispatch({ type: FETCH_DATA, payload: data });
     } catch (error) {

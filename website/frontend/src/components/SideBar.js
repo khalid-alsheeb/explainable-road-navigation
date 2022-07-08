@@ -13,7 +13,7 @@ const SideBar = () => {
         <>
             {/* <SideBarHeader />
             
-            <BetterLine color={'#696969'}/>
+            <BetterLine color={'#696969'}/> */}
 
             <Container className="orange-border" style={{ marginBottom: '10%', marginTop: '10%'}}> 
                 <DataForm />
@@ -21,7 +21,7 @@ const SideBar = () => {
 
             <BetterLine color={'#696969'}/>
 
-            <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
+            {/* <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
                 <Algorithms />
             </Container>
 
