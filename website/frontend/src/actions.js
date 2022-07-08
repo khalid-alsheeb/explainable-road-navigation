@@ -1,4 +1,4 @@
-import { FETCH_DATA, ADD_TO_PLOT, REMOVE_TO_PLOT } from "./constants";
+import { FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_TO_PLOT, ADD_TO_PLOT } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
 
@@ -14,14 +14,29 @@ export const getData = (params) => async (dispatch) => {
             // }
         //})
 
-        console.log(data);
+        const edges = data['edges']
 
-        dispatch({ type: FETCH_DATA, payload: data });
+        dispatch({ type: FETCH_DATA, payload: edges });
     } catch (error) {
         console.log(error.message);
     }
 };
 
+
+export const addToDesiredPath = (edge) => async (dispatch, getState) => {
+    try {
+
+        const state = getState()
+
+        const desiredPath = state.desiredPath
+
+        desiredPath.push(edge)
+
+        dispatch({ type: ADD_TO_DESIRED_PATH, payload: desiredPath });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 export const addToPlot = (name) => async (dispatch, getState) => {
     try {

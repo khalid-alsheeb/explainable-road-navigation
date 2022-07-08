@@ -4,10 +4,8 @@ import reducer from './reducer'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
-    points: [],
-    toPlot: [],
-    returns: {},
-    signals: {}
+    edges: [],
+    desiredPath: []
 }
 
 const middleware = [thunk]
