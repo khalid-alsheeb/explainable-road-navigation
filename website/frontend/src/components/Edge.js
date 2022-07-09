@@ -1,26 +1,37 @@
 import { Polyline } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { addToDesiredPath } from '../actions';
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addToDesiredPath, removeFromDesiredPath } from '../actions';
 
 const Edge = ({ edge }) => {
 
     const [color, setColor] = useState("blue");
-
     const desiredPath = useSelector((state) => state.desiredPath)
 
-    const onClick = () => {
-        if (desiredPath.length === 0) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (color !== 'blue') {
+                if (!desiredPath.includes(edge)) {
+                    colorChange() 
+                }
+        }
+    }, [desiredPath])
+
+    const colorChange = () => {
+        if (color === "orange") {
+            setColor("blue")
+            dispatch(removeFromDesiredPath(edge))
+        } else if (color === "green") {
+            setColor("blue")
+            dispatch(removeFromDesiredPath(edge))
+        } else if (desiredPath.length === 0) {
             setColor("green")
-            addToDesiredPath(edge)
-        } else {
-            if (color === "blue") {
+            dispatch(addToDesiredPath(edge))
+        } else if (color === "blue") {
                 setColor("orange")
-                addToDesiredPath(edge)
-            } else {
-                setColor("blue")
-            }
+                dispatch(addToDesiredPath(edge))
         }
     }
 
@@ -29,7 +40,7 @@ const Edge = ({ edge }) => {
 
     return (
         <>
-            <Polyline positions={coordinates} eventHandlers={{ click: onClick }} pathOptions={{ color }}/>
+            <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }}/>
         </>
     );
 }

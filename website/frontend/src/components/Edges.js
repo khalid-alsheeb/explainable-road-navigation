@@ -8,8 +8,6 @@ const Edges = () => {
 
     //const edges = useSelector((state) => state.edges);
 
-    console.log(originalEdges.length);
-
     return (
         <>
             {originalEdges.map((edge) => <Edge edge={edge}/> )}

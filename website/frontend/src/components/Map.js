@@ -52,31 +52,21 @@ const Map = () => {
 
     const whiteOptions = { color: 'white' }
 
-    const edges = useSelector((state) => state.edges);
-
-    const [color, setColor] = useState("blue");
+    // const edges = useSelector((state) => state.edges);
 
     const lat =  51.5126962992232
     const lng = -0.11711526623945342
 
-    const onClick = () => {
-        setColor("red")
-        console.log(color);
-    }
-
 
     return (
         <>
-            <MapContainer center={[lat, lng]} zoom={15} maxZoom={18} minZoom={14} >
+            <MapContainer center={[lat, lng]} zoom={15} maxZoom={20} minZoom={14} >
         
                 <TileLayer
                 attribution= '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 
                 url='https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
                 />
-
-                {/* Our available data polygon */}
-
 
 
                 {/* <Marker position={[lat, lng]}>
@@ -92,9 +82,11 @@ const Map = () => {
                 )} */}
                 <Edges />
 
+
+                {/* Our available data polygon */}
                 {/* <Polygon pathOptions={blackOptions} positions={polygon} /> */}
 
-                <Button />
+                {/* <Button /> */}
 
                 
             </MapContainer>
