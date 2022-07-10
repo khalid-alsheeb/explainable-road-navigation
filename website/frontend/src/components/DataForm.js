@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import { getData } from '../actions';
+import { getData, switchNode } from '../actions';
 import { useDispatch } from 'react-redux';
 import Switch from '@mui/material/Switch';
 import { Typography, Button, Slider, makeStyles } from "@material-ui/core";
@@ -83,9 +83,17 @@ const DataForm = () => {
     return(
         <Form className="mb-3" style={{margin: '5%'}} onSubmit={handleSubmit} >
 
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} type='submit'>
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={handleSubmit}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
                     Calculate
+                </Typography>
+            </Button>
+
+            <BetterLine />
+        
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(switchNode())}>
+                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
+                    Flip source node
                 </Typography>
             </Button>
         </Form>

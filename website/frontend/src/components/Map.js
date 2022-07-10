@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { Button } from '@mui/material'
 import { useState } from 'react'
 import Edges from './Edges';
+import Markers from './Markers';
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -15,34 +16,6 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
-
-
-// function TooltipPolyline() {
-//     const [clickedCount, setClickedCount] = useState(0)
-//     const eventHandlers = useMemo(
-//       () => ({
-//         click() {
-//           setClickedCount((count) => count + 1)
-//         },
-//       }),
-//       [],
-//     )
-  
-//     const clickedText =
-//       clickedCount === 0
-//         ? 'Click this Circle to change the Tooltip text'
-//         : `Circle click: ${clickedCount}`
-  
-//     return (
-//       <Polyline
-//         center={center}
-        
-//         pathOptions={{ fillColor: 'blue' }}
-//         radius={200}>
-//         <Tooltip>{clickedText}</Tooltip>
-//       </Polyline>
-//     )
-//   }
 
 const Map = () => {
 
@@ -69,11 +42,7 @@ const Map = () => {
                 />
 
 
-                {/* <Marker position={[lat, lng]}>
-                    <Popup >
-                        I am a pop-up!
-                    </Popup>
-                </Marker> */}
+
 
                 {/* {edges.map((edge) =>
                     <>
@@ -82,6 +51,7 @@ const Map = () => {
                 )} */}
                 <Edges />
 
+                <Markers />
 
                 {/* Our available data polygon */}
                 {/* <Polygon pathOptions={blackOptions} positions={polygon} /> */}

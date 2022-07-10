@@ -1,4 +1,4 @@
-import { FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_TO_PLOT, ADD_TO_PLOT, REMOVE_FROM_DESIRED_PATH } from "./constants";
+import { FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_TO_PLOT, ADD_TO_PLOT, REMOVE_FROM_DESIRED_PATH, SWITCH_NODE, ADD_TO_NODE_PATH_EDGES } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
 
@@ -42,7 +42,7 @@ export const addToDesiredPath = (edge) => async (dispatch, getState) => {
             }
             lastNodes = lastNodes.filter(item => item !== notCurrentNode)
             let currentNode = lastNodes[0]
-            
+
             console.log(currentNode, newNodes[0], newNodes[1]);
             if(newNodes.includes(currentNode)) {
                 desiredPath.push(edge)
@@ -68,6 +68,35 @@ export const addToDesiredPath = (edge) => async (dispatch, getState) => {
 };
 
 
+export const addNodeToDesiredPath = (edge) => async (dispatch, getState) => {
+    try {
+
+        const state = getState()
+        let desiredPath = state.desiredPathNodes
+
+        if (desiredPath.length === 0) {
+            desiredPath.push(edge['nodes'][0])
+            desiredPath.push(edge['nodes'][1])
+        } else {
+
+            const lastNode = desiredPath[desiredPath.length - 1]
+            const newNodes = edge['nodes']
+
+            if (newNodes[0] === lastNode) {
+                desiredPath.push(newNodes[1])    
+            } else {
+                desiredPath.push(newNodes[1])
+            }
+        }
+
+        dispatch({ type: ADD_TO_NODE_PATH_EDGES, payload: desiredPath });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+
 export const removeFromDesiredPath = (edge) => async (dispatch, getState) => {
     try {
 
@@ -83,6 +112,15 @@ export const removeFromDesiredPath = (edge) => async (dispatch, getState) => {
         console.log(error.message);
     }
 };
+
+export const switchNode = () => async (dispatch, getState) => {
+    try {
+
+        // dispatch({ type: SWITCH_NODE, payload: desiredPath });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 

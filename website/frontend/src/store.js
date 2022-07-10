@@ -5,7 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
     edges: [],
-    desiredPath: []
+    desiredPath: [],
+    desiredPathNodes: []
 }
 
 const middleware = [thunk]
@@ -13,7 +14,7 @@ const middleware = [thunk]
 const store = createStore(
     reducer, 
     initialState, 
-    composeWithDevTools(applyMiddleware(...middleware))
+    composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export default store;

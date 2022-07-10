@@ -1,8 +1,8 @@
-import { Polyline } from 'react-leaflet'
+import { Polyline, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addToDesiredPath, removeFromDesiredPath } from '../actions';
+import { addToDesiredPath, removeFromDesiredPath, addNodeToDesiredPath } from '../actions';
 
 const Edge = ({ edge }) => {
 
@@ -29,9 +29,11 @@ const Edge = ({ edge }) => {
         } else if (desiredPath.length === 0) {
             setColor("green")
             dispatch(addToDesiredPath(edge))
+            dispatch(addNodeToDesiredPath(edge))
         } else if (color === "blue") {
                 setColor("orange")
                 dispatch(addToDesiredPath(edge))
+                dispatch(addNodeToDesiredPath(edge))
         }
     }
 
