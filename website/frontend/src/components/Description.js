@@ -6,8 +6,7 @@ const Description = () => {
     return (
         <Container style={{ marginBottom: '10%'}}>
             <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                Choose a ticker, a date, and a period, and then press calculate to get the deniosed, and original data.
-                You can check the returns for each technical indicator at the bottom, and a switch to plot them.
+                Create your path by pressing on the nodes you want. You can flip the source and target nodes, by pressing the button. Also, you can see the border of the data we use and remove it if you want.
             </Typography>
         </Container>
 

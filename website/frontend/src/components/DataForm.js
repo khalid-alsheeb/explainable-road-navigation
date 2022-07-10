@@ -1,20 +1,51 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
-import { getData, flipDP } from '../actions';
+import { getData, flipDP, changeBorder } from '../actions';
 import { useDispatch } from 'react-redux';
-import Switch from '@mui/material/Switch';
-import { Typography, Button, Slider, makeStyles } from "@material-ui/core";
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import MuiToggleButton from "@mui/material/ToggleButton";
-import { styled } from "@mui/material/styles";
-import { Col, Container, Row } from 'react-bootstrap';
-import { TableRow, TableCell} from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 import BetterLine from './BetterLine';
 
 const DataForm = () => {
 
     const dispatch = useDispatch();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(getData())
+    }
+
+
+    return(
+        <Form className="mb-3" style={{margin: '5%'}} onSubmit={handleSubmit} >
+
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(changeBorder())}>
+                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
+                    Show/Remove Border
+                </Typography>
+            </Button>
+
+            <BetterLine />
+
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(flipDP())}>
+                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
+                    Flip source and target
+                </Typography>
+            </Button>
+
+            <BetterLine />
+
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={handleSubmit}>
+                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
+                    Calculate
+                </Typography>
+            </Button>
+        </Form>
+    );
+}
+
+export default DataForm;
+
+
 
     // const today = new Date();
     // const today_date = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
@@ -31,76 +62,52 @@ const DataForm = () => {
     //     setParams( { ...Params, train: val } )
     // }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(getData())
-    }
 
-    const styles = {
-        white: {
-            color:'white',
-            backgroundColor: '#404040'
-        },
-        white2: {
-            color:'white',
-            backgroundColor: '#404040',
-            marginTop: '5px'
-        }
-    }
+// const styles = {
+//     white: {
+//         color:'white',
+//         backgroundColor: '#404040'
+//     },
+//     white2: {
+//         color:'white',
+//         backgroundColor: '#404040',
+//         marginTop: '5px'
+//     }
+// }
 
-    const useStyles = makeStyles({
-        rail: {
-            background: "white"
-        },
-        track: {
-            background: "rgb(255, 145, 0)"
-        },
-        thumb: {
-            color: "rgb(255, 145, 0)",
-            '&:focus, &:hover': {
-              boxShadow: '0px 0px 0px 8px rgba(84, 199, 97, 0.16)'
-            }
-        },
-        valueLabel: {
-            color: "rgb(255, 145, 0)"
-        },
-        mark: {
-            color: 'black',
-            background: 'black'
-        }
-    });
+// const classes = useStyles();
 
-    const classes = useStyles();
-
-    const ToggleButton = styled(MuiToggleButton)({
-        "&.Mui-selected, &.Mui-selected:hover": {
-          color: "rgb(255, 145, 0)",
-        },
-        color: 'white'
-    });
+// const ToggleButton = styled(MuiToggleButton)({
+//     "&.Mui-selected, &.Mui-selected:hover": {
+//       color: "rgb(255, 145, 0)",
+//     },
+//     color: 'white'
+// });
 
 
-    return(
-        <Form className="mb-3" style={{margin: '5%'}} onSubmit={handleSubmit} >
 
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={handleSubmit}>
-                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Calculate
-                </Typography>
-            </Button>
 
-            <BetterLine />
-        
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(flipDP())}>
-                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Flip source and target
-                </Typography>
-            </Button>
-        </Form>
-    );
-}
-
-export default DataForm;
+// const useStyles = makeStyles({
+//     rail: {
+//         background: "white"
+//     },
+//     track: {
+//         background: "rgb(255, 145, 0)"
+//     },
+//     thumb: {
+//         color: "rgb(255, 145, 0)",
+//         '&:focus, &:hover': {
+//           boxShadow: '0px 0px 0px 8px rgba(84, 199, 97, 0.16)'
+//         }
+//     },
+//     valueLabel: {
+//         color: "rgb(255, 145, 0)"
+//     },
+//     mark: {
+//         color: 'black',
+//         background: 'black'
+//     }
+// });
 
 
 // <Form.Group className="mb-3"> 

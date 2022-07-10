@@ -1,4 +1,8 @@
-import { FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH, ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH, REVERSE_DESIRED_PATH } from "./constants";
+import {
+        FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
+        ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
+        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER
+} from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
 
@@ -141,7 +145,6 @@ export const removeNodeFromDesiredPath = (edge) => async (dispatch, getState) =>
 };
 
 export const flipDP = () => async (dispatch, getState) => {
-    console.log('aslkjhasdaskjdha');
     try {
         const state = getState()
         let desiredPath = state.desiredPath
@@ -155,3 +158,16 @@ export const flipDP = () => async (dispatch, getState) => {
         console.log(error.message);
     }
 }
+
+
+export const changeBorder = () => async (dispatch, getState) => {
+    try {
+        const state = getState()
+        const isBorder = state.isBorder
+
+        dispatch({ type: ADD_REMOVE_BORDER, payload: !isBorder });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+

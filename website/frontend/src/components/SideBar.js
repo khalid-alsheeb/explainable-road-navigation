@@ -3,17 +3,15 @@ import Container from 'react-bootstrap/Container';
 import React from 'react';
 import DataForm from './DataForm';
 import SideBarHeader from './SideBarHeader';
-import Indicators from './Indicators';
-import Algorithms from './Algorithms';
 import BetterLine from './BetterLine';
 
 const SideBar = () => {
 
     return (
         <>
-            {/* <SideBarHeader />
+            <SideBarHeader />
             
-            <BetterLine color={'#696969'}/> */}
+            <BetterLine color={'#696969'}/>
 
             <Container className="orange-border" style={{ marginBottom: '10%', marginTop: '10%'}}> 
                 <DataForm />

@@ -36,7 +36,7 @@ const Edge = ({ edge }) => {
 
     return (
         <>
-            <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }}/>
+            <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }} pane={'markerPane'} />
         </>
     );
 }

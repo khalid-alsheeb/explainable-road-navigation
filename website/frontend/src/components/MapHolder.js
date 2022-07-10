@@ -10,9 +10,9 @@ const MapHolder = () => {
     return(
         <Container style={{ marginTop: '2%', height: '98vh', paddingBottom: '12%'}} >
             <Row style={{justifyContent:'center', alignItems:'center', marginBottom: '3%'}}>
-            <Typography variant="h3" style={{color: 'white'}} >
-            Routing Explanations
-            </Typography>
+                <Typography variant="h3" style={{color: 'white'}} >
+                Routing Explanations
+                </Typography>
             </Row>
             <Map />
         </Container>
