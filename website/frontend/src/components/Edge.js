@@ -2,7 +2,7 @@ import { Polyline, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addToDesiredPath, removeFromDesiredPath, addNodeToDesiredPath } from '../actions';
+import { addToDesiredPath, removeFromDesiredPath, addNodeToDesiredPath,  removeNodeFromDesiredPath } from '../actions';
 
 const Edge = ({ edge }) => {
 
@@ -22,18 +22,12 @@ const Edge = ({ edge }) => {
     const colorChange = () => {
         if (color === "orange") {
             setColor("blue")
+            dispatch(removeNodeFromDesiredPath(edge))
             dispatch(removeFromDesiredPath(edge))
-        } else if (color === "green") {
-            setColor("blue")
-            dispatch(removeFromDesiredPath(edge))
-        } else if (desiredPath.length === 0) {
-            setColor("green")
+        } else if (color === "blue") {
+            setColor("orange")
             dispatch(addToDesiredPath(edge))
             dispatch(addNodeToDesiredPath(edge))
-        } else if (color === "blue") {
-                setColor("orange")
-                dispatch(addToDesiredPath(edge))
-                dispatch(addNodeToDesiredPath(edge))
         }
     }
 
@@ -48,3 +42,24 @@ const Edge = ({ edge }) => {
 }
 
 export default Edge;
+
+
+
+
+// if (color === "orange") {
+//     setColor("blue")
+//     dispatch(removeNodeFromDesiredPath(edge))
+//     dispatch(removeFromDesiredPath(edge))
+// } else if (color === "green") {
+//     setColor("blue")
+//     dispatch(removeNodeFromDesiredPath(edge))
+//     dispatch(removeFromDesiredPath(edge))
+// } else if (desiredPath.length === 0) {
+//     setColor("green")
+//     dispatch(addToDesiredPath(edge))
+//     dispatch(addNodeToDesiredPath(edge))
+// } else if (color === "blue") {
+//         setColor("orange")
+//         dispatch(addToDesiredPath(edge))
+//         dispatch(addNodeToDesiredPath(edge))
+// }

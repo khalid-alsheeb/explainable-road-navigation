@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import { getData, switchNode } from '../actions';
+import { getData, flipDP } from '../actions';
 import { useDispatch } from 'react-redux';
 import Switch from '@mui/material/Switch';
 import { Typography, Button, Slider, makeStyles } from "@material-ui/core";
@@ -91,9 +91,9 @@ const DataForm = () => {
 
             <BetterLine />
         
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(switchNode())}>
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(flipDP)}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Flip source node
+                    Flip source and target
                 </Typography>
             </Button>
         </Form>
