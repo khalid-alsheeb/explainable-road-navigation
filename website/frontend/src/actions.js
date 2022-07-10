@@ -144,10 +144,13 @@ export const flipDP = () => async (dispatch, getState) => {
     console.log('aslkjhasdaskjdha');
     try {
         const state = getState()
-        let desiredPath = state.desiredPath.revrse()
-        let desiredPathNodes = state.desiredPathNodes.revrse()
+        let desiredPath = state.desiredPath
+        let desiredPathNodes = state.desiredPathNodes
 
-        dispatch({ type: REVERSE_DESIRED_PATH, payload: { desiredPath, desiredPathNodes } });
+        desiredPath = desiredPath.reverse()
+        desiredPathNodes = desiredPathNodes.reverse()
+
+        dispatch({ type: REVERSE_DESIRED_PATH, payload: [ desiredPath, desiredPathNodes ] });
     } catch (error) {
         console.log(error.message);
     }

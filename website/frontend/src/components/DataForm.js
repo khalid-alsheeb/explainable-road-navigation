@@ -91,7 +91,7 @@ const DataForm = () => {
 
             <BetterLine />
         
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(flipDP)}>
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(flipDP())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
                     Flip source and target
                 </Typography>
