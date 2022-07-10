@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
-import { getData, flipDP, changeBorder } from '../actions';
+import { getExplanations, flipDP, changeBorder } from '../actions';
 import { useDispatch } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
 import BetterLine from './BetterLine';
@@ -9,14 +9,8 @@ const DataForm = () => {
 
     const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(getData())
-    }
-
-
     return(
-        <Form className="mb-3" style={{margin: '5%'}} onSubmit={handleSubmit} >
+        <Form className="mb-3" style={{margin: '5%'}} >
 
             <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(changeBorder())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
@@ -34,9 +28,9 @@ const DataForm = () => {
 
             <BetterLine />
 
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={handleSubmit}>
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(getExplanations())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Calculate
+                    Get Explanations
                 </Typography>
             </Button>
         </Form>

@@ -1,13 +1,14 @@
 import {
-    FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
+    ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
     REVERSE_DESIRED_PATH, ADD_TO_NODE_PATH_EDGES,
-    REMOVE_NODE_FROM_DESIRED_PATH, ADD_REMOVE_BORDER
+    REMOVE_NODE_FROM_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS
 } from "./constants";
 
 const Reducer = (state = [], action) => {
     switch (action.type) {
-        case FETCH_DATA:
-            return { ...state, edges: [...action.payload] }
+        case GET_EXPLANATIONS:
+            // return { ...state, data: [...action.payload] }
+            return
         case ADD_TO_DESIRED_PATH:
             return { ...state, desiredPath: [...action.payload] }
         case REMOVE_FROM_DESIRED_PATH:

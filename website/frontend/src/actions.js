@@ -1,26 +1,27 @@
 import {
-        FETCH_DATA, ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
+        ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
         ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
-        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER
+        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
-export const getData = (params) => async (dispatch) => {
+export const getExplanations = () => async (dispatch, getState) => {
     try {
-        const { data } = await axios.get("/")
-            //, {
-            //params: params,
-            // paramsSerializer: params => {
-            //     return qs.stringify(params, { arrayFormat: 'repeat' })
-            // }
-        //})
+        const state = getState()
+        const desiredPath = state.desiredPathNodes
+        const { data } = await axios.get("/", {
+            params: desiredPath,
+            paramsSerializer: params => {
+                return qs.stringify(params, { arrayFormat: 'repeat' })
+            }
+        })
 
-        const edges = data['edges']
-
-        dispatch({ type: FETCH_DATA, payload: edges });
+        console.log(data);
+        dispatch({ type: GET_EXPLANATIONS });
+        // dispatch({ type: GET_EXPLANATIONS, payload: edges });
     } catch (error) {
         console.log(error.message);
     }

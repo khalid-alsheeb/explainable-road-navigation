@@ -1,5 +1,4 @@
-import { MapContainer, TileLayer, Polygon } from 'react-leaflet'
-import './Map.css';
+import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
@@ -18,7 +17,7 @@ const Map = () => {
 
     return (
         <>
-            <MapContainer center={[lat, lng]} zoom={15} maxZoom={20} minZoom={14} >
+            <MapContainer style={{ height: "100%", width: "100%" }} center={[lat, lng]} zoom={15} maxZoom={20} minZoom={14} >
         
                 <TileLayer
                     attribution = '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
