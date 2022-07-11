@@ -1,6 +1,5 @@
 
 
-
 def getGraphExplanation(oldGraph, newGraph, path):
     explanations = {}
     
@@ -14,8 +13,23 @@ def getGraphExplanation(oldGraph, newGraph, path):
         
         exp = getEdgeExplanation(oldEdge, newEdge)
         
-        explanations[source, target] = exp
         
+        if 'name' in oldEdge:
+            name = oldEdge['name']
+        else:
+            # If name is not in data, just use nodes
+            name = '(' + str(source) + ', ' + str(target) + ')'
+        
+        # check for more than 1 edge in the same street need changes, if so, nunmber them.
+        length = len(explanations)
+        count = 1
+        while(length == len(explanations)):
+            if (name not in explanations):
+                explanations[name] = exp
+            else:
+                name += " " + '(' + str(count) + ')'
+            count += 1
+            
     return explanations
 
 
@@ -49,7 +63,7 @@ def explanationsPrinter(explanations):
     s = ''
     for edge, exp in explanations.items():
         if len(explanations[edge]) != 0:
-            s +=  "   -   " + str(edge) + ': ' + explanations[edge] + '\n'
+            s +=  "   -   " + str(edge) + ': ' + exp + '\n'
             
     if len(s) != 0:
         print("These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:")
@@ -60,6 +74,14 @@ def makeExplanationsStrings(explanations):
     
     exp = []
     for key, value in explanations.items():
-        exp.append( "Edge {} ".format(key) + value )
+        if (value != ''):
+            exp.append( "{} ".format(key) + value )
         
     return exp
+
+
+# this is just one explanation. It is not optimal because: i, ii, ii ...
+# if instead the following was true, then the desired path would be optimal:
+# i was open, ii speed 34 ...
+
+# maxSpeed and speed >= not equal.

@@ -1,6 +1,6 @@
 import osmnx as ox
 import networkx as nx
-from .algorithm.graph_helpers import prepareGraph, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG, shortenGraphForISP
+from .algorithm.graph_helpers import prepareGraph, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG
 from .algorithm.ISP_using_LP import inverseShortestPath
 from .algorithm.graph_explanations import getGraphExplanation, explanationsPrinter, makeExplanationsStrings
 
@@ -26,7 +26,7 @@ def getPathExplanation(desired_path):
 
         exp = getGraphExplanation(G, new_graph, desired_path)
         
-        explanations = makeExplanationsStrings(explanations)
+        explanations = makeExplanationsStrings(exp)
     except:
         explanations = []
     
@@ -39,3 +39,5 @@ def getPathExplanation(desired_path):
 # #    -   (455705625, 1104473061): has a current speed of 12.0 (heavy traffic). If it had a current speed of 12.858546960654117 (less traffic),
 # #    -   (25470853, 107852): has a current speed of 9.0 (heavy traffic). If it had a current speed of 20.0 (less traffic),
 # #    -   (108034, 108009): has a current speed of 8.0 (heavy traffic). If it had a current speed of 9.711571889677172 (less traffic),
+
+

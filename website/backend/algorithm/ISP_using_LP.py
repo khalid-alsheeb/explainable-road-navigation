@@ -228,7 +228,7 @@ def inverseShortestPath(graph, desiredPath):
     # print('original speedOrMaxSpeed: ', speedOrMaxSpeed_original)
     # print('optimal speedOrMaxSpeed: ', speedOrMaxSpeed_.value)
     
-    print('Creating the new Graph')
+    print('\nCreating the new Graph')
     
     # Creating the new Graph
     newGraph = nx.MultiDiGraph()
@@ -237,7 +237,11 @@ def inverseShortestPath(graph, desiredPath):
         if speedOrMaxSpeed_.value[index] == 0:
             s = getInverse(inverseSpeeds_original[index])
         else:
-            s = getInverse(inverseSpeeds_.value[index])
+            # rounding error with floats
+            if (inverseSpeeds_original[index] > inverseSpeeds_.value[index]):
+                s = getInverse(inverseSpeeds_original[index])
+            else:
+                s = getInverse(inverseSpeeds_.value[index])
             
         if speedOrMaxSpeed_.value[index] == 1:
             ms = getInverse(inverseMaxSpeeds_original[index])
@@ -256,7 +260,6 @@ def inverseShortestPath(graph, desiredPath):
                         )
         
     updateGraphWeights(newGraph)
-        
     
     
     # Final checks    
@@ -274,9 +277,9 @@ def inverseShortestPath(graph, desiredPath):
         print('The desired Path is worse than the Shortest Path')
     
     
-    print('Optimal Path Weight = ', optimalPathWeight)
-    print('The path is: ', sp)
-    print('numbers after decimal point: ', len(str(optimalPathWeight).replace('.','')) - 1)
+    # print('Optimal Path Weight = ', optimalPathWeight)
+    # print('The path is: ', sp)
+    # print('numbers after decimal point: ', len(str(optimalPathWeight).replace('.','')) - 1)
     print('\n')
     print('Desired Path Weight = ', desiredPathWeight)
     print('The path is: ', desiredPath)

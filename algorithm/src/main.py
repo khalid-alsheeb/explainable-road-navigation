@@ -17,8 +17,7 @@ G = getOriginalAttributeTypes(G)
 
 G = fixWrongDataG(G)
 updateGraphWeights(G)
-dp = [1617596714, 256794594, 1707790024]
-desired_path = nx.shortest_path(G, source=dp[0], target=dp[1], weight="weight")[:-1] + nx.shortest_path(G, source=dp[1], target=dp[2], weight="weight")
+desired_path = [1881001588, 107734]
 sp = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
 
 print(len(desired_path))

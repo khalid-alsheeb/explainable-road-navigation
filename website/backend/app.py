@@ -15,7 +15,6 @@ def get_explanations():
     
     shortest_path, explanations = getPathExplanation(desired_path)
     
-    
     return jsonify({ 'shortest_path': shortest_path, 'explanations': explanations })
 
 
