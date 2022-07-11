@@ -19,9 +19,9 @@ const SideBar = () => {
 
             <BetterLine color={'#696969'}/>
 
-            {/* <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
-
-            </Container> */}
+            <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
+                {/* <Explanations /> */}
+            </Container>
 
             {/* <BetterLine color={'#696969'}/>
 

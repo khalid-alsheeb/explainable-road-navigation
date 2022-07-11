@@ -1,14 +1,9 @@
 import osmnx as ox
 import networkx as nx
-# from data_retrieval import fixGraphData
 from .algorithm.graph_helpers import prepareGraph, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG, shortenGraphForISP
 from .algorithm.ISP_using_LP import inverseShortestPath
-from .algorithm.graph_explanations import getGraphExplanation, explanationsPrinter
+from .algorithm.graph_explanations import getGraphExplanation, explanationsPrinter, makeExplanationsStrings
 
-
-# address = '30 Aldwych, London WC2B 4BG'
-# G = ox.graph_from_address(address, network_type="drive", dist=2000)
-# graph = fixGraphData(G)
 
 def getPathExplanation(desired_path):
 
@@ -27,13 +22,16 @@ def getPathExplanation(desired_path):
     # prepareGraph(G)
     # new_graph = inverseShortestPath(G, desired_path)
 
-    # z = getGraphExplanation(G, new_graph, desired_path)
+    # explanations = getGraphExplanation(G, new_graph, desired_path)
     
-    return shortest_path
+    explanations = {(1881001588, 107734): 'is only one way (on the other side). If it was a two way edge,'}
+    
+    exp = makeExplanationsStrings(explanations)
+    
+    return shortest_path, exp
 
-# explanationsPrinter(z)
 
-
+# EXAMPLE:
 
 # # These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:
 # #    -   (455705625, 1104473061): has a current speed of 12.0 (heavy traffic). If it had a current speed of 12.858546960654117 (less traffic),

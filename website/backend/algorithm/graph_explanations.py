@@ -16,8 +16,6 @@ def getGraphExplanation(oldGraph, newGraph, path):
         
         explanations[source, target] = exp
         
-        #explanations[source, target] = "Edge ({}, {}) ".format(source, target) + exp
-        
     return explanations
 
 
@@ -56,3 +54,12 @@ def explanationsPrinter(explanations):
     if len(s) != 0:
         print("These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:")
         print(s)
+        
+        
+def makeExplanationsStrings(explanations):
+    
+    exp = []
+    for key, value in explanations.items():
+        exp.append( "Edge {} ".format(key) + value )
+        
+    return exp
