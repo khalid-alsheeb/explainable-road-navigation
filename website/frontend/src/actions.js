@@ -5,6 +5,7 @@ import {
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
+import { originalEdges } from './ConstantData'
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
@@ -13,15 +14,25 @@ export const getExplanations = () => async (dispatch, getState) => {
         const state = getState()
         const desiredPath = state.desiredPathNodes
         const { data } = await axios.get("/", {
-            params: desiredPath,
+            params: { desired_path: desiredPath
+            },
             paramsSerializer: params => {
                 return qs.stringify(params, { arrayFormat: 'repeat' })
             }
         })
 
-        console.log(data);
-        dispatch({ type: GET_EXPLANATIONS });
-        // dispatch({ type: GET_EXPLANATIONS, payload: edges });
+        const shortestPathNodes = data['shortest_path']
+
+        let shortestPath = []
+        if (shortestPathNodes.length > 0) {
+            for (var i = 0; i < shortestPathNodes.length - 1; ++i) {
+                shortestPath.push( originalEdges.find( edge => (edge['nodes'][0] === shortestPathNodes[i] && shortestPathNodes[i+1] === edge['nodes'][1]) ))
+            }
+        } else {
+            shortestPath.push('NO SHORTEST PATH')
+        }
+
+        dispatch({ type: GET_EXPLANATIONS, payload: [shortestPath] });
     } catch (error) {
         console.log(error.message);
     }

@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 import cvxpy as cp
 
-from graph_helpers import *
+from .graph_helpers import *
 
 def inverseShortestPath(graph, desiredPath):
     print('Formalising the problem')

@@ -8,24 +8,33 @@ const Edge = ({ edge }) => {
 
     const [color, setColor] = useState("blue");
     const desiredPath = useSelector((state) => state.desiredPath)
+    const shortestPath = useSelector((state) => state.shortestPath)
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (color !== 'blue') {
+        if (shortestPath.includes(edge)) {
+            if (desiredPath.includes(edge)) {
+                setColor('orange')
+            } else {
+                setColor('red')
+            }
+        } else{
+            if (color !== 'blue') {
                 if (!desiredPath.includes(edge)) {
                     colorChange() 
                 }
+            }
         }
-    }, [desiredPath])
+    }, [desiredPath, shortestPath])
 
     const colorChange = () => {
-        if (color === "orange") {
+        if (color === "yellow") {
             setColor("blue")
             dispatch(removeNodeFromDesiredPath(edge))
             dispatch(removeFromDesiredPath(edge))
         } else if (color === "blue") {
-            setColor("orange")
+            setColor("yellow")
             dispatch(addToDesiredPath(edge))
             dispatch(addNodeToDesiredPath(edge))
         }
