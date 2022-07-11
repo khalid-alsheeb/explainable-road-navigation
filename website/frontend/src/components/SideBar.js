@@ -20,10 +20,10 @@ const SideBar = () => {
             <BetterLine color={'#696969'}/>
 
             {/* <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
-                <Algorithms />
-            </Container>
 
-            <BetterLine color={'#696969'}/>
+            </Container> */}
+
+            {/* <BetterLine color={'#696969'}/>
 
             <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
                 <Indicators returns={['67%', '100%', '10%']} />
