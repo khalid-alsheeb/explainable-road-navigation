@@ -18,17 +18,19 @@ def getPathExplanation(desired_path):
         shortest_path = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
     except:
         shortest_path = []
+        
+    prepareGraph(G)
+    
+    try:
+        new_graph = inverseShortestPath(G, desired_path)
 
-    # prepareGraph(G)
-    # new_graph = inverseShortestPath(G, desired_path)
-
-    # explanations = getGraphExplanation(G, new_graph, desired_path)
+        exp = getGraphExplanation(G, new_graph, desired_path)
+        
+        explanations = makeExplanationsStrings(explanations)
+    except:
+        explanations = []
     
-    explanations = {(1881001588, 107734): 'is only one way (on the other side). If it was a two way edge,'}
-    
-    exp = makeExplanationsStrings(explanations)
-    
-    return shortest_path, exp
+    return shortest_path, explanations
 
 
 # EXAMPLE:

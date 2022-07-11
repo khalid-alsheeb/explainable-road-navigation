@@ -8,7 +8,8 @@ const initialState = {
     edges: [],
     desiredPath: [],
     desiredPathNodes: [],
-    shortestPath: []
+    shortestPath: [],
+    explanations: []
 }
 
 const middleware = [thunk]

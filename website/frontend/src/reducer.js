@@ -8,7 +8,7 @@ import {
 const Reducer = (state = [], action) => {
     switch (action.type) {
         case GET_EXPLANATIONS:
-            return { ...state, shortestPath: [...action.payload[0]] }
+            return { ...state, shortestPath: [...action.payload[0]], explanations: [...action.payload[1]] }
         case ADD_TO_DESIRED_PATH:
             return { ...state, desiredPath: [...action.payload] }
         case REMOVE_FROM_DESIRED_PATH:
@@ -27,7 +27,8 @@ const Reducer = (state = [], action) => {
                 edges: [],
                 desiredPath: [],
                 desiredPathNodes: [],
-                shortestPath: []
+                shortestPath: [],
+                explanations: []
             }
         default:
             return state;

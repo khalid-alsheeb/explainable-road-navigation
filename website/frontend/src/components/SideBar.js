@@ -4,6 +4,7 @@ import React from 'react';
 import DataForm from './DataForm';
 import SideBarHeader from './SideBarHeader';
 import BetterLine from './BetterLine';
+import Explanations from './Explanations';
 
 const SideBar = () => {
 
@@ -20,7 +21,7 @@ const SideBar = () => {
             <BetterLine color={'#696969'}/>
 
             <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
-                {/* <Explanations /> */}
+                <Explanations />
             </Container>
 
             {/* <BetterLine color={'#696969'}/>

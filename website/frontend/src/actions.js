@@ -23,6 +23,7 @@ export const getExplanations = () => async (dispatch, getState) => {
         })
 
         const shortestPathNodes = data['shortest_path']
+        const explanations = data['explanations']
 
         let shortestPath = []
         if (shortestPathNodes.length > 0) {
@@ -33,7 +34,7 @@ export const getExplanations = () => async (dispatch, getState) => {
             shortestPath.push('NO SHORTEST PATH')
         }
 
-        dispatch({ type: GET_EXPLANATIONS, payload: [shortestPath] });
+        dispatch({ type: GET_EXPLANATIONS, payload: [ shortestPath, explanations ] });
     } catch (error) {
         console.log(error.message);
     }
