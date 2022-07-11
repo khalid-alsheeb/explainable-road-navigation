@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
-import { getExplanations, flipDP, changeBorder } from '../actions';
+import { getExplanations, flipDP, changeBorder, resetData } from '../actions';
 import { useDispatch } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
 import BetterLine from './BetterLine';
@@ -31,6 +31,14 @@ const DataForm = () => {
             <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(getExplanations())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
                     Get Explanations
+                </Typography>
+            </Button>
+
+            <BetterLine />
+
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(resetData())}>
+                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
+                    Reset Data
                 </Typography>
             </Button>
         </Form>

@@ -1,7 +1,8 @@
 import {
         ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
         ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
-        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS
+        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS,
+        RESET_DATA
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -178,6 +179,17 @@ export const changeBorder = () => async (dispatch, getState) => {
         const isBorder = state.isBorder
 
         dispatch({ type: ADD_REMOVE_BORDER, payload: !isBorder });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+
+export const resetData = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: RESET_DATA });
     } catch (error) {
         console.log(error.message);
     }
