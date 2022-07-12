@@ -5,8 +5,11 @@ import DataForm from './DataForm';
 import SideBarHeader from './SideBarHeader';
 import BetterLine from './BetterLine';
 import Explanations from './Explanations';
+import { useSelector } from 'react-redux';
 
 const SideBar = () => {
+
+    const explanations = useSelector((state) => state.explanations);
 
     return (
         <>
@@ -21,14 +24,10 @@ const SideBar = () => {
             <BetterLine color={'#696969'}/>
 
             <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
-                <Explanations />
+                {explanations.length > 0 &&
+                    <Explanations />
+                }
             </Container>
-
-            {/* <BetterLine color={'#696969'}/>
-
-            <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
-                <Indicators returns={['67%', '100%', '10%']} />
-            </Container> */}
         </>
     )    
 }

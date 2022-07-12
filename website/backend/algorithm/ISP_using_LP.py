@@ -238,7 +238,7 @@ def inverseShortestPath(graph, desiredPath):
             s = getInverse(inverseSpeeds_original[index])
         else:
             # rounding error with floats
-            if (inverseSpeeds_original[index] > inverseSpeeds_.value[index]):
+            if (inverseSpeeds_original[index] < inverseSpeeds_.value[index]):
                 s = getInverse(inverseSpeeds_original[index])
             else:
                 s = getInverse(inverseSpeeds_.value[index])
@@ -247,17 +247,15 @@ def inverseShortestPath(graph, desiredPath):
             ms = getInverse(inverseMaxSpeeds_original[index])
         else:
             ms = getInverse(inverseMaxSpeeds_.value[index])
+            
+        addEdgeToNewGraph(graph, newGraph, i, j)
         
-        newGraph.add_edge(
-                            i, j,
-                            weight = np.nan, 
-                            noWay = int(noWay_.value[index]), 
-                            isClosed = int(areClosed_.value[index]), 
-                            length = graph[i][j][0]['length'], 
-                            speed = s,
-                            maxSpeed = int(round(ms)),
-                            speedOrMaxSpeed = int((speedOrMaxSpeed_.value[index]))
-                        )
+        newGraph[i][j][0]['noWay'] = int(noWay_.value[index])
+        newGraph[i][j][0]['isClosed'] = int(areClosed_.value[index])
+        newGraph[i][j][0]['speed'] = s
+        newGraph[i][j][0]['maxSpeed'] = int(round(ms))
+        newGraph[i][j][0]['speedOrMaxSpeed'] = int((speedOrMaxSpeed_.value[index]))
+        
         
     updateGraphWeights(newGraph)
     

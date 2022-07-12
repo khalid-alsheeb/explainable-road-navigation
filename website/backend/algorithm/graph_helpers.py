@@ -91,6 +91,11 @@ def fixWrongDataG(graph):
     return ox.graph_from_gdfs(nodes, edges)
 
 
+def addEdgeToNewGraph(oldGraph, newGraph, s, t):
+    for key, data in oldGraph.get_edge_data(s, t).items():
+        newGraph.add_edge(s, t, key=key, **(deepcopy(data)))
+
+
 # def shortenGraphForISP(G, shortestPath, desiredPath):
 #     sp = []
 #     for i in range(0, len(shortestPath)-1):
