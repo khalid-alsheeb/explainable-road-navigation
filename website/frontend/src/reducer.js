@@ -23,7 +23,7 @@ const Reducer = (state = [], action) => {
             return { ...state, isBorder: action.payload }
         case RESET_DATA:
             return { 
-                isBorder: true,
+                isBorder: false,
                 edges: [],
                 desiredPath: [],
                 desiredPathNodes: [],

@@ -10,39 +10,50 @@ const Explanations = () => {
 
     const reasons = explanations[0]
     const solutions = explanations[1]
-
+    //{isLoggedIn ? 'currently' : 'not'}
 
     return (
         <Container style={{ marginBottom: '10%'}}>
-            <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
-                The desired path is not optimal because:
-            </Typography>
-            <List>
+            {reasons.length > 0
+            ?
+            <>
+                <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
+                    The desired path is not optimal because:
+                </Typography>
+                <ol  style={{ listStyleType: "upper-roman", color: 'rgb(255, 145, 0)' }} >
 
-                { reasons.map((r) => 
-                    <ListItem>
-                        <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                            {r}
-                        </Typography>
-                    </ListItem>
-                )}
-            </List>
+                    { reasons.map((r) => 
+                        <li>
+                            <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                                {r}
+                            </Typography>
+                        </li>
+                    )}
+                </ol>
 
-            <BetterLine />
+                <BetterLine />
 
-            <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
-                If the following was true, then the desired path would be optimal:
-            </Typography>
-            <List>
+                <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
+                    If the following was true, then the desired path would be optimal:
+                </Typography>
+                <ol  style={{ listStyleType: "upper-roman", color: 'rgb(255, 145, 0)' }} >
 
-                { solutions.map((s) => 
-                    <ListItem>
-                        <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                            {s}
-                        </Typography>
-                    </ListItem>
-                )}
-            </List>
+                    { solutions.map((s) => 
+                        <li>
+                            <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                                {s}
+                            </Typography>
+                        </li>
+                    )}
+                </ol>
+            </>
+            : 
+            <>
+                <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
+                    The desired path is the optimal path.
+                </Typography>
+            </>
+            }
         </Container>
 
     );
