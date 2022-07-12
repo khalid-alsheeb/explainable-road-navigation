@@ -13,21 +13,24 @@ def getGraphExplanation(oldGraph, newGraph, path):
         
         exp = getEdgeExplanation(oldEdge, newEdge)
         
-        
         if 'name' in oldEdge:
             name = oldEdge['name']
         else:
             # If name is not in data, just use nodes
             name = '(' + str(source) + ', ' + str(target) + ')'
+            
+        if type(name) == list:
+            name = "('" + "', '".join(name) + "')"
         
         # check for more than 1 edge in the same street need changes, if so, nunmber them.
         length = len(explanations)
         count = 1
+        nameX = name
         while(length == len(explanations)):
-            if (name not in explanations):
-                explanations[name] = exp
+            if (nameX in explanations):
+                nameX = name +  " " + '(' + str(count) + ')'
             else:
-                name += " " + '(' + str(count) + ')'
+                explanations[nameX] = exp
             count += 1
             
     return explanations

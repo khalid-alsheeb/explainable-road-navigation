@@ -4,7 +4,7 @@ import reducer from './reducer'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const initialState = {
-    isBorder: true,
+    isBorder: false,
     edges: [],
     desiredPath: [],
     desiredPathNodes: [],

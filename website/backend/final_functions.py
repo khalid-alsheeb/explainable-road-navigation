@@ -14,6 +14,8 @@ def getPathExplanation(desired_path):
     G = fixWrongDataG(G)
     updateGraphWeights(G)
     
+    # testing desired_path = [1696030874, 109753, 1617512815, 1707216637, 21392100, 109757, 1707216642, 25472888, 1707216646, 1678452728, 4879371166, 4421008555, 4421008566, 4034060018, 367102039, 4166662878, 26374229, 25378124, 107698, 6139961783, 107697, 282569739]
+    
     try:
         shortest_path = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
     except:
@@ -21,14 +23,17 @@ def getPathExplanation(desired_path):
         
     prepareGraph(G)
     
-    try:
-        new_graph = inverseShortestPath(G, desired_path)
-
-        exp = getGraphExplanation(G, new_graph, desired_path)
-        
-        explanations = makeExplanationsStrings(exp)
-    except:
-        explanations = []
+    # try:
+    #     new_graph = inverseShortestPath(G, desired_path)
+    #     exp = getGraphExplanation(G, new_graph, desired_path)
+    #     explanations = makeExplanationsStrings(exp)
+    # except:
+    #     explanations = []
+    
+    new_graph = inverseShortestPath(G, desired_path)
+    # Issue in getGraphExplanation
+    exp = getGraphExplanation(G, new_graph, desired_path)
+    explanations = makeExplanationsStrings(exp)
     
     return shortest_path, explanations
 

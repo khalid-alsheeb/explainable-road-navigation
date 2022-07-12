@@ -28,7 +28,9 @@ export const getExplanations = () => async (dispatch, getState) => {
         let shortestPath = []
         if (shortestPathNodes.length > 0) {
             for (var i = 0; i < shortestPathNodes.length - 1; ++i) {
-                shortestPath.push( originalEdges.find( edge => (edge['nodes'][0] === shortestPathNodes[i] && shortestPathNodes[i+1] === edge['nodes'][1]) ))
+                shortestPath.push( originalEdges.find( edge =>
+                    (edge['nodes'][0] === shortestPathNodes[i] && shortestPathNodes[i+1] === edge['nodes'][1])
+                ))
             }
         } else {
             shortestPath.push('NO SHORTEST PATH')
