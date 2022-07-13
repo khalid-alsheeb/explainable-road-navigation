@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
-import { getExplanations, flipDP, changeBorder, resetData } from '../actions';
+import { getExplanations } from '../actions';
 import { useDispatch } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
 import BetterLine from './BetterLine';
@@ -15,35 +15,11 @@ const DataForm = () => {
 
             <Algorithms />
 
-            <BetterLine/>
-
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(changeBorder())}>
-                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Show/Remove Border
-                </Typography>
-            </Button>
-
             <BetterLine />
 
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(flipDP())}>
-                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Flip source and target
-                </Typography>
-            </Button>
-
-            <BetterLine />
-
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(getExplanations())}>
+            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)', width: '100%'}} onClick={() => dispatch(getExplanations())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
                     Get Explanations
-                </Typography>
-            </Button>
-
-            <BetterLine />
-
-            <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(resetData())}>
-                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Reset Data
                 </Typography>
             </Button>
         </Form>

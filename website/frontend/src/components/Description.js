@@ -16,7 +16,7 @@ const Description = () => {
                 <Col>
                     <List>
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '40px'}}>
+                        <ListItemIcon style={{minWidth: '30px'}}>
                             <CircleIcon sx={{color: '#ffeb3b'}}/>
                         </ListItemIcon>
                             <ListItemText>
@@ -27,7 +27,7 @@ const Description = () => {
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '40px'}}>
+                        <ListItemIcon style={{minWidth: '30px'}}>
                             <CircleIcon sx={{color: '#f44336'}}/>
                         </ListItemIcon>
                             <ListItemText>
@@ -38,7 +38,7 @@ const Description = () => {
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '40px'}}>
+                        <ListItemIcon style={{minWidth: '30px'}}>
                             <CircleIcon sx={{color: '#ff9800'}}/>
                         </ListItemIcon>
                             <ListItemText>
@@ -52,7 +52,7 @@ const Description = () => {
                 <Col>
                     <List>
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '40px'}}>
+                        <ListItemIcon style={{minWidth: '30px'}}>
                             <RoomIcon sx={{color: '#1fcf48'}}/>
                         </ListItemIcon>
                             <ListItemText>
@@ -63,12 +63,23 @@ const Description = () => {
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '40px'}}>
+                        <ListItemIcon style={{minWidth: '30px'}}>
                             <RoomIcon sx={{color: '#f44336'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                                     Target node
+                                </Typography>
+                            </ListItemText>
+                        </ListItem>
+
+                        <ListItem>
+                        <ListItemIcon style={{minWidth: '30px'}}>
+                            <RoomIcon sx={{color: 'orange'}}/>
+                        </ListItemIcon>
+                            <ListItemText>
+                                <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                                    Waypoint node
                                 </Typography>
                             </ListItemText>
                         </ListItem>

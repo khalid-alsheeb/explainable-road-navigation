@@ -205,3 +205,14 @@ export const changeVersion = (version) => async (dispatch) => {
         console.log(error.message);
     }
 }
+
+
+
+export const calculateSP = () => async (dispatch) => {
+    try {
+
+        console.log('aslkdslakdhaj');
+    } catch (error) {
+        console.log(error.message);
+    }
+}

@@ -6,6 +6,7 @@ import SideBarHeader from './SideBarHeader';
 import BetterLine from './BetterLine';
 import Explanations from './Explanations';
 import { useSelector } from 'react-redux';
+import Controls from './Controls';
 
 const SideBar = () => {
 
@@ -21,6 +22,8 @@ const SideBar = () => {
                 <DataForm />
             </Container>
 
+            <Controls />
+
             <BetterLine color={'#696969'}/>
 
             <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
@@ -28,6 +31,8 @@ const SideBar = () => {
                     <Explanations />
                 }
             </Container>
+
+
         </>
     )    
 }

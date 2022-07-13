@@ -25,6 +25,7 @@ const Reducer = (state = [], action) => {
             return { ...state, version: action.payload }
         case RESET_DATA:
             return { 
+                ...state,
                 edges: [],
                 desiredPath: [],
                 desiredPathNodes: [],
