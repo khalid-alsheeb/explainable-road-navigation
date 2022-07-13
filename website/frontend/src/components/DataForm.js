@@ -4,7 +4,7 @@ import { getExplanations } from '../actions';
 import { useDispatch } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
 import BetterLine from './BetterLine';
-import Algorithms from './Algorithms';
+import Algorithms from './algorithms/Algorithms';
 
 const DataForm = () => {
 

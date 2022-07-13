@@ -1,6 +1,6 @@
 import { Button, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { flipDP, calculateSP } from '../actions';
+import { flipDP, calculateSP } from '../../actions';
 
 
 const AlgorithmsControls = () => {

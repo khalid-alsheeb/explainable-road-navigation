@@ -2,7 +2,7 @@ import { Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { originalNodes } from '../ConstantData'
+import { originalNodes } from '../../ConstantData'
 import L from 'leaflet';
 
 var sourceMarker = new L.Icon({
@@ -24,7 +24,7 @@ var targetMarker = new L.Icon({
 });
 
 
-const Markers = () => {
+const MarkersV1 = () => {
 
     const desiredPath = useSelector((state) => state.desiredPathNodes)
     const [source, setSource] = useState([0, 0]);
@@ -52,9 +52,6 @@ const Markers = () => {
 
         return [s, t]
     }
-    //orange marker
-    //https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png
-
 
     return (
         <>
@@ -77,4 +74,4 @@ const Markers = () => {
     );
 }
 
-export default Markers;
+export default MarkersV1;

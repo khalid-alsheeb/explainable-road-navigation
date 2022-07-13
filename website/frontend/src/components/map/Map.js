@@ -1,7 +1,7 @@
-import { MapContainer, TileLayer } from 'react-leaflet'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Edges from './Edges';
 import Markers from './Markers';
 import Border from './Border';
@@ -9,11 +9,8 @@ import Border from './Border';
 
 const Map = () => {
 
-    // const edges = useSelector((state) => state.edges);
-
     const lat =  51.5126962992232
     const lng = -0.11711526623945342
-
 
     return (
         <>

@@ -6,7 +6,7 @@ import SideBarHeader from './SideBarHeader';
 import BetterLine from './BetterLine';
 import Explanations from './Explanations';
 import { useSelector } from 'react-redux';
-import Controls from './Controls';
+import Controls from './algorithms/Controls';
 
 const SideBar = () => {
 
