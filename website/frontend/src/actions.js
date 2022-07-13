@@ -2,7 +2,7 @@ import {
         ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
         ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
         REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS,
-        RESET_DATA, CHANGE_VERSION
+        RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -14,8 +14,12 @@ export const getExplanations = () => async (dispatch, getState) => {
     try {
         const state = getState()
         const desiredPath = state.desiredPathNodes
+        const version = state.version
+
         const { data } = await axios.get("/", {
-            params: { desired_path: desiredPath
+            params: {
+                version: version,
+                desired_path: desiredPath
             },
             paramsSerializer: params => {
                 return qs.stringify(params, { arrayFormat: 'repeat' })
@@ -212,6 +216,16 @@ export const calculateSP = () => async (dispatch) => {
     try {
 
         console.log('aslkdslakdhaj');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+export const updateDP = (nodes) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_DESIRED_PATH, payload: nodes });
     } catch (error) {
         console.log(error.message);
     }

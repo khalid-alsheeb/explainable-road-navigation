@@ -12,10 +12,10 @@ const Description = () => {
                 Choose which algorithm/input-mechanism you want to use. You can show the border of the data we use, and reset the data that you have put. When you are ready press get explanations.
             </Typography>
             <Row>
-                <Col>
+                <Col style={{padding: '0', paddingRight: '0'}}>
                     <List>
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
+                        <ListItemIcon style={{minWidth: '30px'}} >
                             <CircleIcon sx={{color: '#ffeb3b'}}/>
                         </ListItemIcon>
                             <ListItemText>
@@ -48,11 +48,11 @@ const Description = () => {
                         </ListItem>
                     </List>
                 </Col>
-                <Col>
+                <Col style={{padding: '0', paddingLeft: '0'}}>
                     <List>
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: '#1fcf48'}}/>
+                            <RoomIcon sx={{color: '#1fcf48', fontSize: '200%'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
@@ -63,7 +63,7 @@ const Description = () => {
 
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: '#f44336'}}/>
+                            <RoomIcon sx={{color: '#f44336', fontSize: '200%'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
@@ -74,7 +74,7 @@ const Description = () => {
 
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: 'orange'}}/>
+                            <RoomIcon sx={{color: 'orange', fontSize: '200%'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
