@@ -10,12 +10,10 @@ const Explanations = () => {
 
     const reasons = explanations[0]
     const solutions = explanations[1]
-    //{isLoggedIn ? 'currently' : 'not'}
 
     return (
         <Container style={{ marginBottom: '10%'}}>
-            {reasons.length > 0
-            ?
+            {reasons.length > 0 ?
             <>
                 <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
                     The desired path is not optimal because:

@@ -9,7 +9,8 @@ const initialState = {
     desiredPath: [],
     desiredPathNodes: [],
     shortestPath: [],
-    explanations: []
+    explanations: [],
+    version: 1
 }
 
 const middleware = [thunk]

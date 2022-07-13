@@ -2,7 +2,7 @@ import {
     ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
     REVERSE_DESIRED_PATH, ADD_TO_NODE_PATH_EDGES,
     REMOVE_NODE_FROM_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS,
-    RESET_DATA
+    RESET_DATA, CHANGE_VERSION
 } from "./constants";
 
 const Reducer = (state = [], action) => {
@@ -21,9 +21,10 @@ const Reducer = (state = [], action) => {
             return { ...state, desiredPath: [...action.payload[0]], desiredPathNodes: [...action.payload[1]] }
         case ADD_REMOVE_BORDER:
             return { ...state, isBorder: action.payload }
+        case CHANGE_VERSION:
+            return { ...state, version: action.payload }
         case RESET_DATA:
             return { 
-                isBorder: false,
                 edges: [],
                 desiredPath: [],
                 desiredPathNodes: [],

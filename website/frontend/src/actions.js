@@ -2,7 +2,7 @@ import {
         ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
         ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
         REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS,
-        RESET_DATA
+        RESET_DATA, CHANGE_VERSION
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -188,7 +188,6 @@ export const changeBorder = () => async (dispatch, getState) => {
 }
 
 
-
 export const resetData = () => async (dispatch) => {
     try {
 
@@ -198,3 +197,11 @@ export const resetData = () => async (dispatch) => {
     }
 }
 
+export const changeVersion = (version) => async (dispatch) => {
+    try {
+
+        dispatch({ type: CHANGE_VERSION, payload: version });
+    } catch (error) {
+        console.log(error.message);
+    }
+}

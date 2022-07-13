@@ -56,21 +56,20 @@ const Markers = () => {
 
     return (
         <>
-            {desiredPath.length > 1 && 
-            <> 
-                <Marker position={source} icon={sourceMarker}>
-                    <Popup >
-                        Source
-                    </Popup>
-                </Marker>
+            { desiredPath.length > 1 && 
+                <> 
+                    <Marker position={source} icon={sourceMarker}>
+                        <Popup >
+                            Source
+                        </Popup>
+                    </Marker>
 
-                <Marker position={target} icon={targetMarker} >
-                    <Popup >
-                        Target
-                    </Popup>
-                </Marker>
-            </>
-            
+                    <Marker position={target} icon={targetMarker} >
+                        <Popup >
+                            Target
+                        </Popup>
+                    </Marker>
+                </>
             }
         </>
     );

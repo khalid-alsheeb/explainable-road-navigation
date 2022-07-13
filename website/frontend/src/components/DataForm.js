@@ -4,6 +4,7 @@ import { getExplanations, flipDP, changeBorder, resetData } from '../actions';
 import { useDispatch } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
 import BetterLine from './BetterLine';
+import Algorithms from './Algorithms';
 
 const DataForm = () => {
 
@@ -11,6 +12,10 @@ const DataForm = () => {
 
     return(
         <Form className="mb-3" style={{margin: '5%'}} >
+
+            <Algorithms />
+
+            <BetterLine/>
 
             <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)'}} onClick={() => dispatch(changeBorder())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >

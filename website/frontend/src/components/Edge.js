@@ -12,6 +12,8 @@ const Edge = ({ edge }) => {
     const desiredPath = useSelector((state) => state.desiredPath)
     const shortestPath = useSelector((state) => state.shortestPath)
 
+    const version = useSelector((state) => state.version)
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -55,7 +57,13 @@ const Edge = ({ edge }) => {
 
     return (
         <>
-            <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }} pane={'markerPane'} />
+            { version === 1 ?
+            
+                <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }} pane={'markerPane'} />
+            :
+
+                <Polyline positions={coordinates} pathOptions={{ color }} pane={'markerPane'} />
+            }
 
             { alert && 
                 <PopupAlert />

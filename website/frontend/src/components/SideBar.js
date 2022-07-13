@@ -24,7 +24,7 @@ const SideBar = () => {
             <BetterLine color={'#696969'}/>
 
             <Container style={{ marginBottom: '10%', marginTop: '10%'}}>
-                {explanations.length > 0 &&
+                { explanations.length > 0 &&
                     <Explanations />
                 }
             </Container>
