@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from .final_functions import getPathExplanation
+from .final_functions import getPathExplanation, getDesiredPathFromWaypoint
 import json
 
 
@@ -9,29 +9,39 @@ cors = CORS(app)
 
 # change the routes. 1 for explanations, and annother for the sp. If the user only wants the sp.
 
-@app.route('/', methods = ['GET'])
-def get_explanations():
-    
-    version = request.args.get('version')
+@app.route('/1/', methods = ['GET'])
+def get_explanations1():
     
     desired_path = [int(n) for n in request.args.getlist('desired_path')]
     
-    if(version == 2):
-        # calculate the desired path, and then do the same as before.
-        # get closest nodes in our graph, to the nodes given
-        pass
-    
-    if(version == 3):
-        # Apply the anytime algorithm.
-        # get closest nodes in our graph, to the nodes given
-        pass
-
     #testing  dp
     # desired_path = [1696030874, 109753, 1617512815, 1707216637, 21392100, 109757, 1707216642, 25472888, 1707216646, 1678452728, 4879371166, 4421008555, 4421008566, 4034060018, 367102039, 4166662878, 26374229, 25378124, 107698, 6139961783, 107697, 282569739]
-    
     shortest_path, explanations = getPathExplanation(desired_path)
     
+    # elif(version == 3):
+    #     # Apply the anytime algorithm.
+    #     # get closest nodes in our graph, to the nodes given
+    #     pass
+    
     return jsonify({ 'shortest_path': shortest_path, 'explanations': explanations })
+
+@app.route('/2/', methods = ['GET'])
+def get_explanations2():
+    
+    nodes = [int(n) for n in request.args.getlist('nodes')]
+    
+    print(nodes)
+    
+    # calculate the desired path, and then do the same as before.
+    # get closest nodes in our graph, to the nodes given
+    desired_path = getDesiredPathFromWaypoint(nodes)
+    
+    print(desired_path)
+    if (len(desired_path) > 0):
+        shortest_path, explanations = getPathExplanation(desired_path)
+
+    
+    return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
 
 
 if __name__ == "__main__":

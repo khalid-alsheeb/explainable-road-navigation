@@ -23,6 +23,8 @@ const Edge = ({ edge }) => {
             } else {
                 setColor('red')
             }
+        }else if (desiredPath.includes(edge)) {
+            setColor('yellow')
         } else{
             if (color !== 'blue') {
                 if (!desiredPath.includes(edge)) {
@@ -30,6 +32,7 @@ const Edge = ({ edge }) => {
                 }
             }
         }
+
 
         if (desiredPath.length === 0) {
             setColor("blue")

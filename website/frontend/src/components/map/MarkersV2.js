@@ -32,9 +32,9 @@ var waypointMarker = new L.Icon({
     shadowSize: [41, 41]
 });
 
-const source = [51.50586093478481, -0.11213226405979884] // waterloo campus
-const target = [51.512458385741766, -0.11758313188238835] // strand campus
-const waypoint = [51.511894209636345, -0.10517751225188611] // blackfriars bridge
+const source = { 'lat': 51.50586093478481, 'lng': -0.11213226405979884 } // waterloo campus
+const waypoint = { 'lat': 51.507701073013166, 'lng': -0.10432664845390739 } // blackfriars bridge
+const target = { 'lat': 51.51263530532304, 'lng': -0.11577497367932346 } // strand campus
 
 const MarkersV2 = () => {
     // make it not dragabble, if sp is calculated.

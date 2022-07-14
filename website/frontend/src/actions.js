@@ -1,24 +1,41 @@
 import {
         ADD_TO_DESIRED_PATH, REMOVE_FROM_DESIRED_PATH,
         ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
-        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_EXPLANATIONS,
+        REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_RESULTS_V1,
+        GET_RESULTS_V2, GET_RESULTS_V3,
         RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
-import { originalEdges } from './ConstantData'
+import { getPathFormat, getCorrectNodes } from './helperFunctions'
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
 export const getExplanations = () => async (dispatch, getState) => {
     try {
         const state = getState()
-        const desiredPath = state.desiredPathNodes
         const version = state.version
+        
+        if(version === 1) {
+            dispatch(getResultsV1())
+        } else if(version === 2) {
+            dispatch(getResultsV2())
+        } else if(version === 3) {
+            dispatch(getResultsV3())
+        }
 
-        const { data } = await axios.get("/", {
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const getResultsV1 = () => async (dispatch, getState) => {
+    try {
+        const state = getState()
+        const desiredPath = state.desiredPathNodes
+
+        const { data } = await axios.get("/1/", {
             params: {
-                version: version,
                 desired_path: desiredPath
             },
             paramsSerializer: params => {
@@ -29,23 +46,70 @@ export const getExplanations = () => async (dispatch, getState) => {
         const shortestPathNodes = data['shortest_path']
         const explanations = data['explanations']
 
-        let shortestPath = []
-        if (shortestPathNodes.length > 0) {
-            for (var i = 0; i < shortestPathNodes.length - 1; ++i) {
-                shortestPath.push( originalEdges.find( edge =>
-                    (edge['nodes'][0] === shortestPathNodes[i] && shortestPathNodes[i+1] === edge['nodes'][1])
-                ))
-            }
-        } else {
-            shortestPath.push('NO SHORTEST PATH')
-        }
+        const shortestPath = getPathFormat(shortestPathNodes)
 
-        dispatch({ type: GET_EXPLANATIONS, payload: [ shortestPath, explanations ] });
+        dispatch({ type: GET_RESULTS_V1, payload: [ shortestPath, explanations ] });
     } catch (error) {
         console.log(error.message);
     }
 };
 
+
+export const getResultsV2 = () => async (dispatch, getState) => {
+    try {
+        const state = getState()
+        const nodesp = state.desiredPathNodes
+        const nodes = getCorrectNodes(nodesp)
+
+        const { data } = await axios.get("/2/", {
+            params: {
+                nodes: nodes
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params, { arrayFormat: 'repeat' })
+            }
+        })
+
+        const shortestPathNodes = data['shortest_path']
+        const desiredPathNodes = data['desired_path']
+        const explanations = data['explanations']
+
+        const shortestPath = getPathFormat(shortestPathNodes)
+        const desiredPath = getPathFormat(desiredPathNodes)
+
+        dispatch({ type: GET_RESULTS_V2, payload: [ desiredPath, shortestPath, explanations ] });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+export const getResultsV3 = () => async (dispatch, getState) => {
+    try {
+        // const state = getState()
+        // const desiredPath = state.desiredPathNodes
+
+        // const { data } = await axios.get("/3/", {
+        //     params: {
+        //         desired_path: desiredPath
+        //     },
+        //     paramsSerializer: params => {
+        //         return qs.stringify(params, { arrayFormat: 'repeat' })
+        //     }
+        // })
+
+        // const shortestPathNodes = data['shortest_path']
+        // const explanations = data['explanations']
+
+
+        // const shortestPath = getPathFormat(shortestPathNodes)
+
+
+        // dispatch({ type: GET_RESULTS_V3, payload: [ shortestPath, explanations ] });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 export const addToDesiredPath = (edge) => async (dispatch, getState) => {
     try {
