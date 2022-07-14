@@ -33,7 +33,7 @@ var waypointMarker = new L.Icon({
 });
 
 const source = { 'lat': 51.50586093478481, 'lng': -0.11213226405979884 } // waterloo campus
-const waypoint = { 'lat': 51.507701073013166, 'lng': -0.10432664845390739 } // blackfriars bridge
+const waypoint = { 'lat': 51.50957032449099, 'lng': -0.10437014485696673 } // blackfriars bridge
 const target = { 'lat': 51.51263530532304, 'lng': -0.11577497367932346 } // strand campus
 
 const MarkersV2 = () => {

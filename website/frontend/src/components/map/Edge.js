@@ -1,4 +1,4 @@
-import { Polyline, Marker, Popup } from 'react-leaflet'
+import { Polyline } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,26 +7,32 @@ import PopupAlert from '../PopupAlert';
 
 const Edge = ({ edge }) => {
 
-    const [color, setColor] = useState("blue");
+    const normalEdge = 'blue'
+    const spColor = 'red'
+    const dpColor = 'Yellow'
+    const mixPColor = 'orange'
+
+    const [color, setColor] = useState(normalEdge);
     const [alert, setAlert] = useState(false)
     const desiredPath = useSelector((state) => state.desiredPath)
     const shortestPath = useSelector((state) => state.shortestPath)
-
     const version = useSelector((state) => state.version)
+
+
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (shortestPath.includes(edge)) {
             if (desiredPath.includes(edge)) {
-                setColor('orange')
+                setColor(mixPColor)
             } else {
-                setColor('red')
+                setColor(spColor)
             }
         }else if (desiredPath.includes(edge)) {
-            setColor('yellow')
+            setColor(dpColor)
         } else{
-            if (color !== 'blue') {
+            if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
                     colorChange() 
                 }
@@ -35,7 +41,7 @@ const Edge = ({ edge }) => {
 
 
         if (desiredPath.length === 0) {
-            setColor("blue")
+            setColor(normalEdge)
         }
     }, [desiredPath, shortestPath])
 
@@ -43,12 +49,12 @@ const Edge = ({ edge }) => {
         if (shortestPath.length > 0) {
             setAlert(true)
         }  else {
-            if (color === "yellow") {
-                setColor("blue")
+            if (color === dpColor) {
+                setColor(normalEdge)
                 dispatch(removeNodeFromDesiredPath(edge))
                 dispatch(removeFromDesiredPath(edge))
-            } else if (color === "blue") {
-                setColor("yellow")
+            } else if (color === normalEdge) {
+                setColor(dpColor)
                 dispatch(addToDesiredPath(edge))
                 dispatch(addNodeToDesiredPath(edge))
             }

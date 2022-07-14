@@ -106,6 +106,7 @@ export const getResultsV3 = () => async (dispatch, getState) => {
 
 
         // dispatch({ type: GET_RESULTS_V3, payload: [ shortestPath, explanations ] });
+        dispatch({ type: GET_RESULTS_V3 });
     } catch (error) {
         console.log(error.message);
     }

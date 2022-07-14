@@ -15,7 +15,7 @@ const Reducer = (state = [], action) => {
             return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]] }
 
         case GET_RESULTS_V3:
-            return { ...state, shortestPath: [...action.payload[0]], explanations: [...action.payload[1]] }
+            return { ...state }
 
         case ADD_TO_DESIRED_PATH:
             return { ...state, desiredPath: [...action.payload] }

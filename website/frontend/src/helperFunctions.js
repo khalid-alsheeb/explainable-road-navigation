@@ -28,7 +28,7 @@ export const getCorrectNodes = (originalData) => {
     let closest = [originalNodes[0], originalNodes[0], originalNodes[0]]
     let distances = [getDistance(nodes[0], originalNodes[0]['coordinates']), getDistance(nodes[1], originalNodes[0]['coordinates']), getDistance(nodes[2], originalNodes[0]['coordinates'])]
 
-    for(var i = 0; i < originalNodes.length; ++i) {
+    for(i = 0; i < originalNodes.length; ++i) {
         for(var j = 0; j < nodes.length; ++j) {
             let dist = getDistance(nodes[j], originalNodes[i]['coordinates'])
             if (dist < distances[j]) {
@@ -40,7 +40,7 @@ export const getCorrectNodes = (originalData) => {
 
     let newNodes = []
 
-    for(var i = 0; i < closest.length; ++i) {
+    for(i = 0; i < closest.length; ++i) {
         newNodes.push(closest[i]['id'])
     }
 
