@@ -12,8 +12,6 @@ export const getPathFormat = (pathNodes) => {
                 )
             ))
         }
-    } else {
-        path.push('NO PATH')
     }
 
     return path

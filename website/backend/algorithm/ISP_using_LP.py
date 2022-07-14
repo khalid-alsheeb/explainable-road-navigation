@@ -212,21 +212,10 @@ def inverseShortestPath(graph, desiredPath):
     prob.solve(solver=cp.GUROBI) # using gurobi
     print("\nThe optimal value is", prob.value)
     
-    #Helper print statements
-    # print('original speedInv: ', inverseSpeeds_original)
-    # print('optimal speedInv: ', inverseSpeeds_.value)
-    # print('\n')
-    # print('original speedMaxInv: ', inverseMaxSpeeds_original)
-    # print('optimal speedMaxInv: ', inverseMaxSpeeds_.value)
-    # print('\n')
-    # print('original noWay: ', noWay_original)
-    # print('optimal noWay: ', noWay_.value)
-    # print('\n')
-    # print('original areClosed: ', areClosed_original)
-    # print('optimal areClosed: ', areClosed_.value)
-    # print('\n')
-    # print('original speedOrMaxSpeed: ', speedOrMaxSpeed_original)
-    # print('optimal speedOrMaxSpeed: ', speedOrMaxSpeed_.value)
+    
+    if(prob.value == None):
+        return None
+    
     
     print('\nCreating the new Graph')
     
