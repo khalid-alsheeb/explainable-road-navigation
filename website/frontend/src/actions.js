@@ -268,7 +268,7 @@ export const resetData = () => async (dispatch) => {
 
 export const changeVersion = (version) => async (dispatch) => {
     try {
-
+        dispatch(resetData())
         dispatch({ type: CHANGE_VERSION, payload: version });
     } catch (error) {
         console.log(error.message);
