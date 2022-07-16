@@ -1,9 +1,11 @@
 import osmnx as ox
 import networkx as nx
+import numpy as np
 from data_retrieval import fixGraphData
 from graph_helpers import prepareGraph, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG, shortenGraphForISP
 from ISP_using_LP import inverseShortestPath
 from graph_explanations import getGraphExplanation, explanationsPrinter
+from diverse_SPs import diverseShortestPaths
 
 
 # address = '30 Aldwych, London WC2B 4BG'
@@ -17,23 +19,27 @@ G = getOriginalAttributeTypes(G)
 
 G = fixWrongDataG(G)
 updateGraphWeights(G)
-desired_path = [1881001588, 107734]
-sp = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
 
-print(len(desired_path))
-print(desired_path)
-print(sp)
-print(len(sp))
+#testing  dp
+desired_path = [1696030874, 109753, 1617512815, 1707216637, 21392100, 109757, 1707216642, 25472888, 1707216646, 1678452728, 4879371166, 4421008555, 4421008566, 4034060018, 367102039, 4166662878, 26374229, 25378124, 107698, 6139961783, 107697, 282569739]
 
-prepareGraph(G)
-new_graph = inverseShortestPath(G, desired_path)
+s = diverseShortestPaths(G, desired_path[0], desired_path[-1], 5, 10, 0.001)
 
-z = getGraphExplanation(G, new_graph, desired_path)
-explanationsPrinter(z)
+diverseShortestPaths = [list(i) for i in s]
+print(diverseShortestPaths)
+# for i in s:
+#     print(s)
+#     print('\n')
 
+# sp = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
 
+# print(len(desired_path))
+# print(desired_path)
+# print(sp)
+# print(len(sp))
 
-# # These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:
-# #    -   (455705625, 1104473061): has a current speed of 12.0 (heavy traffic). If it had a current speed of 12.858546960654117 (less traffic),
-# #    -   (25470853, 107852): has a current speed of 9.0 (heavy traffic). If it had a current speed of 20.0 (less traffic),
-# #    -   (108034, 108009): has a current speed of 8.0 (heavy traffic). If it had a current speed of 9.711571889677172 (less traffic),
+# prepareGraph(G)
+# new_graph = inverseShortestPath(G, desired_path)
+
+# z = getGraphExplanation(G, new_graph, desired_path)
+# explanationsPrinter(z)
