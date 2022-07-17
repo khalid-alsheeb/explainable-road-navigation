@@ -3,9 +3,14 @@
 # Imports
 import networkx as nx
 import numpy as np
-import cvxpy as cp
 import math
 from graph_helpers import *
+
+# returns the ShortestPaths as lists
+def diverseShortestPathsList(graph, source, target, numberOfPaths, branchingFactor, ballRadius):
+    shortestPaths = diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, ballRadius)
+    shortestPathsList = [list(i) for i in shortestPaths]
+    return shortestPathsList
 
 def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, ballRadius):
     # FIFO Queue  (append & pop(0))
