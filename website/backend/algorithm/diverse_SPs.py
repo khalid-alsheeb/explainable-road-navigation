@@ -4,7 +4,7 @@
 import networkx as nx
 import numpy as np
 import math
-from graph_helpers import *
+from .graph_helpers import *
 
 # returns the ShortestPaths as lists
 def diverseShortestPathsList(graph, source, target, numberOfPaths, branchingFactor, ballRadius):

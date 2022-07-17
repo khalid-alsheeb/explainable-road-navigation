@@ -39,7 +39,7 @@ def get_explanations2():
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
 
 
-@app.route('/2/', methods = ['GET'])
+@app.route('/3/', methods = ['GET'])
 def get_explanations3():
     
     nodes = [int(n) for n in request.args.getlist('nodes')]

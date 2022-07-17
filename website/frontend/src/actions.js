@@ -86,27 +86,28 @@ export const getResultsV2 = () => async (dispatch, getState) => {
 
 export const getResultsV3 = () => async (dispatch, getState) => {
     try {
-        // const state = getState()
-        // const desiredPath = state.desiredPathNodes
+        const state = getState()
+                const nodesp = state.desiredPathNodes
+        const nodes = getCorrectNodes(nodesp)
 
-        // const { data } = await axios.get("/3/", {
-        //     params: {
-        //         desired_path: desiredPath
-        //     },
-        //     paramsSerializer: params => {
-        //         return qs.stringify(params, { arrayFormat: 'repeat' })
-        //     }
-        // })
+        const { data } = await axios.get("/3/", {
+            params: {
+                nodes: nodes
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params, { arrayFormat: 'repeat' })
+            }
+        })
 
-        // const shortestPathNodes = data['shortest_path']
-        // const explanations = data['explanations']
+        const shortestPathNodes = data['shortest_path']
+        const desiredPathNodes = data['desired_path']
+        const explanations = data['explanations']
+
+        const shortestPath = getPathFormat(shortestPathNodes)
+        const desiredPath = getPathFormat(desiredPathNodes)
 
 
-        // const shortestPath = getPathFormat(shortestPathNodes)
-
-
-        // dispatch({ type: GET_RESULTS_V3, payload: [ shortestPath, explanations ] });
-        dispatch({ type: GET_RESULTS_V3 });
+        dispatch({ type: GET_RESULTS_V3, payload: [ desiredPath, shortestPath, explanations ] });
     } catch (error) {
         console.log(error.message);
     }

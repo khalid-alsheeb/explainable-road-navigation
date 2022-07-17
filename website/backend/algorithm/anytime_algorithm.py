@@ -1,14 +1,14 @@
 import scipy as sp
-from diverse_SPs import diverseShortestPathsList
-from ISP_using_LP import inverseShortestPath
-from graph_explanations import getGraphExplanation
+from .diverse_SPs import diverseShortestPathsList
+from .ISP_using_LP import inverseShortestPath
+from .graph_explanations import getGraphExplanation
 
 
 def anytimeAlgorithm(graph, source, waypoint, target, numberOfPaths, branchingFactor=2, ballRadius=0.001):
     
     desiredPaths = calculatingAllDesiredtPaths(graph, source, waypoint, target, numberOfPaths, branchingFactor, ballRadius)
     
-    print('Number of shortest Paths:', len(desiredPaths))
+    print('Number of desired Paths:', len(desiredPaths))
     
     optimalDesiredPath = []
     optimalExplanations = {}
