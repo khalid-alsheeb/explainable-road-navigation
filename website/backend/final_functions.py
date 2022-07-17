@@ -1,8 +1,11 @@
 import osmnx as ox
 import networkx as nx
+
+from .algorithm.diverse_SPs import getShortestPath
 from .algorithm.graph_helpers import addReverseEdges, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG
 from .algorithm.ISP_using_LP import inverseShortestPath
 from .algorithm.graph_explanations import getGraphExplanation, makeExplanationsStrings
+from .algorithm.anytime_algorithm import anytimeAlgorithm
 
 
 def getPathExplanation(desired_path):
@@ -58,3 +61,20 @@ def getDesiredPathFromWaypoint(desired_path):
     
     return dp
 
+
+def getAnytimeAlgorithmData(nodes):
+
+    G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
+    G = getOriginalAttributeTypes(G)
+    G = fixWrongDataG(G)
+    updateGraphWeights(G)
+    
+    source = nodes[0]
+    waypoint = nodes[1]
+    target = nodes[2]
+    numberOfPaths = 1
+    
+    shortest_path = getShortestPath(G, source, target)
+    desired_path, explanattions = anytimeAlgorithm(G, source, waypoint, target, numberOfPaths, branchingFactor=2, ballRadius=0.001)
+    
+    return shortest_path, desired_path, explanattions
