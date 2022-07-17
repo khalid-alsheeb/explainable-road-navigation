@@ -2,10 +2,11 @@ import osmnx as ox
 import networkx as nx
 import numpy as np
 from data_retrieval import fixGraphData
-from graph_helpers import prepareGraph, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG, shortenGraphForISP
+from graph_helpers import addReverseEdges, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG
 from ISP_using_LP import inverseShortestPath
 from graph_explanations import getGraphExplanation, explanationsPrinter
 from diverse_SPs import diverseShortestPathsList
+from anytime_algorithm import anytimeAlgorithm
 
 
 # address = '30 Aldwych, London WC2B 4BG'
@@ -20,13 +21,18 @@ G = getOriginalAttributeTypes(G)
 G = fixWrongDataG(G)
 updateGraphWeights(G)
 
-#testing  dp
-desired_path = [1696030874, 109753, 1617512815, 1707216637, 21392100, 109757, 1707216642, 25472888, 1707216646, 1678452728, 4879371166, 4421008555, 4421008566, 4034060018, 367102039, 4166662878, 26374229, 25378124, 107698, 6139961783, 107697, 282569739]
 
-s = diverseShortestPathsList(G, desired_path[0], desired_path[-1], 5, 10, 0.001)
+#testing  dp
+# desired_path = [1696030874, 109753, 1617512815, 1707216637, 21392100, 109757, 1707216642, 25472888, 1707216646, 1678452728, 4879371166, 4421008555, 4421008566, 4034060018, 367102039, 4166662878, 26374229, 25378124, 107698, 6139961783, 107697, 282569739]
+
+nodes = [109753, 4421008566, 282569739]
+
+
+
+# s = diverseShortestPathsList(G, desired_path[0], desired_path[-1], 5, 10, 0.001)
 
 #diverseShortestPaths = 
-print(s)
+# print(s)
 # for i in s:
 #     print(s)
 #     print('\n')
@@ -38,7 +44,15 @@ print(s)
 # print(sp)
 # print(len(sp))
 
-# prepareGraph(G)
+addReverseEdges(G)
+
+dp, ex = anytimeAlgorithm(G, nodes[0], nodes[1], nodes[2], 1)
+
+print(dp)
+print('\n\n\n\n')
+print(ex)
+
+
 # new_graph = inverseShortestPath(G, desired_path)
 
 # z = getGraphExplanation(G, new_graph, desired_path)

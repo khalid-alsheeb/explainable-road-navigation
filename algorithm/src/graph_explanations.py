@@ -1,6 +1,5 @@
 
 
-
 def getGraphExplanation(oldGraph, newGraph, path):
     explanations = {}
     
@@ -12,38 +11,54 @@ def getGraphExplanation(oldGraph, newGraph, path):
         oldEdge = oldGraph.get_edge_data(source, target)[0]
         newEdge = newGraph.get_edge_data(source, target)[0]
         
-        exp = getEdgeExplanation(oldEdge, newEdge)
-        
-        explanations[source, target] = exp
-        
-        #explanations[source, target] = "Edge ({}, {}) ".format(source, target) + exp
-        
+        if(oldEdge != newEdge):
+    
+            if 'name' in oldEdge:
+                name = oldEdge['name']
+            else:
+                # If name is not in data, just use nodes
+                name = '(' + str(source) + ', ' + str(target) + ')'
+                
+            if type(name) == list:
+                name = "('" + "', '".join(name) + "')"
+            
+            # check for more than 1 edge in the same street need changes, if so, nunmber them.
+            length = len(explanations)
+            count = 1
+            nameX = name
+            while(length == len(explanations)):
+                if (nameX in explanations):
+                    nameX = name +  " " + '(' + str(count) + ')'
+                else:
+                    exp = getEdgeExplanation(oldEdge, newEdge, nameX)
+                    explanations[nameX] = exp
+                count += 1
+            
     return explanations
 
 
-def getEdgeExplanation(oldEdge, newEdge):
+def getEdgeExplanation(oldEdge, newEdge, name):
     
-    exp = ''
+    reason = ''
+    explanation = ''
     
-    if oldEdge != newEdge:
-    
-        if oldEdge['noWay'] != newEdge['noWay']:
-            exp = "is only one way (on the other side). If it was a two way edge,"
-            
-        elif oldEdge['isClosed'] != newEdge['isClosed']:
-            exp ="is closed. If it was open,"
-            
-        elif oldEdge['maxSpeed'] != newEdge['maxSpeed']:
-            exp = "has a maximim speed of {}. If it had a maximum speed of {},".format(oldEdge['maxSpeed'], newEdge['maxSpeed'])
-            
-        elif oldEdge['speed'] != newEdge['speed']:
-            exp = "has a current speed of {} (heavy traffic). If it had a current speed of {} (less traffic),".format(oldEdge['speed'], newEdge['speed'])
+    if oldEdge['noWay'] != newEdge['noWay']:
+        reason = '{} is only a one way street (on the other side).'.format(name)
+        explanation = "{} was a two way street.".format(name)
         
-    else:
-        # Default explanation, no change.
-        exp = 'does not require any changes'
+    elif oldEdge['isClosed'] != newEdge['isClosed']:
+        reason = '{} is closed, rightnow.'.format(name)
+        explanation = "{} was open.".format(name)
         
-    return exp
+    elif oldEdge['maxSpeed'] != newEdge['maxSpeed']:
+        reason = '{} has a maximim speed of {} mph.'.format(name, oldEdge['maxSpeed'])
+        explanation = "{} had a maximum speed of at least {} mph.".format(name, newEdge['maxSpeed'])
+        
+    elif oldEdge['speed'] != newEdge['speed']:
+        reason = '{} has a current speed of {} mph.'.format(name, oldEdge['speed'])
+        explanation = "{} had a current speed of at least {} mph.".format(name, newEdge['speed'])
+        
+    return (reason, explanation)
 
 
 def explanationsPrinter(explanations):
@@ -51,8 +66,20 @@ def explanationsPrinter(explanations):
     s = ''
     for edge, exp in explanations.items():
         if len(explanations[edge]) != 0:
-            s +=  "   -   " + str(edge) + ': ' + explanations[edge] + '\n'
+            s +=  "   -   " + str(edge) + ': ' + exp + '\n'
             
     if len(s) != 0:
         print("These are the explanations why the desired path is not the optimal path, and how it would be an optimal path:")
         print(s)
+        
+        
+def makeExplanationsStrings(explanations):
+    
+    exps = []
+    reasons = []
+    for key, value in explanations.items():
+        if (value[0] != '' or value[1] != ''):
+            reasons.append(value[0])
+            exps.append(value[1])
+        
+    return [reasons, exps]

@@ -212,23 +212,12 @@ def inverseShortestPath(graph, desiredPath):
     prob.solve(solver=cp.GUROBI) # using gurobi
     print("\nThe optimal value is", prob.value)
     
-    #Helper print statements
-    # print('original speedInv: ', inverseSpeeds_original)
-    # print('optimal speedInv: ', inverseSpeeds_.value)
-    # print('\n')
-    # print('original speedMaxInv: ', inverseMaxSpeeds_original)
-    # print('optimal speedMaxInv: ', inverseMaxSpeeds_.value)
-    # print('\n')
-    # print('original noWay: ', noWay_original)
-    # print('optimal noWay: ', noWay_.value)
-    # print('\n')
-    # print('original areClosed: ', areClosed_original)
-    # print('optimal areClosed: ', areClosed_.value)
-    # print('\n')
-    # print('original speedOrMaxSpeed: ', speedOrMaxSpeed_original)
-    # print('optimal speedOrMaxSpeed: ', speedOrMaxSpeed_.value)
     
-    print('Creating the new Graph')
+    if(prob.value == None):
+        return None
+    
+    
+    print('\nCreating the new Graph')
     
     # Creating the new Graph
     newGraph = nx.MultiDiGraph()
@@ -237,50 +226,54 @@ def inverseShortestPath(graph, desiredPath):
         if speedOrMaxSpeed_.value[index] == 0:
             s = getInverse(inverseSpeeds_original[index])
         else:
-            s = getInverse(inverseSpeeds_.value[index])
+            # rounding error with floats
+            if (inverseSpeeds_original[index] < inverseSpeeds_.value[index]):
+                s = getInverse(inverseSpeeds_original[index])
+            else:
+                s = getInverse(inverseSpeeds_.value[index])
             
         if speedOrMaxSpeed_.value[index] == 1:
             ms = getInverse(inverseMaxSpeeds_original[index])
         else:
             ms = getInverse(inverseMaxSpeeds_.value[index])
+            
+        addEdgeToNewGraph(graph, newGraph, i, j)
         
-        newGraph.add_edge(
-                            i, j,
-                            weight = np.nan, 
-                            noWay = int(noWay_.value[index]), 
-                            isClosed = int(areClosed_.value[index]), 
-                            length = graph[i][j][0]['length'], 
-                            speed = s,
-                            maxSpeed = int(round(ms)),
-                            speedOrMaxSpeed = int((speedOrMaxSpeed_.value[index]))
-                        )
+        newGraph[i][j][0]['noWay'] = int(noWay_.value[index])
+        newGraph[i][j][0]['isClosed'] = int(areClosed_.value[index])
+        newGraph[i][j][0]['speed'] = s
+        newGraph[i][j][0]['maxSpeed'] = int(round(ms))
+        newGraph[i][j][0]['speedOrMaxSpeed'] = int((speedOrMaxSpeed_.value[index]))
+        
         
     updateGraphWeights(newGraph)
+    
+    
+    # Final checks
+    try:
+        sp = nx.shortest_path(newGraph, source=desiredPath[0], target=desiredPath[-1], weight="weight")
         
-    
-    
-    # Final checks    
-    sp = nx.shortest_path(newGraph, source=desiredPath[0], target=desiredPath[-1], weight="weight")
-    
-    desiredPathWeight = getPathWeight(desiredPath, newGraph)
-    optimalPathWeight = getPathWeight(sp, newGraph)
-    print('\n')
-    
-    if (desiredPathWeight - optimalPathWeight) <= epsilon:
-        print('The desired Path is equal to the Shortest Path')
-    elif desiredPathWeight < optimalPathWeight:
-        print('The desired Path is better than the Shortest Path')
-    elif desiredPathWeight > optimalPathWeight:
-        print('The desired Path is worse than the Shortest Path')
-    
-    
-    print('Optimal Path Weight = ', optimalPathWeight)
-    print('The path is: ', sp)
-    print('numbers after decimal point: ', len(str(optimalPathWeight).replace('.','')) - 1)
-    print('\n')
-    print('Desired Path Weight = ', desiredPathWeight)
-    print('The path is: ', desiredPath)
-    print('numbers after decimal point: ', len(str(desiredPathWeight).replace('.','')) - 1)
+        desiredPathWeight = getPathWeight(desiredPath, newGraph)
+        optimalPathWeight = getPathWeight(sp, newGraph)
+        print('\n')
+        
+        if (desiredPathWeight - optimalPathWeight) <= epsilon:
+            print('The desired Path is equal to the Shortest Path')
+        elif desiredPathWeight < optimalPathWeight:
+            print('The desired Path is better than the Shortest Path')
+        elif desiredPathWeight > optimalPathWeight:
+            print('The desired Path is worse than the Shortest Path')
+        
+        
+        print('Optimal Path Weight = ', optimalPathWeight)
+        print('The path is: ', sp)
+        print('numbers after decimal point: ', len(str(optimalPathWeight).replace('.','')) - 1)
+        print('\n')
+        print('Desired Path Weight = ', desiredPathWeight)
+        print('The path is: ', desiredPath)
+        print('numbers after decimal point: ', len(str(desiredPathWeight).replace('.','')) - 1)
+    except:
+        pass
         
     return newGraph
 
