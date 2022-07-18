@@ -106,7 +106,6 @@ export const getResultsV3 = () => async (dispatch, getState) => {
         const shortestPath = getPathFormat(shortestPathNodes)
         const desiredPath = getPathFormat(desiredPathNodes)
 
-
         dispatch({ type: GET_RESULTS_V3, payload: [ desiredPath, shortestPath, explanations ] });
     } catch (error) {
         console.log(error.message);

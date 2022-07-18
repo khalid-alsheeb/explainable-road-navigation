@@ -1,4 +1,3 @@
-import scipy as sp
 from .diverse_SPs import diverseShortestPathsList
 from .ISP_using_LP import inverseShortestPath
 from .graph_explanations import getGraphExplanation
@@ -36,7 +35,6 @@ def calculatingAllDesiredtPaths(graph, source, waypoint, target, numberOfPaths, 
     waypointToTargetSPs = diverseShortestPathsList(graph, waypoint, target, numberOfPaths, branchingFactor, ballRadius)
 
     desiredPaths = []
-    
     for s_w_dp in sourceToWaypointSPs:
         for w_t_dp in waypointToTargetSPs:
             desiredPaths.append( s_w_dp + w_t_dp[1:] )

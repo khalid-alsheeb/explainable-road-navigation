@@ -27,9 +27,11 @@ updateGraphWeights(G)
 
 nodes = [109753, 4421008566, 282569739]
 
+addReverseEdges(G)
 
+s = diverseShortestPathsList(G, nodes[0], nodes[1], 25, 2, 0.0001)
 
-# s = diverseShortestPathsList(G, desired_path[0], desired_path[-1], 5, 10, 0.001)
+print(len(s))
 
 #diverseShortestPaths = 
 # print(s)
@@ -44,16 +46,8 @@ nodes = [109753, 4421008566, 282569739]
 # print(sp)
 # print(len(sp))
 
-addReverseEdges(G)
+# dp, ex = anytimeAlgorithm(G, nodes[0], nodes[1], nodes[2], 1)
 
-dp, ex = anytimeAlgorithm(G, nodes[0], nodes[1], nodes[2], 1)
-
-print(dp)
-print('\n\n\n\n')
-print(ex)
-
-
-# new_graph = inverseShortestPath(G, desired_path)
 
 # z = getGraphExplanation(G, new_graph, desired_path)
 # explanationsPrinter(z)

@@ -24,6 +24,8 @@ def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, 
         shortestPath_graph_pairs.append((shortestPath, graph))
         shortestPaths.add(tuple(shortestPath))
         
+    print(len(graph.edges()))
+        
     while (len(shortestPath_graph_pairs) != 0):
         pair = shortestPath_graph_pairs.pop(0)
         shortestPath = pair[0]
@@ -40,6 +42,8 @@ def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, 
             
             newGraph = ox.graph_from_gdfs(nodes, newEdges)
             
+            print(len(newGraph.edges()))
+            
             newShortestPath = getShortestPath(newGraph, source, target)
             
             if (len(newShortestPath) != 0):
@@ -49,7 +53,7 @@ def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, 
             if (len(newShortestPath) != 0): #NO CRITERIA, FOR NOW. (ACCEPT ALL)
                 # change sp from list to tuple, to be hashed
                 shortestPaths.add(tuple(newShortestPath))
-            
+            print(len(shortestPaths))
             if (len(shortestPaths) >= numberOfPaths):
                 return shortestPaths
             

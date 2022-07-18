@@ -6,7 +6,7 @@ import cvxpy as cp
 from .graph_helpers import *
 
 def inverseShortestPath(graph, desiredPath):
-    print('Formalising the problem')
+    print('\nFormalising the problem')
     # Constants
     inf = 1e6
     epsilon = 1e-6
@@ -210,14 +210,14 @@ def inverseShortestPath(graph, desiredPath):
     # Solve the problem
     #prob.solve(solver=cp.GUROBI, verbose=True) #Detailed
     prob.solve(solver=cp.GUROBI) # using gurobi
-    print("\nThe optimal value is", prob.value)
+    print("The optimal value is", prob.value)
     
     
     if(prob.value == None):
         return None
     
     
-    print('\nCreating the new Graph')
+    print('Creating the new Graph')
     
     # Creating the new Graph
     newGraph = nx.MultiDiGraph()
