@@ -1,42 +1,89 @@
-from .diverse_SPs import diverseShortestPathsList
 from .ISP_using_LP import inverseShortestPath
 from .graph_explanations import getGraphExplanation
+from .diverse_SPs import edgeSampling, getNewEdges
+from .graph_helpers import getInverse
+import osmnx as ox
+import networkx as nx
+import time
 
-
-def anytimeAlgorithm(graph, source, waypoint, target, numberOfPaths, branchingFactor=2, ballRadius=0.001):
+# It uses diverse shortest path algorithm to generate the possible SPs.
+def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branchingFactor, ballRadius):
+    # FIFO Queue  (append & pop(0))
+    shortestPath_graph_pairs = []
+    # A set of k-diverse SPs
+    shortestPaths = set()
+    # Stop the function after (around) x minutes from now
+    timeout = time.time() + 60 * minutes
+    # teh graph used to get the shortest paths (only speed and length are used to calculate the weight)
+    pathsGraph = getTimeOnlyWeightGraph(originalGraph)
     
-    desiredPaths = calculatingAllDesiredtPaths(graph, source, waypoint, target, numberOfPaths, branchingFactor, ballRadius)
+    # optimal values to be returned
+    optimalShortestPath = []
+    optimalGraph = None
+    optimalValue = float('inf')
     
-    print('Number of desired Paths:', len(desiredPaths))
+    count = 0
     
-    optimalDesiredPath = []
-    optimalExplanations = {}
-    optimalExplanationsLength = float('inf')
+    shortestPath = getShortestPathWaypoint(pathsGraph, source, waypoint, target)
+        
+    if (len(shortestPath) != 0 ):
+        shortestPath_graph_pairs.append((shortestPath, pathsGraph))
+        shortestPaths.add(tuple(shortestPath))
+        
+        #ISP HERE
+        possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath)
+        count += 1
+        if ((value != None) and (value < optimalValue)):
+            optimalValue = value
+            optimalGraph = possibleOptimalGraph
+            optimalShortestPath = shortestPath
     
-    
-    for dp in desiredPaths:
-        newGraph = inverseShortestPath(graph, dp)
-        if(newGraph != None):
-            explanations = getGraphExplanation(graph, newGraph, dp)
+    while ((len(shortestPath_graph_pairs) != 0) and (time.time() < timeout)):
+        pair = shortestPath_graph_pairs.pop(0)
+        shortestPath = pair[0]
+        graph = pair[1]
+        
+        for i in range(branchingFactor):
+            sampledEdgeNodes = edgeSampling(graph, shortestPath)
+            nodes, edges = ox.graph_to_gdfs(graph)
+            sampledEdge = edges.loc[(sampledEdgeNodes[0], sampledEdgeNodes[1], 0)]
             
-            expLength = len(explanations)
+            newEdges = getNewEdges(edges, sampledEdge, ballRadius)
             
-            if (expLength < optimalExplanationsLength):
-                optimalDesiredPath = dp
-                optimalExplanations = explanations
-                optimalExplanationsLength = expLength
+            newGraph = ox.graph_from_gdfs(nodes, newEdges)
+            newShortestPath = getShortestPathWaypoint(newGraph, source, waypoint, target)
             
+            if (len(newShortestPath) != 0):
+                shortestPath_graph_pairs.append((newShortestPath, newGraph))
+                shortestPaths.add(tuple(newShortestPath)) #NO CRITERIA, FOR NOW. (ACCEPT ALL)
+                
+                #ISP HERE
+                possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath)
+                count += 1
+                if ((value != None) and (value < optimalValue)):
+                    optimalValue = value
+                    optimalGraph = possibleOptimalGraph
+                    optimalShortestPath = newShortestPath
+            
+    optimalExplanation = getGraphExplanation(originalGraph, optimalGraph, optimalShortestPath)
     
-    return optimalDesiredPath, optimalExplanations
-
-
-def calculatingAllDesiredtPaths(graph, source, waypoint, target, numberOfPaths, branchingFactor, ballRadius):
-    sourceToWaypointSPs = diverseShortestPathsList(graph, source, waypoint, numberOfPaths, branchingFactor, ballRadius)
-    waypointToTargetSPs = diverseShortestPathsList(graph, waypoint, target, numberOfPaths, branchingFactor, ballRadius)
-
-    desiredPaths = []
-    for s_w_dp in sourceToWaypointSPs:
-        for w_t_dp in waypointToTargetSPs:
-            desiredPaths.append( s_w_dp + w_t_dp[1:] )
+    print('times in 5 minues = ', count)
             
-    return desiredPaths
+    return optimalShortestPath, optimalExplanation
+
+
+def getShortestPathWaypoint(graph, source, waypoint, target):
+    try:
+        shortestPath = nx.shortest_path(graph, source=source, target=waypoint, weight="weight") + nx.shortest_path(graph, source=waypoint, target=target, weight="weight")[1:]
+    except:
+        shortestPath = []
+        
+    return shortestPath
+
+
+def getTimeOnlyWeightGraph(G):
+    graph = G.copy()
+    for (i, j, data) in graph.edges(data=True):
+        graph[i][j][0]['weight'] = getInverse(data['speed']) * data['length']
+        
+    return graph

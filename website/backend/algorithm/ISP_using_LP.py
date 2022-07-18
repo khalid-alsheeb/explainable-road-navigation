@@ -215,7 +215,7 @@ def inverseShortestPath(graph, desiredPath):
     
     
     if(prob.value == None):
-        return None
+        return None, None
     
     
     print('Creating the new Graph')
@@ -276,7 +276,7 @@ def inverseShortestPath(graph, desiredPath):
     except:
         pass
         
-    return newGraph
+    return newGraph, prob.value
 
 
 
