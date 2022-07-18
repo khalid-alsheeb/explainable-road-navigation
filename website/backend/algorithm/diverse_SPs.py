@@ -6,19 +6,82 @@ import numpy as np
 import math
 from .graph_helpers import *
 
+# # returns the ShortestPaths as lists
+# def diverseShortestPathsList(graph, source, target, numberOfPaths, branchingFactor, ballRadius):
+#     shortestPaths = diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, ballRadius)
+#     shortestPathsList = [list(i) for i in shortestPaths]
+#     return shortestPathsList
+
+# def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, ballRadius):
+#     # FIFO Queue  (append & pop(0))
+#     shortestPath_graph_pairs = []
+#     # A set of k-diverse SPs
+#     shortestPaths = set()
+    
+#     shortestPath = getShortestPath(graph, source, target)
+        
+#     if (len(shortestPath) != 0 ):
+#         shortestPath_graph_pairs.append((shortestPath, graph))
+#         shortestPaths.add(tuple(shortestPath))
+        
+#     while (len(shortestPath_graph_pairs) != 0):
+#         pair = shortestPath_graph_pairs.pop(0)
+#         shortestPath = pair[0]
+#         graph = pair[1]
+        
+#         for i in range(branchingFactor):
+#             sampledEdgeNodes = edgeSampling(graph, shortestPath)
+            
+#             nodes, edges = ox.graph_to_gdfs(graph)
+            
+#             sampledEdge = edges.loc[(sampledEdgeNodes[0], sampledEdgeNodes[1], 0)]
+            
+#             newEdges = getNewEdges(edges, sampledEdge, ballRadius)
+            
+#             newGraph = ox.graph_from_gdfs(nodes, newEdges)
+            
+#             newShortestPath = getShortestPath(newGraph, source, target)
+            
+#             if (len(newShortestPath) != 0):
+#                 shortestPath_graph_pairs.append((newShortestPath, newGraph))
+            
+#             #TODO
+#             if (len(newShortestPath) != 0): #NO CRITERIA, FOR NOW. (ACCEPT ALL)
+#                 # change sp from list to tuple, to be hashed
+#                 shortestPaths.add(tuple(newShortestPath))
+            
+#             if (len(shortestPaths) >= numberOfPaths):
+#                 return shortestPaths
+            
+#     return shortestPaths
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # returns the ShortestPaths as lists
-def diverseShortestPathsList(graph, source, target, numberOfPaths, branchingFactor, ballRadius):
-    shortestPaths = diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, ballRadius)
+def diverseShortestPathsList(graph, source, waypoint, target, numberOfPaths, branchingFactor, ballRadius):
+    shortestPaths = diverseShortestPaths(graph, source, waypoint, target, numberOfPaths, branchingFactor, ballRadius)
     shortestPathsList = [list(i) for i in shortestPaths]
     return shortestPathsList
 
-def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, ballRadius):
+def diverseShortestPaths(graph, source, waypoint, target, numberOfPaths, branchingFactor, ballRadius):
     # FIFO Queue  (append & pop(0))
     shortestPath_graph_pairs = []
     # A set of k-diverse SPs
     shortestPaths = set()
     
-    shortestPath = getShortestPath(graph, source, target)
+    shortestPath = getShortestPath(graph, source, waypoint, target)
         
     if (len(shortestPath) != 0 ):
         shortestPath_graph_pairs.append((shortestPath, graph))
@@ -31,16 +94,12 @@ def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, 
         
         for i in range(branchingFactor):
             sampledEdgeNodes = edgeSampling(graph, shortestPath)
-            
             nodes, edges = ox.graph_to_gdfs(graph)
-            
             sampledEdge = edges.loc[(sampledEdgeNodes[0], sampledEdgeNodes[1], 0)]
-            
             newEdges = getNewEdges(edges, sampledEdge, ballRadius)
-            
             newGraph = ox.graph_from_gdfs(nodes, newEdges)
             
-            newShortestPath = getShortestPath(newGraph, source, target)
+            newShortestPath = getShortestPath(newGraph, source, waypoint, target)
             
             if (len(newShortestPath) != 0):
                 shortestPath_graph_pairs.append((newShortestPath, newGraph))
@@ -54,6 +113,31 @@ def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, 
                 return shortestPaths
             
     return shortestPaths
+
+
+
+
+def getShortestPath(graph, source, waypoint, target):
+    try:
+        shortestPath = nx.shortest_path(graph, source=source, target=waypoint, weight="weight") + nx.shortest_path(graph, source=waypoint, target=target, weight="weight")[1:]
+    except:
+        shortestPath = []
+        
+    return shortestPath
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def edgeSampling(graph, path):
@@ -108,10 +192,10 @@ def getDistance(point1, point2):
     return math.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2)
 
 
-def getShortestPath(graph, source, target):
-    try:
-        shortestPath = nx.shortest_path(graph, source=source, target=target, weight="weight")
-    except:
-        shortestPath = []
+# def getShortestPath(graph, source, target):
+#     try:
+#         shortestPath = nx.shortest_path(graph, source=source, target=target, weight="weight")
+#     except:
+#         shortestPath = []
         
-    return shortestPath
+#     return shortestPath

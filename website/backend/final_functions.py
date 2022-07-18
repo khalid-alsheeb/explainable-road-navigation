@@ -75,7 +75,7 @@ def getAnytimeAlgorithmData(nodes):
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
-    numberOfPaths = 2
+    numberOfPaths = 4
     branchingFactor = 2
     ballRadius = 0.0001
     

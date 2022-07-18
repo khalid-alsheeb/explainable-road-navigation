@@ -189,8 +189,9 @@ def inverseShortestPath(graph, desiredPath):
             # Keep using speed, and not maxSpeed
             constraints.append( speedOrMaxSpeed_[j] == 1)
     
-    penalty1 = 5
-    penalty2 = 100
+    # TODO: CHANGE PENALTIES
+    penalty1 = 1#5
+    penalty2 = 1#100
     # Cost function, split up
     cost1 = cp.norm1(cp.multiply(inverseSpeeds_ - inverseSpeeds_original, penalty1))
     cost2 = cp.norm1(cp.multiply(inverseMaxSpeeds_ - inverseMaxSpeeds_original, penalty2))

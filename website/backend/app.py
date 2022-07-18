@@ -52,6 +52,7 @@ def get_explanations3():
     
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
 
-
+# [107790, 455705622, 107843]
+# bug nodes
 if __name__ == "__main__":
     app.run(debug=True)
