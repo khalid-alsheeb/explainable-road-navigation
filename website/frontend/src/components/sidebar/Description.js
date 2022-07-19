@@ -7,7 +7,7 @@ import { Col, Row } from "react-bootstrap";
 
 const Description = () => {
     return (
-        <Container style={{ marginBottom: '10%'}}>
+        <Container >
             <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                 Choose which algorithm/input-mechanism you want to use. You can show the border of the data we use, and reset the data that you have put. When you are ready press get explanations.
             </Typography>
