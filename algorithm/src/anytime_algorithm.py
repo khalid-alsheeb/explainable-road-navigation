@@ -16,7 +16,7 @@ def anytimeAlgorithm(graph, source, waypoint, target, numberOfPaths, branchingFa
     
     
     for dp in desiredPaths:
-        newGraph = inverseShortestPath(graph, dp)
+        newGraph, optimal_value = inverseShortestPath(graph, dp)
         if(newGraph != None):
             explanations = getGraphExplanation(graph, newGraph, dp)
             

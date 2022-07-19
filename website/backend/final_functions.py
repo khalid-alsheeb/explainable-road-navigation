@@ -35,7 +35,7 @@ def getPathExplanation(desired_path):
         return shortest_path, explanations
         
     addReverseEdges(G)
-    new_graph = inverseShortestPath(G, desired_path)
+    new_graph, optimal_value = inverseShortestPath(G, desired_path)
     
     if(new_graph == None):
         explanations = ['Infeasible']
