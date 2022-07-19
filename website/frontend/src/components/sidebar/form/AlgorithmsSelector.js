@@ -12,9 +12,9 @@ const AlgorithmsSelector= () => {
     const animatedComponents = makeAnimated();
 
     const algorithms = [
-        { value: 1, label: 'Version 1' },
-        { value: 2, label: 'Version 2' },
-        { value: 3, label: 'Version 3' } 
+        { value: 1, label: 'Specific path' },
+        { value: 2, label: 'Waypoint' },
+        { value: 3, label: 'Anytime Algorithm' } 
     ];
 
     const customStyles = {
