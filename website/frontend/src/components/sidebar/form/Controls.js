@@ -1,7 +1,7 @@
 import { Button, Typography } from "@material-ui/core";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { changeBorder, resetData } from "../../actions";
+import { changeBorder, resetData } from "../../../actions";
 
 
 const Controls = () => {

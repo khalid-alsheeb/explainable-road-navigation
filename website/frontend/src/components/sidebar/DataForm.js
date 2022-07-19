@@ -1,10 +1,10 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
-import { getExplanations } from '../actions';
+import { getExplanations } from '../../actions';
 import { useDispatch } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
-import BetterLine from './BetterLine';
-import Algorithms from './algorithms/Algorithms';
+import BetterLine from '../others/BetterLine';
+import Algorithms from './form/Algorithms';
 
 const DataForm = () => {
 
@@ -27,47 +27,6 @@ const DataForm = () => {
 }
 
 export default DataForm;
-
-
-
-    // const today = new Date();
-    // const today_date = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
-
-    // const [Params, setParams] = useState( {stock: '^GSPC', date: today_date, period: '1y', risk: 2, train: false,epochs: 20, batch: 4 } );
-
-    // const handlePeriod = (e, newPeriod) => {
-    //     if (newPeriod !== null) {
-    //         setParams( { ...Params, period: newPeriod } )
-    //     }
-    // };
-
-    // const handleSwitch = (val) => {
-    //     setParams( { ...Params, train: val } )
-    // }
-
-
-// const styles = {
-//     white: {
-//         color:'white',
-//         backgroundColor: '#404040'
-//     },
-//     white2: {
-//         color:'white',
-//         backgroundColor: '#404040',
-//         marginTop: '5px'
-//     }
-// }
-
-// const classes = useStyles();
-
-// const ToggleButton = styled(MuiToggleButton)({
-//     "&.Mui-selected, &.Mui-selected:hover": {
-//       color: "rgb(255, 145, 0)",
-//     },
-//     color: 'white'
-// });
-
-
 
 
 // const useStyles = makeStyles({

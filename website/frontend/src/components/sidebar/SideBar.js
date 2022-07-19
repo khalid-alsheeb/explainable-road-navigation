@@ -1,12 +1,12 @@
-import '../App.css';
+import '../../App.css';
 import Container from 'react-bootstrap/Container';
 import React from 'react';
 import DataForm from './DataForm';
 import SideBarHeader from './SideBarHeader';
-import BetterLine from './BetterLine';
+import BetterLine from '../others/BetterLine';
 import Explanations from './Explanations';
 import { useSelector } from 'react-redux';
-import Controls from './algorithms/Controls';
+import Controls from './form/Controls';
 
 const SideBar = () => {
 

@@ -67,7 +67,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
             
     optimalExplanation = getGraphExplanation(originalGraph, optimalGraph, optimalShortestPath)
     
-    print('times in 5 minues = ', count)
+    print('times in {} minues = {}'.format(minutes, count))
             
     return optimalShortestPath, optimalExplanation
 

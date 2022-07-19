@@ -1,6 +1,6 @@
 import { Button, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { flipDP, calculateSP } from '../../actions';
+import { flipDP, calculateSP } from '../../../actions';
 
 
 const AlgorithmsControls = () => {
@@ -19,12 +19,6 @@ const AlgorithmsControls = () => {
                             </Typography>
                         </Button>
                     </>
-                // : version === 2 ?
-                //     <>
-                //     </>
-                // : version === 3 ?
-                //     <>
-                //     </>
                 :
                     <>
                         <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)', width: '100%'}} onClick={() => dispatch(calculateSP())} disabled={true}>

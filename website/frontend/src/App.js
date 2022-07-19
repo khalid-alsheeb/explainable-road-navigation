@@ -1,13 +1,10 @@
 import './App.css';
 import React from "react";
-import SideBar from './components/SideBar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
-import DataHolder from './components/MapHolder';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import MapHolder from './components/MapHolder';
+import MapHolder from './components/map/MapHolder';
+import SideBar from './components/sidebar/SideBar';
 
 
 const styles = {

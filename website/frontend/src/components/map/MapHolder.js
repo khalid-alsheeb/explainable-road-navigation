@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import Map from "./map/Map";
+import Map from "./Map";
 import Row from 'react-bootstrap/esm/Row';
 import { Typography } from "@material-ui/core";
 

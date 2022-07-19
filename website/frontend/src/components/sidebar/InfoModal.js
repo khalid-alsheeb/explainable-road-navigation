@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import { Tooltip } from "@material-ui/core";
 import Box from '@mui/material/Box';
 import Markdown from 'markdown-to-jsx';
-import INFORMATION from '../content/information.md';
+import INFORMATION from '../../content/information.md';
 
 
 const InfoModal = () => {

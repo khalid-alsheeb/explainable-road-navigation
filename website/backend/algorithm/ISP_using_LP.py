@@ -5,7 +5,18 @@ import cvxpy as cp
 
 from .graph_helpers import *
 
-def inverseShortestPath(graph, desiredPath):
+def inverseShortestPathSwitch(graph, desiredPath, ispVersions):
+    graphs = []
+    values = []
+    for version in ispVersions:
+        optimalGraph, optimalValue = inverseShortestPath(graph, desiredPath, version)
+        graphs.append(optimalGraph)
+        values.append(optimalValue)
+
+    return graphs
+    
+
+def inverseShortestPath(graph, desiredPath, ispVersion=['All']):
     print('\nFormalising the problem')
     # Constants
     inf = 1e6

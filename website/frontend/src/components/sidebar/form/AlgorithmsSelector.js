@@ -2,7 +2,7 @@ import Select from 'react-select';
 import { Form } from 'react-bootstrap';
 import makeAnimated from 'react-select/animated';
 import { useDispatch } from 'react-redux';
-import { changeVersion } from '../../actions';
+import { changeVersion } from '../../../actions';
 import AlgorithmDescription from './AlgorithmDescription';
 
 const AlgorithmsSelector= () => {

@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToDesiredPath, removeFromDesiredPath, addNodeToDesiredPath,  removeNodeFromDesiredPath } from '../../actions';
-import PopupAlert from '../PopupAlert';
+import PopupAlert from '../others/PopupAlert';
 
 const Edge = ({ edge }) => {
 

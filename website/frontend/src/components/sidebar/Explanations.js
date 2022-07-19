@@ -2,7 +2,7 @@ import React from "react";
 import { Typography} from "@material-ui/core";
 import Container from 'react-bootstrap/Container';
 import { useSelector } from "react-redux";
-import BetterLine from "./BetterLine";
+import BetterLine from "../others/BetterLine";
 
 const Explanations = () => {
 
