@@ -259,7 +259,6 @@ export const changeBorder = () => async (dispatch, getState) => {
 
 export const resetData = () => async (dispatch) => {
     try {
-
         dispatch({ type: RESET_DATA });
     } catch (error) {
         console.log(error.message);
@@ -280,7 +279,7 @@ export const changeVersion = (version) => async (dispatch) => {
 export const calculateSP = () => async (dispatch) => {
     try {
 
-        console.log('aslkdslakdhaj');
+        console.log('SP-Done');
     } catch (error) {
         console.log(error.message);
     }

@@ -46,7 +46,6 @@ const Reducer = (state = [], action) => {
                 ...state,
                 edges: [],
                 desiredPath: [],
-                desiredPathNodes: [],
                 shortestPath: [],
                 explanations: []
             }
