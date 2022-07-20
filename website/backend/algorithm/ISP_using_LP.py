@@ -5,23 +5,23 @@ import cvxpy as cp
 
 from .graph_helpers import *
 
-def inverseShortestPathSwitch(graph, desiredPath, ispVersions):
+def inverseShortestPathSwitch(graph, desiredPath, variablesToUse):
     graphs = []
     values = []
-    for version in ispVersions:
-        optimalGraph, optimalValue = inverseShortestPath(graph, desiredPath, version)
+    for variable in variablesToUse:
+        optimalGraph, optimalValue = inverseShortestPath(graph, desiredPath, variable)
         graphs.append(optimalGraph)
         values.append(optimalValue)
 
     return graphs
     
 
-def inverseShortestPath(graph, desiredPath, ispVersion=['All']):
+def inverseShortestPath(graph, desiredPath, variablesToUse):
     print('\nFormalising the problem')
     # Constants
     inf = 1e6
-    epsilon = 1e-6
     possibleMaxSpeeds = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    epsilon = getInverse(possibleMaxSpeeds[len(possibleMaxSpeeds) - 1])
     inversePossibleMaxSpeeds = [getInverse(s) for s in possibleMaxSpeeds] + [0]
     inversePossibleMaxSpeeds = np.asarray(inversePossibleMaxSpeeds)
     
@@ -140,7 +140,7 @@ def inverseShortestPath(graph, desiredPath, ispVersion=['All']):
     # Constraints
     constraints = []
     
-    #(2e)
+    
     for j in range(len(edges)):
         if xzero[j] == 0:
             constraints.append( lambda_[j] >= 0 )
@@ -156,62 +156,89 @@ def inverseShortestPath(graph, desiredPath, ispVersion=['All']):
         # Hot 1 Encoding, For all edges in G
         constraints.append( inverseMaxSpeeds_[j] == inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_[j] )
         
+        d_j = inverseSpeeds_[j] * lengths[j] + inverseMaxSpeeds_[j] * lengths[j] + inf * noWay_[j] + inf * areClosed_[j]
+        if (xzero[j] == 1): #for all j in desired path
         
-        if xzero[j] == 1: #for all j in desired path
-            d_j = inverseSpeeds_[j] * lengths[j] + inverseMaxSpeeds_[j] * lengths[j] + inf * noWay_[j] + inf * areClosed_[j]
-        
-            # sum_i a_ij * pi_i = d_j,               (2b)
+            # sum_i a_ij * pi_i = d_j,
             constraints.append( cp.sum(cp.multiply(A[:,j], pi_)) == d_j )
             
-            # inverseSpeed is at least the max speed; ie speed is at most max speed.
-            #constraints.append( inverseSpeeds_[j] >= inverseMaxSpeeds_original[j] )
-            
-            # if speed/maxSpeed >= 3/4 choose the maxSpeed to change, else the speed.
-            if inverseMaxSpeeds_original[j] / inverseSpeeds_original[j] >= 4/3:#3/4:
-                # Change maxSpeed
+            # use both variables
+            if (('speed' in variablesToUse) and ('maxSpeed' in variablesToUse)):
+                # if speed/maxSpeed >= 3/4 choose the maxSpeed to change, else the speed.
+                if (inverseMaxSpeeds_original[j] / inverseSpeeds_original[j] >= 4/3):
+                    # Change maxSpeed
+                    constraints.append( speedOrMaxSpeed_[j] == 0 )
+                    constraints.append( inverseMaxSpeeds_[j] >= epsilon )
+                else:
+                    # Change speed
+                    constraints.append( speedOrMaxSpeed_[j] == 1 )
+            # use maxSpeed only
+            elif ('maxSpeed' in variablesToUse):
                 constraints.append( speedOrMaxSpeed_[j] == 0 )
                 constraints.append( inverseMaxSpeeds_[j] >= epsilon )
+            # use speed, and default version
             else:
-                # Change speed
                 constraints.append( speedOrMaxSpeed_[j] == 1 )
                 
-                
-            # Lower bound and Upper bounds are 0, if we use the other metric. For speed and max Speed.
-            constraints.append( (1 - speedOrMaxSpeed_[j]) * min(inversePossibleMaxSpeeds) <= inverseMaxSpeeds_[j] )
-            constraints.append( (1 - speedOrMaxSpeed_[j]) * max(inversePossibleMaxSpeeds) >= inverseMaxSpeeds_[j] )
-            
-            constraints.append( speedOrMaxSpeed_[j] * inverseMaxSpeeds_original[j] <= inverseSpeeds_[j] )
-            constraints.append( speedOrMaxSpeed_[j] * inverseSpeeds_original[j] >= inverseSpeeds_[j] )
             
         else: # for all j not in desired path
-            d_j = inverseSpeeds_[j] * lengths[j] + inf * noWay_[j] + inf * areClosed_[j]
             
-            # sum_i a_ij * pi_i + lambda_j = d_j,    (2c)
+            # sum_i a_ij * pi_i + lambda_j = d_j,
             constraints.append( cp.sum(cp.multiply(A[:,j], pi_)) + lambda_[j] == d_j )
             
             # Do not change datta
             constraints.append( noWay_[j] == noWay_original[j] )
             constraints.append( areClosed_[j] == areClosed_original[j] )
-            constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
-            constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
-            constraints.append( maxSpeeds_H1E_[j] == maxSpeeds_H1E_original[j] )
-            constraints.append( speedOrMaxSpeed_[j] == speedOrMaxSpeed_original[j] )
             
-            # Keep using speed, and not maxSpeed
-            constraints.append( speedOrMaxSpeed_[j] == 1)
+            # Use maxSpeed
+            if (('speed' not in variablesToUse) and ('maxSpeed' in variablesToUse)):
+                constraints.append( speedOrMaxSpeed_[j] == 0 )
+                constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
+            # Use speed
+            else:
+                constraints.append( speedOrMaxSpeed_[j] == 1)
+                constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
+                
+                
+                
+        # Lower bound and Upper bounds are 0, if we use the other metric. For speed and max Speed.
+        constraints.append( (1 - speedOrMaxSpeed_[j]) * min(inversePossibleMaxSpeeds) <= inverseMaxSpeeds_[j] )
+        constraints.append( (1 - speedOrMaxSpeed_[j]) * max(inversePossibleMaxSpeeds) >= inverseMaxSpeeds_[j] )
+        
+        constraints.append( speedOrMaxSpeed_[j] * inverseMaxSpeeds_original[j] <= inverseSpeeds_[j] )
+        constraints.append( speedOrMaxSpeed_[j] * inverseSpeeds_original[j] >= inverseSpeeds_[j] )
+
+
+    # Variables to change/not change, depending on parameter:
+    if ('noWay' not in variablesToUse):
+        constraints.append( noWay_[j] == noWay_original[j] )
+    if ('isClosed' not in variablesToUse):
+        constraints.append( areClosed_[j] == areClosed_original[j] )
+    # if ('speed' not in variablesToUse):
+    #     constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
+    # if ('maxSpeed' not in variablesToUse):
+    #     constraints.append( inverseMaxSpeed_[j] == inverseMaxSpeed_original[j] )
+            
     
     # TODO: CHANGE PENALTIES
     penalty1 = 1#5
     penalty2 = 1#100
-    # Cost function, split up
-    cost1 = cp.norm1(cp.multiply(inverseSpeeds_ - inverseSpeeds_original, penalty1))
-    cost2 = cp.norm1(cp.multiply(inverseMaxSpeeds_ - inverseMaxSpeeds_original, penalty2))
+    
+    # Use maxSpeed
+    if (('speed' not in variablesToUse) and ('maxSpeed' in variablesToUse)):
+        cost2 = cp.norm1(cp.multiply(inverseMaxSpeeds_ - inverseMaxSpeeds_original, penalty2))
+        cost1 = 0
+    # Use speed
+    else:
+        cost1 = cp.norm1(cp.multiply(inverseSpeeds_ - inverseSpeeds_original, penalty1))
+        cost2 = 0
     cost3 = cp.norm1(noWay_ - noWay_original)
     cost4 = cp.norm1(areClosed_ - areClosed_original)
             
-            
+    
     # Final Cost funnction
     cost = cost1 + cost2 + cost3 + cost4
+    
     
         
     # Forming the problem

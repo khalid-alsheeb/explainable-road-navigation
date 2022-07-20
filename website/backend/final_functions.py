@@ -2,21 +2,20 @@ import osmnx as ox
 import networkx as nx
 
 from .algorithm.diverse_SPs import getShortestPath
-from .algorithm.graph_helpers import addReverseEdges, getOriginalAttributeTypes, updateGraphWeights, fixWrongDataG
+from .algorithm.graph_helpers import addReverseEdges, getOriginalAttributeTypes, getPathWeight, updateGraphWeights, fixWrongDataG, updateWeightMetric
 from .algorithm.ISP_using_LP import inverseShortestPath
 from .algorithm.graph_explanations import getGraphExplanation, makeExplanationsStrings
 from .algorithm.anytime_algorithm import anytimeAlgorithm
 
 
-
-
-def getPathExplanation(desired_path):
+def getPathExplanation(desired_path, variablesToUse):
 
     G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
 
     G = getOriginalAttributeTypes(G)
 
     G = fixWrongDataG(G)
+    updateWeightMetric(G, variablesToUse)
     updateGraphWeights(G)
     
     try:
@@ -33,9 +32,13 @@ def getPathExplanation(desired_path):
     elif(len(shortest_path) == 0):
         explanations = ['NO SP']
         return shortest_path, explanations
+    elif(getPathWeight(desired_path, G) == getPathWeight(shortest_path, G)):
+        #TODO: consider this case
+        explanations = ['SP=DP']
+        return shortest_path, explanations
         
     addReverseEdges(G)
-    new_graph, optimal_value = inverseShortestPath(G, desired_path)
+    new_graph, optimal_value = inverseShortestPath(G, desired_path, variablesToUse)
     
     if(new_graph == None):
         explanations = ['Infeasible']
@@ -48,13 +51,14 @@ def getPathExplanation(desired_path):
 
 
 
-def getDesiredPathFromWaypoint(desired_path):
+def getDesiredPathFromWaypoint(desired_path, variablesToUse):
 
     G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
 
     G = getOriginalAttributeTypes(G)
 
     G = fixWrongDataG(G)
+    updateWeightMetric(G, variablesToUse)
     updateGraphWeights(G)
     
     try:

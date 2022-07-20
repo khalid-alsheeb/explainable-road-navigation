@@ -11,6 +11,18 @@ def calculateWeight(data):
         
     return weight
 
+def updateWeightMetric(graph, variablesToUse):
+    
+    # Use maxSpeed
+    if (('speed' not in variablesToUse) and ('maxSpeed' in variablesToUse)):
+        metricValue = 0
+    # Use speed
+    else:
+        metricValue = 1
+    
+    for (source, target, data) in graph.edges(data=True):
+        graph[source][target][0]['speedOrMaxSpeed'] = metricValue
+
 
 def updateEdgeWeight(graph, source, target, data):
     graph[source][target][0]['weight'] = calculateWeight(data)

@@ -7,10 +7,13 @@ import json
 app = Flask(__name__)
 cors = CORS(app)
 
-# change the routes. 1 for explanations, and annother for the sp. If the user only wants the sp.
+#variablesToUse=['noWay', 'isClosed', 'speed', 'maxSpeed']
+
 
 @app.route('/1/', methods = ['GET'])
 def get_explanations1():
+    
+    variablesToUse=['noWay', 'isClosed', 'maxSpeed']
     
     desired_path = [int(n) for n in request.args.getlist('desired_path')]
     shortest_path, explanations = getPathExplanation(desired_path)
@@ -20,17 +23,21 @@ def get_explanations1():
 @app.route('/2/', methods = ['GET'])
 def get_explanations2():
     
+    
+    variablesToUse=['noWay', 'isClosed']
+    
+    
     nodes = [int(n) for n in request.args.getlist('nodes')]
     
     print(nodes)
     
     # calculate the desired path, and then do the same as before.
     # get closest nodes in our graph, to the nodes given
-    desired_path = getDesiredPathFromWaypoint(nodes)
+    desired_path = getDesiredPathFromWaypoint(nodes, variablesToUse)
     
     print(desired_path)
     if (len(desired_path) > 0):
-        shortest_path, explanations = getPathExplanation(desired_path)
+        shortest_path, explanations = getPathExplanation(desired_path, variablesToUse)
 
     
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
