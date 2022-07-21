@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from .final_functions import getPathExplanation, getDesiredPathFromWaypoint, getAnytimeAlgorithmData
+from .final_functions import getPathExplanation, getDesiredPathFromWaypoint, getAnytimeAlgorithmData, variablesToUseFix
 import json
 
 
@@ -14,7 +14,8 @@ cors = CORS(app)
 def get_explanations1():
 
     desired_path = [int(n) for n in request.args.getlist('desired_path')]
-    variablesToUse = [int(n) for n in request.args.getlist('variablesToUse')]
+    variablesToUse = [n for n in request.args.getlist('variablesToUse')]
+    variablesToUseFix(variablesToUse)
     
     shortest_path, explanations = getPathExplanation(desired_path, variablesToUse)
     
@@ -24,7 +25,8 @@ def get_explanations1():
 def get_explanations2():
     
     nodes = [int(n) for n in request.args.getlist('nodes')]
-    variablesToUse = [int(n) for n in request.args.getlist('variablesToUse')]
+    variablesToUse = [n for n in request.args.getlist('variablesToUse')]
+    variablesToUseFix(variablesToUse)
     
     print(nodes)
     
@@ -44,12 +46,11 @@ def get_explanations2():
 def get_explanations3():
     
     nodes = [int(n) for n in request.args.getlist('nodes')]
-    variablesToUse = [int(n) for n in request.args.getlist('variablesToUse')]
+    variablesToUse = [n for n in request.args.getlist('variablesToUse')]
+    variablesToUseFix(variablesToUse)
     
     # bug nodes
     # nodes = [107790, 455705622, 107843]
-    
-    variablesToUse=['noWay', 'isClosed']
     
     print(nodes)
     

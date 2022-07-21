@@ -10,6 +10,7 @@ const initialState = {
     desiredPathNodes: [],
     shortestPath: [],
     explanations: [],
+    variablesToUse: [],
     version: 1
 }
 

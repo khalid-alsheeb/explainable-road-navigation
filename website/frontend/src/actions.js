@@ -3,7 +3,8 @@ import {
         ADD_TO_NODE_PATH_EDGES, REMOVE_NODE_FROM_DESIRED_PATH,
         REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_RESULTS_V1,
         GET_RESULTS_V2, GET_RESULTS_V3,
-        RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH
+        RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
+        UPDATE_VARIABLES
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -33,10 +34,12 @@ export const getResultsV1 = () => async (dispatch, getState) => {
     try {
         const state = getState()
         const desiredPath = state.desiredPathNodes
+        const variablesToUse = state.variables
 
         const { data } = await axios.get("/1/", {
             params: {
-                desired_path: desiredPath
+                desired_path: desiredPath,
+                variablesToUse: variablesToUse
             },
             paramsSerializer: params => {
                 return qs.stringify(params, { arrayFormat: 'repeat' })
@@ -60,10 +63,12 @@ export const getResultsV2 = () => async (dispatch, getState) => {
         const state = getState()
         const nodesp = state.desiredPathNodes
         const nodes = getCorrectNodes(nodesp)
+        const variablesToUse = state.variables
 
         const { data } = await axios.get("/2/", {
             params: {
-                nodes: nodes
+                nodes: nodes,
+                variablesToUse: variablesToUse
             },
             paramsSerializer: params => {
                 return qs.stringify(params, { arrayFormat: 'repeat' })
@@ -87,12 +92,16 @@ export const getResultsV2 = () => async (dispatch, getState) => {
 export const getResultsV3 = () => async (dispatch, getState) => {
     try {
         const state = getState()
-                const nodesp = state.desiredPathNodes
+        const nodesp = state.desiredPathNodes
         const nodes = getCorrectNodes(nodesp)
+        const variablesToUse = state.variables
+
+        console.log(variablesToUse);
 
         const { data } = await axios.get("/3/", {
             params: {
-                nodes: nodes
+                nodes: nodes,
+                variablesToUse: variablesToUse
             },
             paramsSerializer: params => {
                 return qs.stringify(params, { arrayFormat: 'repeat' })
@@ -269,6 +278,15 @@ export const changeVersion = (version) => async (dispatch) => {
     try {
         dispatch(resetData())
         dispatch({ type: CHANGE_VERSION, payload: version });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+export const updateVariablesToUse = (variables) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_VARIABLES, payload: variables });
     } catch (error) {
         console.log(error.message);
     }

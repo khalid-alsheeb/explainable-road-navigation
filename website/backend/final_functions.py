@@ -101,3 +101,10 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
             explanations = makeExplanationsStrings(explanations)
     
     return shortest_path, desired_path, explanations
+
+
+def variablesToUseFix(variablesToUse):
+    if 'noWay and isClosed' in variablesToUse:
+        variablesToUse.remove('noWay and isClosed')
+        variablesToUse.append('noWay')
+        variablesToUse.append('isClosed')

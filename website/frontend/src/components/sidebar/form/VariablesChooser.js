@@ -3,16 +3,23 @@ import MuiToggleButton from "@mui/material/ToggleButton";
 import { Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form'
 import { useState } from "react";
+import { updateVariablesToUse } from "../../../actions";
+import { useDispatch } from "react-redux";
 
 
 const VariablesChooser = () => {
 
-    const [Params, setParams] = useState(() => ['3m', '1y', '2y']);
+    const dispatch = useDispatch();
+
+    const [Variables, setVariables] = useState(() => ['speed', 'maxSpeed', 'noWay and isClosed']);
+
+    dispatch(updateVariablesToUse(Variables))
 
 
-    const handleChange = (e, newParams) => {
-        if (newParams.length) {
-            setParams(newParams)
+    const handleChange = (e, newVariables) => {
+        if (newVariables.length) {
+            setVariables(newVariables)
+            dispatch(updateVariablesToUse(newVariables))
         }
     };
 
@@ -46,17 +53,17 @@ const VariablesChooser = () => {
                 </Row>
                 <Row>
                 <ToggleButtonGroup
-                    value={Params}
+                    value={Variables}
                     onChange={handleChange}
                     size="small"
                 >
-                    <ToggleButton value="2y" aria-label="left aligned" style={styles.orangeBorder}>
+                    <ToggleButton value="speed" aria-label="left aligned" style={styles.orangeBorder}>
                             speed
                     </ToggleButton>
-                    <ToggleButton value="1y" aria-label="centered" style={styles.orangeBorder}>
+                    <ToggleButton value="maxSpeed" aria-label="centered" style={styles.orangeBorder}>
                             max speed
                     </ToggleButton>
-                    <ToggleButton value="3m" aria-label="right aligned" style={styles.orangeBorder}>
+                    <ToggleButton value="noWay and isClosed" aria-label="right aligned" style={styles.orangeBorder}>
                             no-way & road closure 
                     </ToggleButton>
                 </ToggleButtonGroup>
