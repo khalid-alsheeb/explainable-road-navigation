@@ -83,14 +83,18 @@ const VariablesChooser = () => {
                     </ToggleButton>
                 </ToggleButtonGroup>
                 </Row>
-                <Row>
-                <Typography variant="button" style={styles.white} component="div">
-                                All combinations
-                </Typography>
-                <Switch thumbSwitchedStyle={{ backgroundColor: 'white' }} 
-                        color='warning' style={{color: "#ff9100"} } 
-                        onChange={(e, val) => handleSwitch(val)}
-                />
+                <Row style={{marginTop: '10px'}}>
+                    <Col xs={9}>
+                        <Typography variant="button" style={styles.white} component="div">
+                                        All combinations
+                        </Typography>
+                    </Col>
+                    <Col xs={1}>
+                        <Switch thumbSwitchedStyle={{ backgroundColor: 'white' }} 
+                                color='warning' style={{color: "#ff9100"} } 
+                                onChange={(e, val) => handleSwitch(val)}
+                        />
+                    </Col>
                 </Row>
         </Container>
         </Form.Group>
