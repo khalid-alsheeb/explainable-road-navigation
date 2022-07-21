@@ -214,15 +214,11 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         constraints.append( speedOrMaxSpeed_[j] * inverseSpeeds_original[j] >= inverseSpeeds_[j] )
 
 
-    # Variables to change/not change, depending on parameter:
-    if ('noWay' not in variablesToUse):
-        constraints.append( noWay_[j] == noWay_original[j] )
-    if ('isClosed' not in variablesToUse):
-        constraints.append( areClosed_[j] == areClosed_original[j] )
-    # if ('speed' not in variablesToUse):
-    #     constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
-    # if ('maxSpeed' not in variablesToUse):
-    #     constraints.append( inverseMaxSpeed_[j] == inverseMaxSpeed_original[j] )
+        # Variables to change/not change, depending on parameter:
+        if ('noWay' not in variablesToUse):
+            constraints.append( noWay_[j] == noWay_original[j] )
+        if ('isClosed' not in variablesToUse):
+            constraints.append( areClosed_[j] == areClosed_original[j] )
             
     
     # TODO: CHANGE PENALTIES
