@@ -176,9 +176,14 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             elif ('maxSpeed' in variablesToUse):
                 constraints.append( speedOrMaxSpeed_[j] == 0 )
                 constraints.append( inverseMaxSpeeds_[j] >= epsilon )
-            # use speed, and default version
+            # use only speed
+            elif ('speed' in variablesToUse):
+                constraints.append( speedOrMaxSpeed_[j] == 1 )
+            # if neither, then use speed to calculate weight, but keep it constant
             else:
                 constraints.append( speedOrMaxSpeed_[j] == 1 )
+                constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
+                
                 
             
         else: # for all j not in desired path
