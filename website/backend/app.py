@@ -12,22 +12,19 @@ cors = CORS(app)
 
 @app.route('/1/', methods = ['GET'])
 def get_explanations1():
-    
-    variablesToUse=['noWay', 'isClosed', 'maxSpeed']
-    
+
     desired_path = [int(n) for n in request.args.getlist('desired_path')]
-    shortest_path, explanations = getPathExplanation(desired_path)
+    variablesToUse = [int(n) for n in request.args.getlist('variablesToUse')]
+    
+    shortest_path, explanations = getPathExplanation(desired_path, variablesToUse)
     
     return jsonify({ 'shortest_path': shortest_path, 'explanations': explanations })
 
 @app.route('/2/', methods = ['GET'])
 def get_explanations2():
     
-    
-    variablesToUse=['noWay', 'isClosed']
-    
-    
     nodes = [int(n) for n in request.args.getlist('nodes')]
+    variablesToUse = [int(n) for n in request.args.getlist('variablesToUse')]
     
     print(nodes)
     
@@ -47,14 +44,17 @@ def get_explanations2():
 def get_explanations3():
     
     nodes = [int(n) for n in request.args.getlist('nodes')]
+    variablesToUse = [int(n) for n in request.args.getlist('variablesToUse')]
     
     # bug nodes
-    nodes = [107790, 455705622, 107843]
+    # nodes = [107790, 455705622, 107843]
+    
+    variablesToUse=['noWay', 'isClosed']
     
     print(nodes)
     
     # Apply the anytime algorithm and get SP
-    shortest_path, desired_path, explanations = getAnytimeAlgorithmData(nodes)
+    shortest_path, desired_path, explanations = getAnytimeAlgorithmData(nodes, variablesToUse)
 
     
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })

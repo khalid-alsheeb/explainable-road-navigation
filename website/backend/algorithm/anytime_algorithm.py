@@ -7,7 +7,7 @@ import networkx as nx
 import time
 
 # It uses diverse shortest path algorithm to generate the possible SPs.
-def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branchingFactor, ballRadius):
+def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse):
     # FIFO Queue  (append & pop(0))
     shortestPath_graph_pairs = []
     # A set of k-diverse SPs
@@ -31,7 +31,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
         shortestPaths.add(tuple(shortestPath))
         
         #ISP HERE
-        possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath)
+        possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
         count += 1
         if ((value != None) and (value < optimalValue)):
             optimalValue = value
@@ -58,7 +58,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                 shortestPaths.add(tuple(newShortestPath)) #NO CRITERIA, FOR NOW. (ACCEPT ALL)
                 
                 #ISP HERE
-                possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath)
+                possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
                 count += 1
                 if ((value != None) and (value < optimalValue)):
                     optimalValue = value

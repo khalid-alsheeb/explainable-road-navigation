@@ -22,6 +22,8 @@ def getPathExplanation(desired_path, variablesToUse):
         shortest_path = nx.shortest_path(G, source=desired_path[0], target=desired_path[-1], weight="weight")
     except:
         shortest_path = []
+        
+    addReverseEdges(G)
     
     if(len(desired_path) == 0):
         explanations = ['NO Nodes']
@@ -37,7 +39,6 @@ def getPathExplanation(desired_path, variablesToUse):
         explanations = ['SP=DP']
         return shortest_path, explanations
         
-    addReverseEdges(G)
     new_graph, optimal_value = inverseShortestPath(G, desired_path, variablesToUse)
     
     if(new_graph == None):
@@ -69,7 +70,7 @@ def getDesiredPathFromWaypoint(desired_path, variablesToUse):
     return dp
 
 
-def getAnytimeAlgorithmData(nodes):
+def getAnytimeAlgorithmData(nodes, variablesToUse):
 
     G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
     G = getOriginalAttributeTypes(G)
@@ -93,7 +94,7 @@ def getAnytimeAlgorithmData(nodes):
         explanations = ['NO SP']
     else:
         addReverseEdges(G)
-        desired_path, explanations = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius)
+        desired_path, explanations = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
         if(len(desired_path) == 0):
             explanations = ['Infeasible']
         else:
