@@ -86,7 +86,7 @@ const VariablesChooser = () => {
                 <Row style={{marginTop: '10px'}}>
                     <Col xs={9}>
                         <Typography variant="button" style={styles.white} component="div">
-                                        All combinations
+                                        4 combinations
                         </Typography>
                     </Col>
                     <Col xs={1}>
