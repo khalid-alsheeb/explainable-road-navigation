@@ -239,8 +239,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # exclude data from source control by default
-./website/backend/notebooks/*
-!./website/backend/notebooks/.gitkeep
+/website/backend/notebooks/*
+!/website/backend/notebooks/.gitkeep
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python,macos,react
