@@ -130,9 +130,9 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     noWay_ = cp.Variable(len(edges), boolean=True)
     areClosed_ = cp.Variable(len(edges), boolean=True)
     inverseSpeeds_ = cp.Variable(len(edges))
-    inverseMaxSpeeds_ = cp.Variable(len(edges))
     maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
     
+    inverseMaxSpeeds_ = inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_.T
         
     # Constraints
     constraints = []
@@ -150,8 +150,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     for j in range(len(edges)):
         
-        # Hot 1 Encoding, For all edges in G
-        constraints.append( inverseMaxSpeeds_[j] == inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_[j] )
         constraints.append( inverseSpeeds_[j] >= inverseMaxSpeeds_original[j] )
         
         if (xzero[j] == 1): #for all j in desired path
