@@ -1,5 +1,6 @@
 import osmnx as ox
 import networkx as nx
+import time
 
 from .algorithms.diverse_SPs import getShortestPath
 from .helpers.graph_helpers import addReverseEdges, getOriginalAttributeTypes, getPathWeight, updateGraphWeights, fixWrongDataG, updateWeightMetric
@@ -38,7 +39,17 @@ def getPathExplanation(desired_path, variablesToUse):
         #TODO: consider this case
         explanations = ['SP=DP']
         return shortest_path, explanations
-        
+    
+    # average = 0
+    # for i in range(10):
+    #     start_time = time.time()
+    #     new_graph, optimal_value = inverseShortestPath(G, desired_path, variablesToUse)
+    #     average += time.time() - start_time
+    # average = average/10
+    
+    # print("\n average of 10 runs is: --- %s seconds ---" % (average))
+    # print('\n')
+    
     new_graph, optimal_value = inverseShortestPath(G, desired_path, variablesToUse)
     
     if(new_graph == None):
