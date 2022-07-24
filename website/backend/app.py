@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from .final_functions import getPathExplanation, getDesiredPathFromWaypoint, getAnytimeAlgorithmData, variablesToUseFix
+from .src.final_functions import getPathExplanation, getDesiredPathFromWaypoint, getAnytimeAlgorithmData, variablesToUseFix
 import json
 
 
