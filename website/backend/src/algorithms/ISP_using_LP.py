@@ -23,8 +23,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     # Constants
     inf = 1e6
     possibleMaxSpeeds = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90]
-    epsilon = getInverse(possibleMaxSpeeds[len(possibleMaxSpeeds) - 1])
-    inversePossibleMaxSpeeds = [getInverse(s) for s in possibleMaxSpeeds] + [0]
+    epsilon = 1e-6
+    inversePossibleMaxSpeeds = [getInverse(s) for s in possibleMaxSpeeds]
     inversePossibleMaxSpeeds = np.asarray(inversePossibleMaxSpeeds)
     
     # Some graph and path data
@@ -161,7 +161,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
                 if (inverseMaxSpeeds_original[j] / inverseSpeeds_original[j] >= 4/3):
                     # Change maxSpeed
                     d_j = inverseMaxSpeeds_[j] * lengths[j] + inf * noWay_[j] + inf * areClosed_[j]
-                    constraints.append( inverseMaxSpeeds_[j] >= epsilon )
                     constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
                     
                 else:
@@ -172,7 +171,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             # use maxSpeed only
             elif ('maxSpeed' in variablesToUse):
                 d_j = inverseMaxSpeeds_[j] * lengths[j] + inf * noWay_[j] + inf * areClosed_[j]
-                constraints.append( inverseMaxSpeeds_[j] >= epsilon )
                 
             # # use only speed
             # elif ('speed' in variablesToUse):
@@ -218,18 +216,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
             
     
-    # TODO: CHANGE PENALTIES
-    penalty1 = 1#5
-    penalty2 = 1#100
-    
-    # Use maxSpeed
-    if (('speed' not in variablesToUse) and ('maxSpeed' in variablesToUse)):
-        cost2 = cp.norm1(cp.multiply(inverseMaxSpeeds_ - inverseMaxSpeeds_original, penalty2))
-        cost1 = 0
-    # Use speed
-    else:
-        cost1 = cp.norm1(cp.multiply(inverseSpeeds_ - inverseSpeeds_original, penalty1))
-        cost2 = 0
+    cost1 = cp.norm1(inverseSpeeds_ - inverseSpeeds_original)
+    cost2 = cp.norm1(maxSpeeds_H1E_ - maxSpeeds_H1E_original) / 2
     cost3 = cp.norm1(noWay_ - noWay_original)
     cost4 = cp.norm1(areClosed_ - areClosed_original)
             
@@ -268,8 +256,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
         ms = getInverse(inverseMaxSpeeds_.value[index])
         
-        # Id max speed is less, use maxSpeed to calculate weights, else use speeds
-        if (inverseMaxSpeeds_original[index] > inverseMaxSpeeds_.value[index]):
+        # If max speed is less, use maxSpeed to calculate weights, else use speeds
+        if (inverseMaxSpeeds_original[index] > inverseMaxSpeeds_[index]):
             speedOrmaxSpeed = 0
         else:
             speedOrmaxSpeed = 1
