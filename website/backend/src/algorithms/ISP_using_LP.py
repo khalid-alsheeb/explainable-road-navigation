@@ -136,11 +136,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         
     # Constraints
     constraints = []
-    
-    
-    for j in range(len(edges)):
-        if xzero[j] == 0:
-            constraints.append( lambda_[j] >= 0 )
             
             
     # Hot 1 Encoding    
@@ -203,6 +198,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
             # sum_i a_ij * pi_i + lambda_j = d_j,
             constraints.append( cp.sum(cp.multiply(A[:,j], pi_)) + lambda_[j] == d_j )
+            
+            constraints.append( lambda_[j] >= 0 )
 
 
         # Variables to change/not change, depending on parameter:
