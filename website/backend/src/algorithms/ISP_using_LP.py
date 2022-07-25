@@ -257,7 +257,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         ms = getInverse(inverseMaxSpeeds_.value[index])
         
         # If max speed is less, use maxSpeed to calculate weights, else use speeds
-        if (inverseMaxSpeeds_original[index] > inverseMaxSpeeds_[index]):
+        if (inverseMaxSpeeds_original[index] > inverseMaxSpeeds_.value[index]):
             speedOrmaxSpeed = 0
         else:
             speedOrmaxSpeed = 1
