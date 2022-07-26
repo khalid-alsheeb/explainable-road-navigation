@@ -25,7 +25,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     count = 0
     
     shortestPath = getShortestPathWaypoint(pathsGraph, source, waypoint, target)
-    while(True and (time.time() < timeout)):
+    while(True):
         if (len(shortestPath) != 0 ):
             shortestPath_graph_pairs.append((shortestPath, pathsGraph))
             shortestPaths.add(tuple(shortestPath))
