@@ -91,7 +91,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
-    minutes = 5
+    minutes = 2
     branchingFactor = 2
     ballRadius = 0.0001
     

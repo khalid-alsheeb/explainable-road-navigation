@@ -25,46 +25,46 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     count = 0
     
     shortestPath = getShortestPathWaypoint(pathsGraph, source, waypoint, target)
-        
-    if (len(shortestPath) != 0 ):
-        shortestPath_graph_pairs.append((shortestPath, pathsGraph))
-        shortestPaths.add(tuple(shortestPath))
-        
-        #ISP HERE
-        possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
-        count += 1
-        if ((value != None) and (value < optimalValue)):
-            optimalValue = value
-            optimalGraph = possibleOptimalGraph
-            optimalShortestPath = shortestPath
-    
-    while ((len(shortestPath_graph_pairs) != 0) and (time.time() < timeout)):
-        pair = shortestPath_graph_pairs.pop(0)
-        shortestPath = pair[0]
-        graph = pair[1]
-        
-        for i in range(branchingFactor):
-            sampledEdgeNodes = edgeSampling(graph, shortestPath)
-            nodes, edges = ox.graph_to_gdfs(graph)
-            sampledEdge = edges.loc[(sampledEdgeNodes[0], sampledEdgeNodes[1], 0)]
+    while(True and (time.time() < timeout)):
+        if (len(shortestPath) != 0 ):
+            shortestPath_graph_pairs.append((shortestPath, pathsGraph))
+            shortestPaths.add(tuple(shortestPath))
             
-            newEdges = getNewEdges(edges, sampledEdge, ballRadius)
+            #ISP HERE
+            possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
+            count += 1
+            if ((value != None) and (value < optimalValue)):
+                optimalValue = value
+                optimalGraph = possibleOptimalGraph
+                optimalShortestPath = shortestPath
+        
+        while ((len(shortestPath_graph_pairs) != 0) and (time.time() < timeout)):
+            pair = shortestPath_graph_pairs.pop(0)
+            shortestPath = pair[0]
+            graph = pair[1]
             
-            newGraph = ox.graph_from_gdfs(nodes, newEdges)
-            newShortestPath = getShortestPathWaypoint(newGraph, source, waypoint, target)
-            
-            if (len(newShortestPath) != 0):
-                shortestPath_graph_pairs.append((newShortestPath, newGraph))
-                shortestPaths.add(tuple(newShortestPath)) #NO CRITERIA, FOR NOW. (ACCEPT ALL)
+            for i in range(branchingFactor):
+                sampledEdgeNodes = edgeSampling(graph, shortestPath)
+                nodes, edges = ox.graph_to_gdfs(graph)
+                sampledEdge = edges.loc[(sampledEdgeNodes[0], sampledEdgeNodes[1], 0)]
                 
-                #ISP HERE
-                possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
-                count += 1
-                if ((value != None) and (value < optimalValue)):
-                    optimalValue = value
-                    optimalGraph = possibleOptimalGraph
-                    optimalShortestPath = newShortestPath
-            
+                newEdges = getNewEdges(edges, sampledEdge, ballRadius)
+                
+                newGraph = ox.graph_from_gdfs(nodes, newEdges)
+                newShortestPath = getShortestPathWaypoint(newGraph, source, waypoint, target)
+                
+                if (len(newShortestPath) != 0):
+                    shortestPath_graph_pairs.append((newShortestPath, newGraph))
+                    shortestPaths.add(tuple(newShortestPath)) #NO CRITERIA, FOR NOW. (ACCEPT ALL)
+                    
+                    #ISP HERE
+                    possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
+                    count += 1
+                    if ((value != None) and (value < optimalValue)):
+                        optimalValue = value
+                        optimalGraph = possibleOptimalGraph
+                        optimalShortestPath = newShortestPath
+                
     optimalExplanation = getGraphExplanation(originalGraph, optimalGraph, optimalShortestPath)
     
     print('times in {} minues = {}'.format(minutes, count))
