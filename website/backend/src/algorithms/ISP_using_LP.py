@@ -2,6 +2,7 @@
 import networkx as nx
 import numpy as np
 import cvxpy as cp
+import math
 
 from ..helpers.graph_helpers import *
 
@@ -17,7 +18,7 @@ def inverseShortestPathSwitch(graph, desiredPath, variablesToUse):
 
 
     
-# To be changed, speed up
+# Less variables
 def inverseShortestPath(graph, desiredPath, variablesToUse):
     print('\nFormalising the problem')
     # Constants
@@ -132,6 +133,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     inverseSpeeds_ = cp.Variable(len(edges))
     maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
     
+    # A way to hold the maxSpeeds floats
     inverseMaxSpeeds_ = inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_.T
         
     # Constraints
@@ -213,6 +215,11 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
             
     
+    # cost1 = cp.norm1( (1 / ( 1 + cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) - 1/2 )
+    # cost1 = cp.norm1( -1 * cp.log( (1 / ( 1 + cp.exp(1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) + 1/2 ) )
+    # cost1 = cp.sum( cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) - 1)
+    # cost1 = cp.sum( (1 / ( 1 + cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) - 1/2 )
+    # cost1 = cp.norm1(cp.logistic(inverseSpeeds_original - inverseSpeeds_))
     cost1 = cp.norm1(inverseSpeeds_ - inverseSpeeds_original)
     cost2 = cp.norm1(maxSpeeds_H1E_ - maxSpeeds_H1E_original) / 2
     cost3 = cp.norm1(noWay_ - noWay_original)
