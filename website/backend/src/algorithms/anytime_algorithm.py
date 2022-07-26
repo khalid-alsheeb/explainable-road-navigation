@@ -14,7 +14,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     shortestPaths = set()
     # Stop the function after (around) x minutes from now
     timeout = time.time() + 60 * minutes
-    # teh graph used to get the shortest paths (only speed and length are used to calculate the weight)
+    # the graph used to get the shortest paths (only speed and length are used to calculate the weight)
     pathsGraph = getTimeOnlyWeightGraph(originalGraph)
     
     # optimal values to be returned
