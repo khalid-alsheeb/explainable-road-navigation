@@ -24,7 +24,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     # Constants
     inf = 1e6
     possibleMaxSpeeds = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90]
-    epsilon = 1e-6
+    epsilon = 1e-16
     inversePossibleMaxSpeeds = [getInverse(s) for s in possibleMaxSpeeds]
     inversePossibleMaxSpeeds = np.asarray(inversePossibleMaxSpeeds)
     
@@ -132,6 +132,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     areClosed_ = cp.Variable(len(edges), boolean=True)
     inverseSpeeds_ = cp.Variable(len(edges))
     maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
+    # inverseSpeedsChanges_ = cp.Variable(len(edges), boolean=True)
     
     # A way to hold the maxSpeeds floats
     inverseMaxSpeeds_ = inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_.T
@@ -214,12 +215,21 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         if ('maxSpeed' not in variablesToUse):
             constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
             
+            
+    # #ceiling function for speed cost:
+    # deltaInverseSpeeds = inverseSpeeds_original - inverseSpeeds_
+    # # inf is used because of rounding errors
+    # constraints.append(inverseSpeedsChanges_ <= deltaInverseSpeeds * inf + (1-epsilon))
+    # constraints.append(deltaInverseSpeeds <= inverseSpeedsChanges_)
+    
+            
     
     # cost1 = cp.norm1( (1 / ( 1 + cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) - 1/2 )
     # cost1 = cp.norm1( -1 * cp.log( (1 / ( 1 + cp.exp(1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) + 1/2 ) )
     # cost1 = cp.sum( cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) - 1)
     # cost1 = cp.sum( (1 / ( 1 + cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) - 1/2 )
     # cost1 = cp.norm1(cp.logistic(inverseSpeeds_original - inverseSpeeds_))
+    # cost1 = cp.norm1(inverseSpeedsChanges_)
     cost1 = cp.norm1(inverseSpeeds_ - inverseSpeeds_original)
     cost2 = cp.norm1(maxSpeeds_H1E_ - maxSpeeds_H1E_original) / 2
     cost3 = cp.norm1(noWay_ - noWay_original)
@@ -253,7 +263,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     for (i, j), index in edgeIndex.items():
         # rounding error with floats
-        if (inverseSpeeds_original[index] < inverseSpeeds_.value[index]):
+        if (inverseSpeeds_original[index] <= inverseSpeeds_.value[index]):
             s = getInverse(inverseSpeeds_original[index])
         else:
             s = getInverse(inverseSpeeds_.value[index])
