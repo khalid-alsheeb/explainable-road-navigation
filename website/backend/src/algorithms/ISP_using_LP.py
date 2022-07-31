@@ -132,14 +132,14 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     areClosed_ = cp.Variable(len(edges), boolean=True)
     inverseSpeeds_ = cp.Variable(len(edges))
     maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
-    # inverseSpeedsChanges_ = cp.Variable(len(edges), boolean=True)
+    inverseSpeedsChanges_ = cp.Variable(len(edges), boolean=True)
     
     # A way to hold the maxSpeeds floats
     inverseMaxSpeeds_ = inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_.T
-        
-    # Constraints
+    
+    # Constraints 
     constraints = []
-            
+    
             
     # Hot 1 Encoding    
     for row in maxSpeeds_H1E_:
@@ -148,7 +148,9 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     for j in range(len(edges)):
         
-        constraints.append( inverseSpeeds_[j] >= inverseMaxSpeeds_original[j] )
+        constraints.append( inverseSpeeds_[j] == inverseSpeedsChanges_[j] * inverseMaxSpeeds_original[j] + (1 - inverseSpeedsChanges_[j]) * inverseSpeeds_original[j] )
+        
+        # constraints.append( inverseSpeeds_[j] >= inverseMaxSpeeds_original[j] )
         
         if (xzero[j] == 1): #for all j in desired path
             
@@ -230,7 +232,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     # cost1 = cp.sum( (1 / ( 1 + cp.exp(-1000000 * (inverseSpeeds_original - inverseSpeeds_) ) )) - 1/2 )
     # cost1 = cp.norm1(cp.logistic(inverseSpeeds_original - inverseSpeeds_))
     # cost1 = cp.norm1(inverseSpeedsChanges_)
-    cost1 = cp.norm1(inverseSpeeds_ - inverseSpeeds_original)
+    #cost1 = cp.norm1(inverseSpeeds_ - inverseSpeeds_original)
+    cost1 = cp.norm1(inverseSpeedsChanges_ - np.zeros(len(edges)) )
     cost2 = cp.norm1(maxSpeeds_H1E_ - maxSpeeds_H1E_original) / 2
     cost3 = cp.norm1(noWay_ - noWay_original)
     cost4 = cp.norm1(areClosed_ - areClosed_original)
