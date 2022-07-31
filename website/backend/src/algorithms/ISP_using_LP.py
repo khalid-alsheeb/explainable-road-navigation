@@ -130,12 +130,13 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     noWay_ = cp.Variable(len(edges), boolean=True)
     areClosed_ = cp.Variable(len(edges), boolean=True)
-    inverseSpeeds_ = cp.Variable(len(edges))
     maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
     inverseSpeedsChanges_ = cp.Variable(len(edges), boolean=True)
     
     # A way to hold the maxSpeeds floats
     inverseMaxSpeeds_ = inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_.T
+    
+    inverseSpeeds_ = cp.multiply(inverseSpeedsChanges_, inverseMaxSpeeds_original) + cp.multiply((1 - inverseSpeedsChanges_), inverseSpeeds_original)
     
     # Constraints 
     constraints = []
@@ -148,7 +149,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     for j in range(len(edges)):
         
-        constraints.append( inverseSpeeds_[j] == inverseSpeedsChanges_[j] * inverseMaxSpeeds_original[j] + (1 - inverseSpeedsChanges_[j]) * inverseSpeeds_original[j] )
+        # constraints.append( inverseSpeeds_[j] == inverseSpeedsChanges_[j] * inverseMaxSpeeds_original[j] + (1 - inverseSpeedsChanges_[j]) * inverseSpeeds_original[j] )
         
         # constraints.append( inverseSpeeds_[j] >= inverseMaxSpeeds_original[j] )
         
@@ -265,13 +266,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     newGraph = nx.MultiDiGraph()
     
     for (i, j), index in edgeIndex.items():
-        # rounding error with floats
-        if (inverseSpeeds_original[index] <= inverseSpeeds_.value[index]):
-            s = getInverse(inverseSpeeds_original[index])
-        else:
-            s = getInverse(inverseSpeeds_.value[index])
-            
-        ms = getInverse(inverseMaxSpeeds_.value[index])
         
         # If max speed is less, use maxSpeed to calculate weights, else use speeds
         if (inverseMaxSpeeds_original[index] > inverseMaxSpeeds_.value[index]):
@@ -284,8 +278,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         
         newGraph[i][j][0]['noWay'] = int(noWay_.value[index])
         newGraph[i][j][0]['isClosed'] = int(areClosed_.value[index])
-        newGraph[i][j][0]['speed'] = s
-        newGraph[i][j][0]['maxSpeed'] = int(round(ms))
+        newGraph[i][j][0]['speed'] = getInverse(inverseSpeeds_.value[index])
+        newGraph[i][j][0]['maxSpeed'] = int(getInverse(inverseMaxSpeeds_.value[index]))
         newGraph[i][j][0]['speedOrMaxSpeed'] = speedOrmaxSpeed
         
         
