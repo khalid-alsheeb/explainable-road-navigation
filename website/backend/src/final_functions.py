@@ -6,7 +6,7 @@ from .algorithms.diverse_SPs import getShortestPath
 from .helpers.graph_helpers import addReverseEdges, getOriginalAttributeTypes, getPathWeight, updateGraphWeights, fixWrongDataG, updateWeightMetric
 from .algorithms.ISP_using_LP import inverseShortestPath
 from .helpers.graph_explanations import getGraphExplanation, makeExplanationsStrings
-from .algorithms.anytime_algorithm import anytimeAlgorithm
+from .algorithms.anytime_algorithm import anytimeAlgorithm, getTimeOnlyWeightGraph
 
 
 def getPathExplanation(desired_path, variablesToUse):
@@ -71,7 +71,10 @@ def getDesiredPathFromWaypoint(desired_path, variablesToUse):
 
     G = fixWrongDataG(G)
     updateWeightMetric(G, variablesToUse)
+    
+    addReverseEdges(G)
     updateGraphWeights(G)
+    # G = getTimeOnlyWeightGraph(G)
     
     try:
         dp = nx.shortest_path(G, source=desired_path[0], target=desired_path[1], weight="weight") + nx.shortest_path(G, source=desired_path[1], target=desired_path[2], weight="weight")[1:]
