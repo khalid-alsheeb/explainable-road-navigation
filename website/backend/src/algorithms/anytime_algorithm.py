@@ -10,12 +10,13 @@ import time
 def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse):
     # FIFO Queue  (append & pop(0))
     shortestPath_graph_pairs = []
-    # A set of k-diverse SPs
-    shortestPaths = set()
+    # A set of k-diverse SPs // We do not use it
+    # shortestPaths = set()
     # Stop the function after (around) x minutes from now
     timeout = time.time() + 60 * minutes
     # the graph used to get the shortest paths (only speed and length are used to calculate the weight)
     pathsGraph = getTimeOnlyWeightGraph(originalGraph)
+    # pathsGraph = originalGraph.copy()
     
     # optimal values to be returned
     optimalShortestPath = []
@@ -28,7 +29,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     while(True and (time.time() < timeout)):
         if (len(shortestPath) != 0 ):
             shortestPath_graph_pairs.append((shortestPath, pathsGraph))
-            shortestPaths.add(tuple(shortestPath))
+            # shortestPaths.add(tuple(shortestPath))
             
             #ISP HERE
             possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
@@ -55,7 +56,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                 
                 if (len(newShortestPath) != 0):
                     shortestPath_graph_pairs.append((newShortestPath, newGraph))
-                    shortestPaths.add(tuple(newShortestPath)) #NO CRITERIA, FOR NOW. (ACCEPT ALL)
+                    # shortestPaths.add(tuple(newShortestPath)) #NO CRITERIA, FOR NOW. (ACCEPT ALL) Not USED
                     
                     #ISP HERE
                     possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)

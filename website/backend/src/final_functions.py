@@ -74,7 +74,7 @@ def getDesiredPathFromWaypoint(desired_path, variablesToUse):
     
     addReverseEdges(G)
     updateGraphWeights(G)
-    # G = getTimeOnlyWeightGraph(G)
+    G = getTimeOnlyWeightGraph(G)
     
     try:
         dp = nx.shortest_path(G, source=desired_path[0], target=desired_path[1], weight="weight") + nx.shortest_path(G, source=desired_path[1], target=desired_path[2], weight="weight")[1:]
@@ -94,7 +94,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
-    minutes = 2
+    minutes = 5
     branchingFactor = 2
     ballRadius = 0.0001
     
