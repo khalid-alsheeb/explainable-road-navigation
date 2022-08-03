@@ -168,6 +168,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             constraints.append( areClosed_[j] == areClosed_original[j] )
             constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
             constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
+            constraints.append( lambda_[j] >= 0 )
             
             # Use maxSpeed
             if (('speed' not in variablesToUse) and ('maxSpeed' in variablesToUse)):
@@ -179,8 +180,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
             # sum_i a_ij * pi_i + lambda_j = d_j,
             constraints.append( cp.sum(cp.multiply(A[:,j], pi_)) + lambda_[j] == d_j )
-            
-            constraints.append( lambda_[j] >= 0 )
 
 
         # Variables to change/not change, depending on parameter:
@@ -195,9 +194,8 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
     
     
-    cost1 = cp.norm1(inverseSpeedsChanges_ - np.zeros(len(edges)) )
-    cost2 = cp.norm1(inverseMaxSpeedsChanges_ - np.zeros(len(edges)) )
-    # cost2 = cp.norm1(maxSpeeds_H1E_ - maxSpeeds_H1E_original) / 2
+    cost1 = cp.norm1(inverseSpeedsChanges_)
+    cost2 = cp.norm1(inverseMaxSpeedsChanges_)
     cost3 = cp.norm1(noWay_ - noWay_original)
     cost4 = cp.norm1(areClosed_ - areClosed_original)
             
