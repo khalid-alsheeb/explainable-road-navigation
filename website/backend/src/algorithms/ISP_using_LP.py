@@ -24,10 +24,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     # Constants
     inf = 1e6
     epsilon = 1e-16
-    # possibleMaxSpeeds = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90]
-    # inversePossibleMaxSpeeds = [getInverse(s) for s in possibleMaxSpeeds]
-    # inversePossibleMaxSpeeds = np.asarray(inversePossibleMaxSpeeds)
-    
     inverseMaxMaxSpeed = getInverse(90)
     
     # Some graph and path data
@@ -42,7 +38,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     inverseSpeeds = []
     inverseMaxSpeeds = []
     lengths = []
-    maxSpeeds_H1E = []
     
     # Edges data, and their indecies
     edges = []
@@ -59,16 +54,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         inverseSpeeds.append(getInverse(data['speed']))
         inverseMaxSpeeds.append(getInverse(data['maxSpeed']))
         lengths.append(data['length'])
-        
-        # # hot 1 encoding original data
-        # hot1E = []
-        # for ms in inversePossibleMaxSpeeds:
-        #     if getInverse(data['maxSpeed']) == ms:
-        #         hot1E.append(1)
-        #     else:
-        #         hot1E.append(0)
-        # maxSpeeds_H1E.append(hot1E)
-        
         
         
     # Nodes data, and their indecies
@@ -123,7 +108,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     areClosed_original = np.asarray(areClosed)
     inverseSpeeds_original = np.asarray(inverseSpeeds)
     inverseMaxSpeeds_original = np.asarray(inverseMaxSpeeds)
-    # maxSpeeds_H1E_original = np.asarray(maxSpeeds_H1E)
     
     
     # Variables
@@ -132,24 +116,15 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     noWay_ = cp.Variable(len(edges), boolean=True)
     areClosed_ = cp.Variable(len(edges), boolean=True)
-    # maxSpeeds_H1E_ = cp.Variable(maxSpeeds_H1E_original.shape, boolean=True)
     inverseSpeedsChanges_ = cp.Variable(len(edges), boolean=True)
     inverseMaxSpeedsChanges_ = cp.Variable(len(edges), boolean=True)
     
-    # A way to hold the maxSpeeds floats
-    # inverseMaxSpeeds_ = inversePossibleMaxSpeeds.T @ maxSpeeds_H1E_.T
     
     inverseSpeeds_ = cp.multiply(inverseSpeedsChanges_, inverseMaxSpeeds_original) + cp.multiply((1 - inverseSpeedsChanges_), inverseSpeeds_original)
     inverseMaxSpeeds_ = cp.multiply(inverseMaxSpeedsChanges_, inverseMaxMaxSpeed) + cp.multiply((1 - inverseMaxSpeedsChanges_), inverseMaxSpeeds_original)
     
     # Constraints 
     constraints = []
-    
-            
-    # # Hot 1 Encoding    
-    # for row in maxSpeeds_H1E_:
-    #     constraints.append( sum(row) == 1)
-        
     
     for j in range(len(edges)):
         
