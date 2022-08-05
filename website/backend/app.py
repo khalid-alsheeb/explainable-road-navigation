@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from .src.final_functions import getPathExplanation, getDesiredPathFromWaypoint, getAnytimeAlgorithmData, variablesToUseFix
 import json
-
+import numpy as np
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -12,6 +12,7 @@ cors = CORS(app)
 
 @app.route('/1/', methods = ['GET'])
 def get_explanations1():
+    np.random.seed(0)
 
     desired_path = [int(n) for n in request.args.getlist('desired_path')]
     variablesToUse = [n for n in request.args.getlist('variablesToUse')]
@@ -23,6 +24,7 @@ def get_explanations1():
 
 @app.route('/2/', methods = ['GET'])
 def get_explanations2():
+    np.random.seed(0)
     
     nodes = [int(n) for n in request.args.getlist('nodes')]
     variablesToUse = [n for n in request.args.getlist('variablesToUse')]
@@ -44,6 +46,7 @@ def get_explanations2():
 
 @app.route('/3/', methods = ['GET'])
 def get_explanations3():
+    np.random.seed(0)
     
     nodes = [int(n) for n in request.args.getlist('nodes')]
     variablesToUse = [n for n in request.args.getlist('variablesToUse')]
