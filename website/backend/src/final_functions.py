@@ -58,7 +58,7 @@ def getPathExplanation(desired_path, variablesToUse):
         exp = getGraphExplanation(G, new_graph, desired_path)
         explanations = makeExplanationsStrings(exp)
     
-    return shortest_path, explanations
+    return shortest_path, explanations, optimal_value
 
 
 
@@ -108,13 +108,13 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
         explanations = ['NO SP']
     else:
         addReverseEdges(G)
-        desired_path, explanations = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
+        desired_path, explanations, optimalValue, values = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
         if(len(desired_path) == 0):
             explanations = ['Infeasible']
         else:
             explanations = makeExplanationsStrings(explanations)
     
-    return shortest_path, desired_path, explanations
+    return shortest_path, desired_path, explanations, optimalValue, values
 
 
 def variablesToUseFix(variablesToUse):

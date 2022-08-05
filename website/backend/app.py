@@ -7,9 +7,6 @@ import numpy as np
 app = Flask(__name__)
 cors = CORS(app)
 
-#variablesToUse=['noWay', 'isClosed', 'speed', 'maxSpeed']
-
-
 @app.route('/1/', methods = ['GET'])
 def get_explanations1():
     np.random.seed(0)
@@ -18,7 +15,7 @@ def get_explanations1():
     variablesToUse = [n for n in request.args.getlist('variablesToUse')]
     variablesToUseFix(variablesToUse)
     
-    shortest_path, explanations = getPathExplanation(desired_path, variablesToUse)
+    shortest_path, explanations, optimalValue = getPathExplanation(desired_path, variablesToUse)
     
     return jsonify({ 'shortest_path': shortest_path, 'explanations': explanations })
 
@@ -38,7 +35,7 @@ def get_explanations2():
     
     print(desired_path)
     if (len(desired_path) > 0):
-        shortest_path, explanations = getPathExplanation(desired_path, variablesToUse)
+        shortest_path, explanations, optimalValue = getPathExplanation(desired_path, variablesToUse)
 
     
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
@@ -58,7 +55,7 @@ def get_explanations3():
     print(nodes)
     
     # Apply the anytime algorithm and get SP
-    shortest_path, desired_path, explanations = getAnytimeAlgorithmData(nodes, variablesToUse)
+    shortest_path, desired_path, explanations, optimalValues = getAnytimeAlgorithmData(nodes, variablesToUse)
 
     
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })

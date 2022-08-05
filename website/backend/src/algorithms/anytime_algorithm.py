@@ -23,6 +23,8 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     optimalGraph = None
     optimalValue = float('inf')
     
+    values = []
+    
     count = 0
     
     shortestPath = getShortestPathWaypoint(pathsGraph, source, waypoint, target)
@@ -33,6 +35,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
             
             #ISP HERE
             possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
+            values.append(value)
             count += 1
             if ((value != None) and (value < optimalValue)):
                 optimalValue = value
@@ -60,6 +63,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                     
                     #ISP HERE
                     possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
+                    values.append(value)
                     count += 1
                     if ((value != None) and (value < optimalValue)):
                         optimalValue = value
@@ -70,7 +74,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     
     print('times in {} minues = {}'.format(minutes, count))
             
-    return optimalShortestPath, optimalExplanation
+    return optimalShortestPath, optimalExplanation, optimalValue, values
 
 
 def getShortestPathWaypoint(graph, source, waypoint, target):
