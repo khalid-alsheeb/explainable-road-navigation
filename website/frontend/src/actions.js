@@ -4,7 +4,7 @@ import {
         REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_RESULTS_V1,
         GET_RESULTS_V2, GET_RESULTS_V3,
         RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
-        UPDATE_VARIABLES
+        UPDATE_VARIABLES, UPDATE_MARKERS
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -61,7 +61,7 @@ export const getResultsV1 = () => async (dispatch, getState) => {
 export const getResultsV2 = () => async (dispatch, getState) => {
     try {
         const state = getState()
-        const nodesp = state.desiredPathNodes
+        const nodesp = state.markers
         const nodes = getCorrectNodes(nodesp)
         const variablesToUse = state.variables
 
@@ -92,7 +92,7 @@ export const getResultsV2 = () => async (dispatch, getState) => {
 export const getResultsV3 = () => async (dispatch, getState) => {
     try {
         const state = getState()
-        const nodesp = state.desiredPathNodes
+        const nodesp = state.markers
         const nodes = getCorrectNodes(nodesp)
         const variablesToUse = state.variables
 
@@ -308,6 +308,16 @@ export const updateDP = (nodes) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_DESIRED_PATH, payload: nodes });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+export const updateMarkers = (markers) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_MARKERS, payload: markers });
     } catch (error) {
         console.log(error.message);
     }

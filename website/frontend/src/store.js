@@ -11,6 +11,7 @@ const initialState = {
     shortestPath: [],
     explanations: [],
     variablesToUse: [],
+    markers: [],
     version: 1
 }
 

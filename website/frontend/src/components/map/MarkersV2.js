@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import L from 'leaflet';
-import { updateDP } from '../../actions';
+import { updateMarkers } from '../../actions';
 
 var sourceMarker = new L.Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -43,7 +43,7 @@ const MarkersV2 = () => {
 
     const [nodes, setNodes] = useState([source, waypoint, target])
 
-    dispatch(updateDP(nodes))
+    dispatch(updateMarkers(nodes))
 
     const handleChangeS = useMemo(() => ({
         dragend(e) {
