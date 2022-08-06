@@ -69,6 +69,12 @@ const Explanations = () => {
                         Please add some nodes.
                     </Typography>
                 </>
+            : explanations[0] === 'Infeasible-AT' ?
+            <>
+                <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
+                    This specific problem is Infeasible - within our time limit.
+                </Typography>
+            </>
             :
                 <>
                 </>
