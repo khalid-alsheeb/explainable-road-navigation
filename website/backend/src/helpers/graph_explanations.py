@@ -1,5 +1,3 @@
-
-
 def getGraphExplanation(oldGraph, newGraph, path):
     explanations = {}
     

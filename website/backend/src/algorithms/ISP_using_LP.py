@@ -1,8 +1,6 @@
-# Imports
 import networkx as nx
 import numpy as np
 import cvxpy as cp
-import math
 
 from ..helpers.graph_helpers import *
 

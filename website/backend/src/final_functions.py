@@ -1,6 +1,5 @@
 import osmnx as ox
 import networkx as nx
-import time
 
 from .algorithms.diverse_SPs import getShortestPath
 from .helpers.graph_helpers import addReverseEdges, getOriginalAttributeTypes, getPathWeight, updateGraphWeights, fixWrongDataG, updateWeightMetric
@@ -36,9 +35,8 @@ def getPathExplanation(desired_path, variablesToUse):
         explanations = ['NO SP']
         return shortest_path, explanations, None
     elif(getPathWeight(desired_path, G) == getPathWeight(shortest_path, G)):
-        #TODO: consider this case
         explanations = ['SP=DP']
-        return shortest_path, explanations, 0
+        return desired_path, explanations, 0
     
     # average = 0
     # for i in range(10):
@@ -90,8 +88,6 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     G = getOriginalAttributeTypes(G)
     G = fixWrongDataG(G)
     updateGraphWeights(G)
-    
-    nodes = [3140855379, 3140855372, 1707216608]
     
     source = nodes[0]
     waypoint = nodes[1]

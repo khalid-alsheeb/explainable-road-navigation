@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
-import networkx as nx
 import osmnx as ox
+
 from graph_helpers import fixWrongDataE
 
 

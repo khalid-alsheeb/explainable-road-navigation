@@ -1,5 +1,3 @@
-# Imports
-import networkx as nx
 import numpy as np
 import cvxpy as cp
 

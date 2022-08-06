@@ -1,7 +1,7 @@
 import osmnx as ox
-import networkx as nx
 import numpy as np
 import pandas as pd
+
 from src.final_functions import getPathExplanation, getDesiredPathFromWaypoint, variablesToUseFix, getAnytimeAlgorithmData
 
 np.random.seed(0)

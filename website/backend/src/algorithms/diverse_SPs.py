@@ -1,9 +1,8 @@
 #Taken from "A Heuristic Approach to Finding Diverse Short Paths" (Caleb Voss, Mark Moll, and Lydia E. Kavraki)
-
-# Imports
 import networkx as nx
 import numpy as np
 import math
+
 from ..helpers.graph_helpers import *
 
 # returns the ShortestPaths as lists
@@ -45,7 +44,6 @@ def diverseShortestPaths(graph, source, target, numberOfPaths, branchingFactor, 
             if (len(newShortestPath) != 0):
                 shortestPath_graph_pairs.append((newShortestPath, newGraph))
             
-            #TODO
             if (len(newShortestPath) != 0): #NO CRITERIA, FOR NOW. (ACCEPT ALL)
                 # change sp from list to tuple, to be hashed
                 shortestPaths.add(tuple(newShortestPath))
