@@ -48,13 +48,13 @@ const Explanations = () => {
             : explanations[0] === 'Infeasible' ?
                 <>
                     <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
-                        The problem is Infeasible.
+                        This specific problem is Infeasible.
                     </Typography>
                 </>
             : explanations[0] === 'SP=DP' ?
                 <>
                     <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
-                        The desired path is the optimal path.
+                        This desired path is the optimal path.
                     </Typography>
                 </>
             : explanations[0] === 'NO SP' ?
