@@ -28,17 +28,17 @@ def getPathExplanation(desired_path, variablesToUse):
     
     if(len(desired_path) == 0):
         explanations = ['NO Nodes']
-        return shortest_path, explanations
+        return shortest_path, explanations, None
     elif(desired_path == shortest_path):
         explanations = ['SP=DP']
-        return shortest_path, explanations
+        return shortest_path, explanations, None
     elif(len(shortest_path) == 0):
         explanations = ['NO SP']
-        return shortest_path, explanations
+        return shortest_path, explanations, None
     elif(getPathWeight(desired_path, G) == getPathWeight(shortest_path, G)):
         #TODO: consider this case
         explanations = ['SP=DP']
-        return shortest_path, explanations
+        return shortest_path, explanations, None
     
     # average = 0
     # for i in range(10):
