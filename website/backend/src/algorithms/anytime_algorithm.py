@@ -27,8 +27,10 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     
     count = 0
     
+    # The zero condition is there to stop if we find a path with the lowest possible optimalValue (zero - no changes needed)
+    
     shortestPath = getShortestPathWaypoint(pathsGraph, source, waypoint, target)
-    while(True and (time.time() < timeout)):
+    while((time.time() < timeout) and (optimalValue > 0.0)):
         if (len(shortestPath) != 0 ):
             shortestPath_graph_pairs.append((shortestPath, pathsGraph))
             # shortestPaths.add(tuple(shortestPath))
@@ -42,7 +44,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                 optimalGraph = possibleOptimalGraph
                 optimalShortestPath = shortestPath
         
-        while ((len(shortestPath_graph_pairs) != 0) and (time.time() < timeout)):
+        while ((len(shortestPath_graph_pairs) != 0) and (time.time() < timeout) and (optimalValue > 0.0)):
             pair = shortestPath_graph_pairs.pop(0)
             shortestPath = pair[0]
             graph = pair[1]
