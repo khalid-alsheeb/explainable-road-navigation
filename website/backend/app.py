@@ -55,7 +55,7 @@ def get_explanations3():
     print(nodes)
     
     # Apply the anytime algorithm and get SP
-    shortest_path, desired_path, explanations, optimalValues = getAnytimeAlgorithmData(nodes, variablesToUse)
+    shortest_path, desired_path, explanations, optimalValue, values = getAnytimeAlgorithmData(nodes, variablesToUse)
 
     
     return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })

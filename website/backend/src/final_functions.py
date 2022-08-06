@@ -31,14 +31,14 @@ def getPathExplanation(desired_path, variablesToUse):
         return shortest_path, explanations, None
     elif(desired_path == shortest_path):
         explanations = ['SP=DP']
-        return shortest_path, explanations, None
+        return shortest_path, explanations, 0
     elif(len(shortest_path) == 0):
         explanations = ['NO SP']
         return shortest_path, explanations, None
     elif(getPathWeight(desired_path, G) == getPathWeight(shortest_path, G)):
         #TODO: consider this case
         explanations = ['SP=DP']
-        return shortest_path, explanations, None
+        return shortest_path, explanations, 0
     
     # average = 0
     # for i in range(10):
@@ -91,6 +91,8 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     G = fixWrongDataG(G)
     updateGraphWeights(G)
     
+    nodes = [3140855379, 3140855372, 1707216608]
+    
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
@@ -111,6 +113,8 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
         desired_path, explanations, optimalValue, values = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
         if(len(desired_path) == 0):
             explanations = ['Infeasible']
+        elif(optimalValue == 0.0):
+            explanations = ['SP=DP']
         else:
             explanations = makeExplanationsStrings(explanations)
     
