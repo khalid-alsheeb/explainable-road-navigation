@@ -49,9 +49,6 @@ def get_explanations3():
     variablesToUse = [n for n in request.args.getlist('variablesToUse')]
     variablesToUseFix(variablesToUse)
     
-    # bug nodes
-    # nodes = [107790, 455705622, 107843]
-    
     print(nodes)
     
     # Apply the anytime algorithm and get SP
