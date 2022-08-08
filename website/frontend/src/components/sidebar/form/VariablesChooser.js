@@ -58,46 +58,44 @@ const VariablesChooser = () => {
 
     return (
         
-        <Form.Group className="mb-3">
-        <Container>
-                <Row>
-                    <Form.Label style={styles.white}>
-                        Variables to use:
-                    </Form.Label>
-                </Row>
-                <Row>
-                <ToggleButtonGroup
-                    value={Variables}
-                    onChange={handleChange}
-                    disabled={isDsiabled}
-                    size="small"
-                >
-                    <ToggleButton value="speed" aria-label="left aligned" style={styles.orangeBorder}>
-                            speed
-                    </ToggleButton>
-                    <ToggleButton value="maxSpeed" aria-label="centered" style={styles.orangeBorder}>
-                            max speed
-                    </ToggleButton>
-                    <ToggleButton value="noWay and isClosed" aria-label="right aligned" style={styles.orangeBorder}>
-                            no-way & road closure 
-                    </ToggleButton>
-                </ToggleButtonGroup>
-                </Row>
-                <Row style={{marginTop: '10px'}}>
-                    <Col xs={9}>
-                        <Typography variant="button" style={styles.white} component="div">
-                                        4 combinations
-                        </Typography>
-                    </Col>
-                    <Col xs={1}>
-                        <Switch thumbSwitchedStyle={{ backgroundColor: 'white' }} 
-                                color='warning' style={{color: "#ff9100"} } 
-                                onChange={(e, val) => handleSwitch(val)}
-                        />
-                    </Col>
-                </Row>
-        </Container>
-        </Form.Group>
+        <Col>
+            <Form.Label style={styles.white}>
+                Variables to use
+            </Form.Label>
+            <Row>
+                <Col>
+                    <ToggleButtonGroup
+                        value={Variables}
+                        onChange={handleChange}
+                        disabled={isDsiabled}
+                        size="small"
+                    >
+                        <ToggleButton value="speed" aria-label="left aligned" style={styles.orangeBorder}>
+                                speed
+                        </ToggleButton>
+                        <ToggleButton value="maxSpeed" aria-label="centered" style={styles.orangeBorder}>
+                                max speed
+                        </ToggleButton>
+                        <ToggleButton value="noWay and isClosed" aria-label="right aligned" style={styles.orangeBorder}>
+                                no-way & road closure 
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Col>
+            </Row>
+            <Row style={{marginTop: '10px'}}>
+                <Col xs={9}>
+                    <Typography variant="button" style={styles.white} component="div">
+                                    4 combinations
+                    </Typography>
+                </Col>
+                <Col xs={1}>
+                    <Switch thumbSwitchedStyle={{ backgroundColor: 'white' }} 
+                            color='warning' style={{color: "#ff9100"} } 
+                            onChange={(e, val) => handleSwitch(val)}
+                    />
+                </Col>
+            </Row>
+        </Col>
     );
 }
 

@@ -25,7 +25,6 @@ const AlgorithmsSelector= () => {
         }),
         control: (provided) => ({
         ...provided,
-        // marginTop: "5%",
         color:'white',
         backgroundColor: '#404040',
         border: '1px solid rgb(255, 145, 0)',
@@ -55,22 +54,21 @@ const AlgorithmsSelector= () => {
 
     return (
         <Form.Group className="mb-3"> 
-        <Form.Label style={{color: 'white'}}>
-            Algorithm
-        </Form.Label>
+            <Form.Label style={{color: 'white'}}>
+                Algorithm
+            </Form.Label>
             <Select
-            defaultValue={algorithms[0]}
-            styles={ customStyles }
-            components={animatedComponents}
-            options={algorithms}
-            onChange = {(choice) => dispatch(changeVersion(choice.value))}
-            isSearchable={false}
+                defaultValue={algorithms[0]}
+                styles={ customStyles }
+                components={animatedComponents}
+                options={algorithms}
+                onChange = {(choice) => dispatch(changeVersion(choice.value))}
+                isSearchable={false}
             />
 
-        <Form.Text className="text-muted">
-          <AlgorithmDescription />
-        </Form.Text>
-        
+            <Form.Text className="text-muted">
+            <AlgorithmDescription />
+            </Form.Text>
         </Form.Group>
     )
 }

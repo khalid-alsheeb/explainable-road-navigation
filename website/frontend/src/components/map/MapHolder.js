@@ -4,7 +4,6 @@ import Map from "./Map";
 import Row from 'react-bootstrap/esm/Row';
 import { Typography } from "@material-ui/core";
 
-//<Container style={{height: '98vh', width: '100vh'}}>
 const MapHolder = () => {
 
     return(
