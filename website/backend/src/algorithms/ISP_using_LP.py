@@ -4,17 +4,6 @@ import cvxpy as cp
 
 from ..helpers.graph_helpers import *
 
-def inverseShortestPathSwitch(graph, desiredPath, variablesToUse):
-    graphs = []
-    values = []
-    for variable in variablesToUse:
-        optimalGraph, optimalValue = inverseShortestPath(graph, desiredPath, variable)
-        graphs.append(optimalGraph)
-        values.append(optimalValue)
-
-    return graphs
-
-
 
 # Fastest ISP
 def inverseShortestPath(graph, desiredPath, variablesToUse):
@@ -161,11 +150,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
         else: # for all j not in desired path
             
-            # Do not change data
-            constraints.append( noWay_[j] == noWay_original[j] )
-            constraints.append( areClosed_[j] == areClosed_original[j] )
-            constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
-            constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
             constraints.append( lambda_[j] >= 0 )
             
             # Use maxSpeed
@@ -178,8 +162,16 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
             # sum_i a_ij * pi_i + lambda_j = d_j,
             constraints.append( cp.sum(cp.multiply(A[:,j], pi_)) + lambda_[j] == d_j )
-
-
+            
+        if (xstar[j] == 1 and xzero[j] == 0): # all edges in SP and not in DP
+            # Do not change data
+            constraints.append( noWay_[j] == noWay_original[j] )
+            constraints.append( areClosed_[j] == areClosed_original[j] )
+            constraints.append( inverseMaxSpeeds_[j] == inverseMaxSpeeds_original[j] )
+            constraints.append( inverseSpeeds_[j] == inverseSpeeds_original[j] )
+            
+            
+        
         # Variables to change/not change, depending on parameter:
         if ('noWay' not in variablesToUse):
             constraints.append( noWay_[j] == noWay_original[j] )
@@ -224,7 +216,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     
     for (i, j), index in edgeIndex.items():
         
-        # If max speed is less, use maxSpeed to calculate weights, else use speeds
+        # If max speed is less, use maxSpeed to calculate weights, else use speed
         if (inverseMaxSpeeds_original[index] > inverseMaxSpeeds_.value[index]):
             speedOrmaxSpeed = 0
         else:
@@ -233,10 +225,10 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
             
         addEdgeToNewGraph(graph, newGraph, i, j)
         
-        newGraph[i][j][0]['noWay'] = int(noWay_.value[index])
-        newGraph[i][j][0]['isClosed'] = int(areClosed_.value[index])
+        newGraph[i][j][0]['noWay'] = round(noWay_.value[index])
+        newGraph[i][j][0]['isClosed'] = round(areClosed_.value[index])
         newGraph[i][j][0]['speed'] = getInverse(inverseSpeeds_.value[index])
-        newGraph[i][j][0]['maxSpeed'] = int(getInverse(inverseMaxSpeeds_.value[index]))
+        newGraph[i][j][0]['maxSpeed'] = round(getInverse(inverseMaxSpeeds_.value[index]))
         newGraph[i][j][0]['speedOrMaxSpeed'] = speedOrmaxSpeed
         
         
