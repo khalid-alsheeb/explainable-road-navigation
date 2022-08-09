@@ -21,6 +21,11 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     optimalGraph = None
     optimalValue = float('inf')
     
+    try:
+        no_waypoint_shortest_path = nx.shortest_path(pathsGraph, source=source, target=target, weight="weight")
+    except:
+        no_waypoint_shortest_path = []
+    
     values = []
     
     count = 0
@@ -32,7 +37,12 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
         if (len(shortestPath) != 0 ):
             shortestPath_graph_pairs.append((shortestPath, pathsGraph))
             
-            possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
+            if(shortestPath == no_waypoint_shortest_path):
+                value = 0
+                possibleOptimalGraph = originalGraph
+            else:
+                possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
+                
             values.append(value)
             count += 1
             if ((value != None) and (value < optimalValue)):
@@ -57,8 +67,12 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                 
                 if (len(newShortestPath) != 0):
                     shortestPath_graph_pairs.append((newShortestPath, newGraph))
-
-                    possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
+                    
+                    if(newShortestPath == no_waypoint_shortest_path):
+                        value = 0
+                        possibleOptimalGraph = originalGraph
+                    else:
+                        possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
                     values.append(value)
                     count += 1
                     if ((value != None) and (value < optimalValue)):
