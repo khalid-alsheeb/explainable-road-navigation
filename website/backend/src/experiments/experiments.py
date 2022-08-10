@@ -7,7 +7,7 @@ from src.final_functions import getPathExplanation, getDesiredPathFromWaypoint, 
 np.random.seed(0)
 
 G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
-variablesToUse = ['noWay', 'isClosed', 'maxSpeed']
+variablesToUse = ['noWay', 'isClosed', 'maxSpeed', 'speed']
 variablesToUseFix(variablesToUse)
 
 allNodes = []
