@@ -17,6 +17,7 @@ all_anytime_values = []
 for i in range(12):
     currentNodes = []
     
+    # random nodes maker
     while(len(currentNodes) < 3):
         randomNode = int(np.random.choice(G.nodes))
         if(randomNode not in currentNodes):
