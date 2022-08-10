@@ -14,7 +14,7 @@ allNodes = []
 original_values = []
 solvableCount = 0
 
-while solvableCount < 1:
+while solvableCount < 100:
     currentNodes = []
     
     # random nodes maker
