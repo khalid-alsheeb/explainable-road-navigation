@@ -92,7 +92,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
-    minutes = 5
+    minutes = 0.25
     branchingFactor = 2
     ballRadius = 0.0001
     
@@ -106,15 +106,15 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
         explanations = ['NO SP']
     else:
         addReverseEdges(G)
-        desired_path, explanations, optimalValue, values = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
-        if(optimalValue == 0.0):
+        desired_path, explanations, optimalValues = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
+        if(optimalValues[len(optimalValues) - 1] == 0.0):
             explanations = ['SP=DP']
         elif(len(desired_path) == 0):
             explanations = ['Infeasible-AT']
         else:
             explanations = makeExplanationsStrings(explanations)
     
-    return shortest_path, desired_path, explanations, optimalValue, values
+    return shortest_path, desired_path, explanations, optimalValues
 
 
 def variablesToUseFix(variablesToUse):

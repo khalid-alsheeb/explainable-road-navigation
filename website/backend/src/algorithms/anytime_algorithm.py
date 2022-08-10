@@ -26,7 +26,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     except:
         no_waypoint_shortest_path = []
     
-    values = []
+    optimalValues = []
     
     count = 0
     
@@ -43,12 +43,16 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
             else:
                 possibleOptimalGraph, value = inverseShortestPath(originalGraph, shortestPath, variablesToUse)
                 
-            values.append(value)
             count += 1
             if ((value != None) and (value < optimalValue)):
                 optimalValue = value
                 optimalGraph = possibleOptimalGraph
                 optimalShortestPath = shortestPath
+            
+            if (value == None and optimalValue == float('inf')):
+                optimalValues.append(None)
+            else:
+                optimalValues.append(optimalValue)
         
         while ((len(shortestPath_graph_pairs) != 0) and (time.time() < timeout) and (optimalValue > 0.0)):
             pair = shortestPath_graph_pairs.pop(0)
@@ -73,18 +77,23 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                         possibleOptimalGraph = originalGraph
                     else:
                         possibleOptimalGraph, value = inverseShortestPath(originalGraph, newShortestPath, variablesToUse)
-                    values.append(value)
+
                     count += 1
                     if ((value != None) and (value < optimalValue)):
                         optimalValue = value
                         optimalGraph = possibleOptimalGraph
                         optimalShortestPath = newShortestPath
+                        
+                    if (value == None and optimalValue == float('inf')):
+                        optimalValues.append(None)
+                    else:
+                        optimalValues.append(optimalValue)
                 
     optimalExplanation = getGraphExplanation(originalGraph, optimalGraph, optimalShortestPath)
     
     print('times in {} minues = {}'.format(minutes, count))
             
-    return optimalShortestPath, optimalExplanation, optimalValue, values
+    return optimalShortestPath, optimalExplanation, optimalValues
 
 
 def getShortestPathWaypoint(graph, source, waypoint, target):
