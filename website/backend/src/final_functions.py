@@ -1,5 +1,6 @@
 import osmnx as ox
 import networkx as nx
+import time
 
 from .algorithms.diverse_SPs import getShortestPath
 from .helpers.graph_helpers import addReverseEdges, getOriginalAttributeTypes, getPathWeight, updateGraphWeights, fixWrongDataG, updateWeightMetric
@@ -92,7 +93,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
-    minutes = 0.25
+    minutes = 5
     branchingFactor = 2
     ballRadius = 0.0001
     
