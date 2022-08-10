@@ -261,7 +261,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     except:
         pass
         
-    return newGraph, round(prob.value)
+    return newGraph, float(round(prob.value))
 
 
 
