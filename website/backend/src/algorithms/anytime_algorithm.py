@@ -22,7 +22,7 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
     optimalValue = float('inf')
     
     try:
-        no_waypoint_shortest_path = nx.shortest_path(pathsGraph, source=source, target=target, weight="weight")
+        no_waypoint_shortest_path = nx.shortest_path(originalGraph, source=source, target=target, weight="weight")
     except:
         no_waypoint_shortest_path = []
     
