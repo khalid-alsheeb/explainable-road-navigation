@@ -11,7 +11,7 @@ G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
 variablesToUse = ['noWay', 'isClosed', 'maxSpeed', 'speed']
 variablesToUseFix(variablesToUse)
 
-dataAT = pd.read_csv('./data/anytime_algorithm_problems_part1.csv')
+dataAT = pd.read_csv('./data/anytime_algorithm_problems_part2.csv')
 dataAT.anytime_algorithm_values = dataAT.anytime_algorithm_values.apply(literal_eval)
 dataAT.nodes = dataAT.nodes.apply(literal_eval)
 
