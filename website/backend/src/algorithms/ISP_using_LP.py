@@ -11,7 +11,7 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
     # Constants
     inf = 1e6
     epsilon = 1e-16
-    inverseMaxMaxSpeed = getInverse(90)
+    inverseMaxMaxSpeed = getInverse(70)
     
     # Some graph and path data
     n = len(graph.nodes())
