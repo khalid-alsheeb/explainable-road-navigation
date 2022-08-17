@@ -117,6 +117,11 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         
         if (xzero[j] == 1): #for all j in desired path
             
+            if ('noWay' in variablesToUse):
+                constraints.append( noWay_[j] == 0 )
+            if ('isClosed' in variablesToUse):
+                constraints.append( areClosed_[j] == 0 )
+            
             # use both variables
             if (('speed' in variablesToUse) and ('maxSpeed' in variablesToUse)):
                 
