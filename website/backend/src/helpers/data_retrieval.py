@@ -62,7 +62,7 @@ def convertMaxSpeedToInt(speed):
 def add_specific_traffic_data(edges, name):
     # Create request URL
     BASE_URL = "https://api.tomtom.com/"
-    API_KEY = "ThfURaOhGRaty7mx9AKALwrbyIZApHd8"
+    API_KEY = "YOUR KEY"
     #zoom = 22
     TRAFFIC_URL = "traffic/services/4/flowSegmentData/absolute/22/json?key="
     UNIT = "unit=mph"
