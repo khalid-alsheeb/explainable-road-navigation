@@ -50,11 +50,11 @@ def getEdgeExplanation(oldEdge, newEdge, name):
         
     elif oldEdge['maxSpeed'] != newEdge['maxSpeed']:
         reason = '{} has a maximim speed of {} mph.'.format(name, oldEdge['maxSpeed'])
-        explanation = "{} had a maximum speed of at least {} mph.".format(name, newEdge['maxSpeed'])
+        explanation = "{} had a maximum speed of {} mph.".format(name, newEdge['maxSpeed'])
         
     elif oldEdge['speed'] != newEdge['speed']:
         reason = '{} has a current speed of {} mph.'.format(name, oldEdge['speed'])
-        explanation = "{} had a current speed of at least {} mph.".format(name, newEdge['speed'])
+        explanation = "{} had a current speed of {} mph.".format(name, newEdge['speed'])
         
     return (reason, explanation)
 
