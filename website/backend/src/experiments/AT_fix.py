@@ -15,9 +15,12 @@ data = pd.read_csv('./data/fixed_hundred_anytime_vs_original.csv')
 data.anytime_algorithm_values = data.anytime_algorithm_values.apply(literal_eval)
 data.nodes = data.nodes.apply(literal_eval)
 
+data2 = pd.read_csv('./data/anytime_algorithm_problems.csv')
+data2.nodes = data2.nodes.apply(literal_eval)
+
 nodes_100 = []
 at_100 = []
-allNodes = []
+allNodes = list(data2.nodes) + list(data.nodes)
 for index, row in data.iterrows():
     optimalValues_anytime = row.anytime_algorithm_values
     solution = optimalValues_anytime[len(optimalValues_anytime)  -1]
@@ -25,9 +28,9 @@ for index, row in data.iterrows():
     if(solution != None):
         at_100.append(optimalValues_anytime)
         nodes_100.append(current_nodes)
-    allNodes.append(current_nodes)
         
-
+print(len(allNodes))
+        
 
 print(len(nodes_100))
 print(len(at_100))
