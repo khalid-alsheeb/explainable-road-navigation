@@ -78,11 +78,11 @@ const MarkersV2 = () => {
                 </Popup>
             </Marker>
 
-            <Marker position={waypoint} icon={waypointMarker} draggable={true} eventHandlers={handleChangeW}>
+            {/* <Marker position={waypoint} icon={waypointMarker} draggable={true} eventHandlers={handleChangeW}>
                 <Popup >
                     Waypoint
                 </Popup>
-            </Marker>
+            </Marker> */}
         </>
     );
 }

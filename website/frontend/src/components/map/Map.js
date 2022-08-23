@@ -5,6 +5,7 @@ import { useState, useMemo } from 'react'
 import Edges from './Edges';
 import Markers from './Markers';
 import Border from './Border';
+import MarkersV2 from './MarkersV2';
 
 
 const Map = () => {
@@ -26,7 +27,7 @@ const Map = () => {
 
                 <Edges />
 
-                <Markers />
+                <MarkersV2 />
                 
             </MapContainer>
         </>

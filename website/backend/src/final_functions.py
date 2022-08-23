@@ -123,3 +123,19 @@ def variablesToUseFix(variablesToUse):
         variablesToUse.remove('noWay and isClosed')
         variablesToUse.append('noWay')
         variablesToUse.append('isClosed')
+        
+
+def calculateShortestPath(source, target):
+    
+    G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
+    G = getOriginalAttributeTypes(G)
+    G = fixWrongDataG(G)
+    updateGraphWeights(G)
+    
+    
+    try:
+        shortestPath = nx.shortest_path(G, source=source, target=target, weight="weight")
+    except:
+        shortestPath = []
+        
+    return shortestPath

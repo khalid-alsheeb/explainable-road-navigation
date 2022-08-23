@@ -4,7 +4,7 @@ import {
         REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_RESULTS_V1,
         GET_RESULTS_V2, GET_RESULTS_V3,
         RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
-        UPDATE_VARIABLES, UPDATE_MARKERS
+        UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -294,10 +294,27 @@ export const updateVariablesToUse = (variables) => async (dispatch) => {
 
 
 
-export const calculateSP = () => async (dispatch) => {
+export const calculateSP = () => async (dispatch, getState) => {
     try {
+        const state = getState()
+        const nodesp = state.markers
+        const nodes = getCorrectNodes(nodesp)
 
-        console.log('SP-Done');
+        const { data } = await axios.get("/sp/", {
+            params: {
+                nodes: nodes,
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params, { arrayFormat: 'repeat' })
+            }
+        })
+
+        const shortestPathNodes = data['shortest_path']
+        const shortestPath = getPathFormat(shortestPathNodes)
+
+        console.log(shortestPath);
+
+        dispatch({ type: GET_SHORTEST_PATH, payload: shortestPath });
     } catch (error) {
         console.log(error.message);
     }
@@ -322,3 +339,4 @@ export const updateMarkers = (markers) => async (dispatch) => {
         console.log(error.message);
     }
 }
+

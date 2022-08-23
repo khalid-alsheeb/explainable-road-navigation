@@ -40,9 +40,9 @@ const Edge = ({ edge }) => {
         }
 
 
-        if (desiredPath.length === 0) {
-            setColor(normalEdge)
-        }
+        // if (desiredPath.length === 0) {
+        //     setColor(normalEdge)
+        // }
     }, [desiredPath, shortestPath])
 
     const colorChange = () => {
@@ -63,16 +63,17 @@ const Edge = ({ edge }) => {
 
     const coordinates = edge['coordinates']
 
-
     return (
         <>
-            { version === 1 ?
+            {/* { version === 1 ?
             
                 <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }} pane={'markerPane'} />
             :
 
                 <Polyline positions={coordinates} pathOptions={{ color }} pane={'markerPane'} />
-            }
+            } */}
+
+            <Polyline positions={coordinates} pathOptions={{ color }} pane={'markerPane'} />
 
             { alert && 
                 <PopupAlert />
