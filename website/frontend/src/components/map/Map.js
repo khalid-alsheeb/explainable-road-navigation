@@ -1,7 +1,5 @@
-import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
-import { useSelector } from 'react-redux'
-import { useState, useMemo } from 'react'
 import Edges from './Edges';
 import Markers from './Markers';
 import Border from './Border';

@@ -11,13 +11,13 @@ import {
 const Reducer = (state = [], action) => {
     switch (action.type) {
         case GET_RESULTS_V1:
-            return { ...state, shortestPath: [...action.payload[0]], explanations: [...action.payload[1]] }
+            return { ...state, shortestPath: [...action.payload[0]], explanations: [...action.payload[1]], finishedExplanations: true }
 
         case GET_RESULTS_V2:
-            return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]] }
+            return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]], finishedExplanations: true }
 
         case GET_RESULTS_V3:
-            return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]] }
+            return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]], finishedExplanations: true }
 
         case ADD_TO_DESIRED_PATH:
             return { ...state, desiredPath: [...action.payload] }
@@ -60,13 +60,19 @@ const Reducer = (state = [], action) => {
                 ...state,
                 edges: [],
                 desiredPath: [],
+                desiredPathNodes: [],
                 shortestPath: [],
-                explanations: []
+                explanations: [],
+                variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
+                version: 1,
+                inputType: 0,
+                finishedExplanations: false
             }
 
         default:
             return state;
     }
 }
+
 
 export default Reducer;

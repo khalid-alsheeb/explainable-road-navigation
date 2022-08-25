@@ -10,10 +10,11 @@ const initialState = {
     desiredPathNodes: [],
     shortestPath: [],
     explanations: [],
-    variablesToUse: ['speed', 'maxSpeed', 'noWay and isClosed'],
+    variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
     markers: [],
     version: 1,
-    inputType: 0
+    inputType: 0,
+    finishedExplanations: false
 }
 
 const middleware = [thunk]

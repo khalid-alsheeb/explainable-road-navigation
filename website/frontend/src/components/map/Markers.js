@@ -1,6 +1,6 @@
 import { Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import L from 'leaflet';
 import { updateMarkers } from '../../actions';
@@ -37,13 +37,34 @@ const waypoint = { 'lat': 51.50957032449099, 'lng': -0.10437014485696673 } // bl
 const target = { 'lat': 51.51263530532304, 'lng': -0.11577497367932346 } // strand campus
 
 const Markers = () => {
-    // make it not dragabble, if sp is calculated.
+    // make it not dragabble, if dp is calculated.
 
     const inputType = useSelector((state) => state.inputType);
+    const finishedExplanations = useSelector((state) => state.finishedExplanations);
 
     const dispatch = useDispatch()
 
     const [nodes, setNodes] = useState([source, waypoint, target])
+
+    const [IsDraggableOriginal, setIsDraggableOriginal] = useState(true)
+
+    const [IsDraggableWaypoint, setIsDraggableWaypoint] = useState(false)
+
+    useEffect(() => {
+        
+        if (inputType !== 0) {
+            setIsDraggableOriginal(false)
+        } else {
+            setIsDraggableOriginal(true)
+        }
+
+        if (finishedExplanations === true) {
+            setIsDraggableWaypoint(false)
+        } else if (inputType === 2) {
+            setIsDraggableWaypoint(true)
+        }
+
+    }, [inputType, finishedExplanations])
 
     dispatch(updateMarkers(nodes))
 
@@ -68,20 +89,20 @@ const Markers = () => {
 
     return (
         <>
-            <Marker position={source} icon={sourceMarker} draggable={true} eventHandlers={handleChangeS}>
+            <Marker position={source} icon={sourceMarker} draggable={IsDraggableOriginal} eventHandlers={handleChangeS}>
                 <Popup >
                     Source
                 </Popup>
             </Marker>
 
-            <Marker position={target} icon={targetMarker} draggable={true} eventHandlers={handleChangeT}>
+            <Marker position={target} icon={targetMarker} draggable={IsDraggableOriginal} eventHandlers={handleChangeT}>
                 <Popup >
                     Target
                 </Popup>
             </Marker>
 
             { inputType === 2?
-                <Marker position={waypoint} icon={waypointMarker} draggable={true} eventHandlers={handleChangeW}>
+                <Marker position={waypoint} icon={waypointMarker} draggable={IsDraggableWaypoint} eventHandlers={handleChangeW}>
                     <Popup >
                         Waypoint
                     </Popup>

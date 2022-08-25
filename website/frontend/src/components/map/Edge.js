@@ -13,12 +13,9 @@ const Edge = ({ edge }) => {
     const mixPColor = 'orange'
 
     const [color, setColor] = useState(normalEdge);
-    // const [alert, setAlert] = useState(false)
     const desiredPath = useSelector((state) => state.desiredPath)
     const shortestPath = useSelector((state) => state.shortestPath)
     const inputType = useSelector((state) => state.inputType)
-
-
 
     const dispatch = useDispatch();
 
