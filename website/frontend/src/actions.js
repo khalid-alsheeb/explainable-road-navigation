@@ -4,7 +4,8 @@ import {
         REVERSE_DESIRED_PATH, ADD_REMOVE_BORDER, GET_RESULTS_V1,
         GET_RESULTS_V2, GET_RESULTS_V3,
         RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
-        UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH
+        UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH,
+        CHANGE_INPUT_TYPE
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -340,3 +341,11 @@ export const updateMarkers = (markers) => async (dispatch) => {
     }
 }
 
+export const changeInputType = (version) => async (dispatch) => {
+    try {
+        // dispatch(resetData())
+        dispatch({ type: CHANGE_INPUT_TYPE, payload: version });
+    } catch (error) {
+        console.log(error.message);
+    }
+}

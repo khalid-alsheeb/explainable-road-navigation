@@ -2,19 +2,26 @@ import Select from 'react-select';
 import { Form } from 'react-bootstrap';
 import makeAnimated from 'react-select/animated';
 import { useDispatch } from 'react-redux';
-import { changeVersion } from '../../../actions';
+import { changeInputType, changeVersion } from '../../../actions';
 import AlgorithmDescription from './AlgorithmDescription';
+import { Typography } from '@mui/material';
+import InputDescription from './InputDescription';
 
-const AlgorithmsSelector= () => {
+const InputSelector= () => {
 
     const dispatch = useDispatch();
 
     const animatedComponents = makeAnimated();
 
     const algorithms = [
-        { value: 2, label: 'Quick Algorithm' },
-        { value: 3, label: 'In-House optimal Algorithm' } 
+        { value: 1, label: 'Provide a full path' },
+        { value: 2, label: 'Add a Waypoint' },
     ];
+
+    const handleChange = (choice) => {
+        dispatch(changeInputType(choice.value))
+        dispatch(changeVersion(choice.value))
+    }
 
     const customStyles = {
         option: (provided, state) => ({
@@ -54,22 +61,26 @@ const AlgorithmsSelector= () => {
     return (
         <Form.Group className="mb-3"> 
             <Form.Label style={{color: 'white'}}>
-                Algorithm
+                Did you expect a different path?
+
             </Form.Label>
+            <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                Please select a way to input your desired path
+            </Typography>
             <Select
                 defaultValue={algorithms[0]}
                 styles={ customStyles }
                 components={animatedComponents}
                 options={algorithms}
-                onChange = {(choice) => dispatch(changeVersion(choice.value))}
+                onChange = {handleChange}
                 isSearchable={false}
             />
 
             <Form.Text className="text-muted">
-            <AlgorithmDescription />
+            <InputDescription />
             </Form.Text>
         </Form.Group>
     )
 }
 
-export default AlgorithmsSelector;
+export default InputSelector;

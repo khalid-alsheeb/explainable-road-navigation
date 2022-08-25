@@ -7,22 +7,35 @@ import BetterLine from '../others/BetterLine';
 import Explanations from './Explanations';
 import { useSelector } from 'react-redux';
 import Controls from './form/Controls';
+import ShortestPathButton from './form/ShortestPathButton';
 
 const SideBar = () => {
 
     const explanations = useSelector((state) => state.explanations);
 
+    const inputType = useSelector((state) => state.inputType);
+
     return (
         <>
             <SideBarHeader />
-            
+
             <BetterLine color={'#696969'}/>
+            <div style={{ marginBottom: '10%' }}>
+                <ShortestPathButton/>
+            </div>
 
-            <Container className="orange-border" style={{ marginBottom: '10%', marginTop: '10%'}}> 
-                <DataForm />
-            </Container>
+            {
+                inputType === 0 ?
+                    <></>
+                :
 
-            <Controls />
+                    <Container className="orange-border"> 
+                        <DataForm />
+                    </Container>
+            }
+            <div style={{ marginTop: '10%' }}>
+                <Controls/>
+            </div>
 
             <BetterLine color={'#696969'}/>
 

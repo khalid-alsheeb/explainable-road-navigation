@@ -4,7 +4,8 @@ import {
     REMOVE_NODE_FROM_DESIRED_PATH, ADD_REMOVE_BORDER, GET_RESULTS_V1,
     GET_RESULTS_V2, GET_RESULTS_V3,
     RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
-    UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH
+    UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH,
+    CHANGE_INPUT_TYPE
 } from "./constants";
 
 const Reducer = (state = [], action) => {
@@ -49,7 +50,10 @@ const Reducer = (state = [], action) => {
             return { ...state, markers: action.payload }
 
         case GET_SHORTEST_PATH:
-            return { ...state, shortestPath: action.payload }
+            return { ...state, shortestPath: action.payload, inputType: 1 }
+
+        case CHANGE_INPUT_TYPE:
+            return { ...state, inputType: action.payload }
 
         case RESET_DATA:
             return { 

@@ -2,21 +2,21 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
-const AlgorithmDescription = () => {
+const InputDescription = () => {
 
-    const version = useSelector((state) => state.version);
+    const inputType = useSelector((state) => state.inputType);
 
 
     return (
         <>
         {
-            version === 2 ?
+            inputType === 1 ?
                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                    This is the ordinary quick algorithm. It answers the problem quickly, but sub-optimally - sometimes.
+                    Create your path by pressing on the edges you want. They should become orange or yellow, afterwards.
                 </Typography>
-            : version === 3 ?
+            : inputType === 2 ?
                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                    This is the new asymptotically optimal anytime algorithm. It always gives an optimal answer - if given sufficent time.
+                    Create your path by dragging waypoint marker to where you want it.
                 </Typography>
             : <></>
         }
@@ -24,4 +24,4 @@ const AlgorithmDescription = () => {
     );
 }
 
-export default AlgorithmDescription;
+export default InputDescription;

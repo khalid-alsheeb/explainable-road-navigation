@@ -1,7 +1,7 @@
 import { Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import L from 'leaflet';
 import { updateMarkers } from '../../actions';
 
@@ -38,6 +38,8 @@ const target = { 'lat': 51.51263530532304, 'lng': -0.11577497367932346 } // stra
 
 const MarkersV2 = () => {
     // make it not dragabble, if sp is calculated.
+
+    const inputType = useSelector((state) => state.inputType);
 
     const dispatch = useDispatch()
 
@@ -78,11 +80,17 @@ const MarkersV2 = () => {
                 </Popup>
             </Marker>
 
-            {/* <Marker position={waypoint} icon={waypointMarker} draggable={true} eventHandlers={handleChangeW}>
-                <Popup >
-                    Waypoint
-                </Popup>
-            </Marker> */}
+
+
+            { inputType === 2?
+                <Marker position={waypoint} icon={waypointMarker} draggable={true} eventHandlers={handleChangeW}>
+                    <Popup >
+                        Waypoint
+                    </Popup>
+                </Marker> 
+            :
+                <></>
+            }
         </>
     );
 }

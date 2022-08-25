@@ -10,7 +10,7 @@ const Markers = () => {
 
     return (
         <>
-           {
+           {/* {
                 version === 1 ?
                     <>
                         <MarkersV1 />
@@ -20,7 +20,8 @@ const Markers = () => {
                         <MarkersV2 />
                     </>
 
-            }
+            } */}
+            <MarkersV2 />
         </>
     );
 }
