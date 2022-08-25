@@ -28,7 +28,7 @@ const DataForm = () => {
 
             <BetterLine />
 
-            {/* <VariablesChooser /> */}
+            <VariablesChooser />
 
             <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)', width: '100%'}} onClick={() => dispatch(getExplanations())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
