@@ -13,10 +13,10 @@ const Edge = ({ edge }) => {
     const mixPColor = 'orange'
 
     const [color, setColor] = useState(normalEdge);
-    const [alert, setAlert] = useState(false)
+    // const [alert, setAlert] = useState(false)
     const desiredPath = useSelector((state) => state.desiredPath)
     const shortestPath = useSelector((state) => state.shortestPath)
-    const version = useSelector((state) => state.version)
+    const inputType = useSelector((state) => state.inputType)
 
 
 
@@ -35,20 +35,15 @@ const Edge = ({ edge }) => {
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
                     colorChange() 
+                    console.log('ajklsdjaskdh');
                 }
             }
         }
 
-
-        // if (desiredPath.length === 0) {
-        //     setColor(normalEdge)
-        // }
     }, [desiredPath, shortestPath])
 
     const colorChange = () => {
-        if (shortestPath.length > 0) {
-            setAlert(true)
-        }  else {
+        if (inputType === 1) {
             if (color === dpColor) {
                 setColor(normalEdge)
                 dispatch(removeNodeFromDesiredPath(edge))
@@ -57,6 +52,14 @@ const Edge = ({ edge }) => {
                 setColor(dpColor)
                 dispatch(addToDesiredPath(edge))
                 dispatch(addNodeToDesiredPath(edge))
+            } else if (color === spColor) {
+                setColor(mixPColor)
+                dispatch(addToDesiredPath(edge))
+                dispatch(addNodeToDesiredPath(edge))
+            } else if (color === mixPColor) {
+                setColor(spColor)
+                dispatch(removeNodeFromDesiredPath(edge))
+                dispatch(removeFromDesiredPath(edge))
             }
         }
     }
@@ -65,19 +68,7 @@ const Edge = ({ edge }) => {
 
     return (
         <>
-            {/* { version === 1 ?
-            
-                <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }} pane={'markerPane'} />
-            :
-
-                <Polyline positions={coordinates} pathOptions={{ color }} pane={'markerPane'} />
-            } */}
-
-            <Polyline positions={coordinates} pathOptions={{ color }} pane={'markerPane'} />
-
-            { alert && 
-                <PopupAlert />
-            }
+            <Polyline positions={coordinates} eventHandlers={{ click: colorChange }} pathOptions={{ color }} pane={'markerPane'} />  
         </>
     );
 }
