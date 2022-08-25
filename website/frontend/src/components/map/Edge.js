@@ -15,6 +15,7 @@ const Edge = ({ edge }) => {
     const desiredPath = useSelector((state) => state.desiredPath)
     const shortestPath = useSelector((state) => state.shortestPath)
     const inputType = useSelector((state) => state.inputType)
+    const finishedExplanations = useSelector((state) => state.finishedExplanations)
 
     const dispatch = useDispatch();
 
@@ -30,7 +31,8 @@ const Edge = ({ edge }) => {
         } else{
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
-                    colorChange() 
+                    colorChange()
+                    console.log(';alskjdlasdlasdjlasjlasdkasdlljk');
                 }
             }
         }
@@ -38,7 +40,7 @@ const Edge = ({ edge }) => {
     }, [desiredPath, shortestPath])
 
     const colorChange = () => {
-        if (inputType === 1) {
+        if (inputType === 1 && !finishedExplanations) {
             if (color === dpColor) {
                 setColor(normalEdge)
                 dispatch(removeNodeFromDesiredPath(edge))
