@@ -32,7 +32,6 @@ const Edge = ({ edge }) => {
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
                     colorChange() 
-                    console.log('ajklsdjaskdh');
                 }
             }
         }
@@ -58,6 +57,9 @@ const Edge = ({ edge }) => {
                 dispatch(removeNodeFromDesiredPath(edge))
                 dispatch(removeFromDesiredPath(edge))
             }
+        }
+        if (inputType === 0) {
+            setColor(normalEdge)
         }
     }
 
