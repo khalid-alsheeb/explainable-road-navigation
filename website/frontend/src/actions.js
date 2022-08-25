@@ -5,7 +5,7 @@ import {
         GET_RESULTS_V2, GET_RESULTS_V3,
         RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
         UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH,
-        CHANGE_INPUT_TYPE
+        CHANGE_INPUT_TYPE, RESET_PARTIAL_DATA
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
@@ -277,12 +277,21 @@ export const resetData = () => async (dispatch) => {
 
 export const changeVersion = (version) => async (dispatch) => {
     try {
-        dispatch(resetData())
+        dispatch(resetPartialData())
         dispatch({ type: CHANGE_VERSION, payload: version });
     } catch (error) {
         console.log(error.message);
     }
 }
+
+export const resetPartialData = () => async (dispatch) => {
+    try {
+        dispatch({ type: RESET_PARTIAL_DATA });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 
 export const updateVariablesToUse = (variables) => async (dispatch) => {
@@ -343,7 +352,7 @@ export const updateMarkers = (markers) => async (dispatch) => {
 
 export const changeInputType = (version) => async (dispatch) => {
     try {
-        // dispatch(resetData())
+        dispatch(resetPartialData())
         dispatch({ type: CHANGE_INPUT_TYPE, payload: version });
     } catch (error) {
         console.log(error.message);

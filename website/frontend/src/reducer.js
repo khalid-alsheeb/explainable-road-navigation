@@ -5,7 +5,7 @@ import {
     GET_RESULTS_V2, GET_RESULTS_V3,
     RESET_DATA, CHANGE_VERSION, UPDATE_DESIRED_PATH,
     UPDATE_VARIABLES, UPDATE_MARKERS, GET_SHORTEST_PATH,
-    CHANGE_INPUT_TYPE
+    CHANGE_INPUT_TYPE, RESET_PARTIAL_DATA
 } from "./constants";
 
 const Reducer = (state = [], action) => {
@@ -66,6 +66,17 @@ const Reducer = (state = [], action) => {
                 variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
                 version: 1,
                 inputType: 0,
+                finishedExplanations: false
+            }
+
+        case RESET_PARTIAL_DATA:
+            return { 
+                ...state,
+                edges: [],
+                desiredPath: [],
+                desiredPathNodes: [],
+                explanations: [],
+                variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
                 finishedExplanations: false
             }
 
