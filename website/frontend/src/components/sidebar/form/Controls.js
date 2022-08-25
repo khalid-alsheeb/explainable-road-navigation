@@ -28,7 +28,7 @@ const Controls = () => {
             <Row>
             <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)', width: '100%'}} onClick={() => dispatch(resetData())}>
                 <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                    Reset Data
+                    Try another journey
                 </Typography>
             </Button>
             </Row>
