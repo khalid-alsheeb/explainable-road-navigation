@@ -13,6 +13,30 @@ import { getPathFormat, getCorrectNodes } from './helperFunctions'
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
+export const calculateSP = () => async (dispatch, getState) => {
+    try {
+        const state = getState()
+        const nodesp = state.markers
+        const nodes = getCorrectNodes(nodesp)
+
+        const { data } = await axios.get("/sp/", {
+            params: {
+                nodes: nodes,
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params, { arrayFormat: 'repeat' })
+            }
+        })
+
+        const shortestPathNodes = data['shortest_path']
+        const shortestPath = getPathFormat(shortestPathNodes)
+
+        dispatch({ type: GET_SHORTEST_PATH, payload: shortestPath });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 export const getExplanations = () => async (dispatch, getState) => {
     try {
         const state = getState()
@@ -97,8 +121,6 @@ export const getResultsV3 = () => async (dispatch, getState) => {
         const nodes = getCorrectNodes(nodesp)
         const variablesToUse = state.variables
 
-        console.log(variablesToUse);
-
         const { data } = await axios.get("/3/", {
             params: {
                 nodes: nodes,
@@ -121,6 +143,7 @@ export const getResultsV3 = () => async (dispatch, getState) => {
         console.log(error.message);
     }
 };
+
 
 export const addToDesiredPath = (edge) => async (dispatch, getState) => {
     try {
@@ -146,34 +169,15 @@ export const addToDesiredPath = (edge) => async (dispatch, getState) => {
             if(newNodes.includes(currentNode)) {
                 desiredPath.push(edge)
             }
-        }  else if (desiredPath.length === 1) {
+        }  else {
             let lastNode = desiredPathNodes[desiredPathNodes.length - 1]
             let newNodes = edge['nodes']
             if (newNodes.includes(lastNode)) {
                 desiredPath.push(edge)
             }
-        } else {
-            desiredPath.push(edge)
-        }
+        } 
 
         dispatch({ type: ADD_TO_DESIRED_PATH, payload: desiredPath });
-    } catch (error) {
-        console.log(error.message);
-    }
-};
-
-
-export const removeFromDesiredPath = (edge) => async (dispatch, getState) => {
-    try {
-
-        const state = getState()
-        let desiredPath = state.desiredPath
-        if (desiredPath.includes(edge)) {
-            // removes the edges after the one removed, too
-            desiredPath.length = desiredPath.indexOf(edge)
-        }
-
-        dispatch({ type: REMOVE_FROM_DESIRED_PATH, payload: desiredPath });
     } catch (error) {
         console.log(error.message);
     }
@@ -186,9 +190,12 @@ export const addNodeToDesiredPath = (edge) => async (dispatch, getState) => {
         const state = getState()
         let desiredPath = state.desiredPathNodes
 
-        if (desiredPath.length === 0) {
-            desiredPath.push(edge['nodes'][0])
-            desiredPath.push(edge['nodes'][1])
+        if (desiredPath.length === 1) {
+            if (desiredPath[0] === edge['nodes'][0]) {
+                desiredPath.push(edge['nodes'][1])
+            } else if (desiredPath[0] === edge['nodes'][1]) {
+                desiredPath.push(edge['nodes'][0])
+            }
         } else {
 
             const lastNode = desiredPath[desiredPath.length - 1]
@@ -202,6 +209,22 @@ export const addNodeToDesiredPath = (edge) => async (dispatch, getState) => {
         }
 
         dispatch({ type: ADD_TO_NODE_PATH_EDGES, payload: desiredPath });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const removeFromDesiredPath = (edge) => async (dispatch, getState) => {
+    try {
+
+        const state = getState()
+        let desiredPath = state.desiredPath
+        if (desiredPath.includes(edge)) {
+            // removes the edges after the one removed, too
+            desiredPath.length = desiredPath.indexOf(edge)
+        }
+
+        dispatch({ type: REMOVE_FROM_DESIRED_PATH, payload: desiredPath });
     } catch (error) {
         console.log(error.message);
     }
@@ -225,9 +248,9 @@ export const removeNodeFromDesiredPath = (edge) => async (dispatch, getState) =>
             }
 
             const len = desiredPathNodes.indexOf(node)
-
-            if (len <= 2) {
-                desiredPathNodes.length = 0
+            console.log(len);
+            if (len === 0) {
+                desiredPathNodes.length = 1
             } else {
                 desiredPathNodes.length = len
             }   
@@ -292,8 +315,6 @@ export const resetPartialData = () => async (dispatch) => {
     }
 }
 
-
-
 export const updateVariablesToUse = (variables) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_VARIABLES, payload: variables });
@@ -301,35 +322,6 @@ export const updateVariablesToUse = (variables) => async (dispatch) => {
         console.log(error.message);
     }
 }
-
-
-
-export const calculateSP = () => async (dispatch, getState) => {
-    try {
-        const state = getState()
-        const nodesp = state.markers
-        const nodes = getCorrectNodes(nodesp)
-
-        const { data } = await axios.get("/sp/", {
-            params: {
-                nodes: nodes,
-            },
-            paramsSerializer: params => {
-                return qs.stringify(params, { arrayFormat: 'repeat' })
-            }
-        })
-
-        const shortestPathNodes = data['shortest_path']
-        const shortestPath = getPathFormat(shortestPathNodes)
-
-        console.log(shortestPath);
-
-        dispatch({ type: GET_SHORTEST_PATH, payload: shortestPath });
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
 
 export const updateDP = (nodes) => async (dispatch) => {
     try {

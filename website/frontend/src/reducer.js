@@ -50,7 +50,7 @@ const Reducer = (state = [], action) => {
             return { ...state, markers: action.payload }
 
         case GET_SHORTEST_PATH:
-            return { ...state, shortestPath: action.payload, inputType: 1 }
+            return { ...state, shortestPath: action.payload, inputType: 1, desiredPathNodes: [action.payload[0]['nodes'][0]] }
 
         case CHANGE_INPUT_TYPE:
             return { ...state, inputType: action.payload }

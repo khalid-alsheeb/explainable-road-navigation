@@ -29,10 +29,10 @@ const Edge = ({ edge }) => {
         }else if (desiredPath.includes(edge)) {
             setColor(dpColor)
         } else{
+            // To remove an edge that has the one before it removed.
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
                     colorChange()
-                    console.log(';alskjdlasdlasdjlasjlasdkasdlljk');
                 }
             }
         }
