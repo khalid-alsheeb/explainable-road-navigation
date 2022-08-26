@@ -4,14 +4,16 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form'
 import { useState } from "react";
 import { updateVariablesToUse } from "../../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const VariablesChooser = () => {
 
     const dispatch = useDispatch();
 
-    const [Variables, setVariables] = useState(() => ['speed', 'maxSpeed', 'noWay and isClosed']);
+    const originalVars = useSelector((state) => state.variables);
+
+    const [Variables, setVariables] = useState(originalVars);
 
     const [isDsiabled, setIsDisabled] = useState(false)
 
@@ -24,18 +26,6 @@ const VariablesChooser = () => {
             dispatch(updateVariablesToUse(Variables))
         }
     };
-
-    const handleSwitch = (val) => {
-        if(val) {
-            setIsDisabled(true)
-            setVariables([])
-            dispatch(updateVariablesToUse(Variables))
-        } else {
-            setIsDisabled(false)
-            setVariables(['speed', 'maxSpeed', 'noWay and isClosed'])
-            dispatch(updateVariablesToUse(Variables))
-        }
-    }
 
     const styles = {
         white: {

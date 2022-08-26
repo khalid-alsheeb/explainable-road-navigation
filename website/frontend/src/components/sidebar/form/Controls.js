@@ -1,10 +1,15 @@
 import { Button, Typography } from "@material-ui/core";
+import Switch from '@mui/material/Switch';
+import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { changeBorder, resetData } from "../../../actions";
+import VariablesChooser from "./VariablesChooser";
 
 
 const Controls = () => {
+
+    const [isOn, setIsOn] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -31,6 +36,26 @@ const Controls = () => {
                     Try another journey
                 </Typography>
             </Button>
+            </Row>
+
+            <Row>
+                <Col md='8' style={{marginTop: '2.5%'}}>
+                <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
+                    Advanced settings
+                </Typography>
+                </Col>
+                <Col md='auto' >
+                <Switch
+                    thumbSwitchedStyle={{ backgroundColor: 'white' }} color='warning' style={{color: "#ff9100"}} 
+                    onChange={() => {setIsOn(!isOn)}}
+                />
+                </Col>
+                {
+                    isOn ?
+                    <VariablesChooser />
+                    :
+                    <></>
+                }
             </Row>
 
         </Col>
