@@ -150,32 +150,36 @@ export const addToDesiredPath = (edge) => async (dispatch, getState) => {
         const state = getState()
         let desiredPath = state.desiredPath
         let desiredPathNodes = state.desiredPathNodes
-        if (desiredPath.length > 1) {
-            let secondLastNodes = desiredPath[desiredPath.length - 2]['nodes']
-            let lastNodes = desiredPath[desiredPath.length - 1]['nodes']
-            let newNodes = edge['nodes']
-            let notCurrentNode = 0
-            for (var i = 0; i < secondLastNodes.length; i++) {
-                for (var j = 0; j < lastNodes.length; j++) {
-                    if (secondLastNodes[i] === lastNodes[j]) {
-                        notCurrentNode = lastNodes[j]
+        const shortestPath = state.shortestPath
+
+        if (!(desiredPathNodes[desiredPathNodes.length - 1] === shortestPath[shortestPath.length - 1]['nodes'][1])) {
+            if (desiredPath.length > 1) {
+                let secondLastNodes = desiredPath[desiredPath.length - 2]['nodes']
+                let lastNodes = desiredPath[desiredPath.length - 1]['nodes']
+                let newNodes = edge['nodes']
+                let notCurrentNode = 0
+                for (var i = 0; i < secondLastNodes.length; i++) {
+                    for (var j = 0; j < lastNodes.length; j++) {
+                        if (secondLastNodes[i] === lastNodes[j]) {
+                            notCurrentNode = lastNodes[j]
+                        }
                     }
                 }
-            }
-            lastNodes = lastNodes.filter(item => item !== notCurrentNode)
-            let currentNode = lastNodes[0]
-
-            console.log(currentNode, newNodes[0], newNodes[1]);
-            if(newNodes.includes(currentNode)) {
-                desiredPath.push(edge)
-            }
-        }  else {
-            let lastNode = desiredPathNodes[desiredPathNodes.length - 1]
-            let newNodes = edge['nodes']
-            if (newNodes.includes(lastNode)) {
-                desiredPath.push(edge)
-            }
-        } 
+                lastNodes = lastNodes.filter(item => item !== notCurrentNode)
+                let currentNode = lastNodes[0]
+    
+                console.log(currentNode, newNodes[0], newNodes[1]);
+                if(newNodes.includes(currentNode)) {
+                    desiredPath.push(edge)
+                }
+            }  else {
+                let lastNode = desiredPathNodes[desiredPathNodes.length - 1]
+                let newNodes = edge['nodes']
+                if (newNodes.includes(lastNode)) {
+                    desiredPath.push(edge)
+                }
+            } 
+        }
 
         dispatch({ type: ADD_TO_DESIRED_PATH, payload: desiredPath });
     } catch (error) {
@@ -189,22 +193,24 @@ export const addNodeToDesiredPath = (edge) => async (dispatch, getState) => {
 
         const state = getState()
         let desiredPath = state.desiredPathNodes
-
-        if (desiredPath.length === 1) {
-            if (desiredPath[0] === edge['nodes'][0]) {
-                desiredPath.push(edge['nodes'][1])
-            } else if (desiredPath[0] === edge['nodes'][1]) {
-                desiredPath.push(edge['nodes'][0])
-            }
-        } else {
-
-            const lastNode = desiredPath[desiredPath.length - 1]
-            const newNodes = edge['nodes']
-
-            if (newNodes[0] === lastNode) {
-                desiredPath.push(newNodes[1])    
-            } else if (newNodes[1] === lastNode) {
-                desiredPath.push(newNodes[0])
+        const shortestPath = state.shortestPath
+        if (!(desiredPath[desiredPath.length - 1] === shortestPath[shortestPath.length - 1]['nodes'][1])) {
+            if (desiredPath.length === 1) {
+                if (desiredPath[0] === edge['nodes'][0]) {
+                    desiredPath.push(edge['nodes'][1])
+                } else if (desiredPath[0] === edge['nodes'][1]) {
+                    desiredPath.push(edge['nodes'][0])
+                }
+            } else {
+    
+                const lastNode = desiredPath[desiredPath.length - 1]
+                const newNodes = edge['nodes']
+    
+                if (newNodes[0] === lastNode) {
+                    desiredPath.push(newNodes[1])    
+                } else if (newNodes[1] === lastNode) {
+                    desiredPath.push(newNodes[0])
+                }
             }
         }
 
