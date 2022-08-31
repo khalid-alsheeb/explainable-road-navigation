@@ -97,7 +97,10 @@ def multiDiGraphToDiGraph(G):
     nodes, edges = ox.graph_to_gdfs(G)
     toChange = edges.query('key == 1').copy()
     
+    newIndecies = []
     for index, row in toChange.iterrows():
+
+
         coords = list(row['geometry'].coords)
         maxDistance = 0
         for i in range(len(coords) -  1):
@@ -120,27 +123,35 @@ def multiDiGraphToDiGraph(G):
         newEdge1.length = newEdge1.length * ratio
         newEdge2.length = newEdge2.length * (1 - ratio)
 
-        newNode = nodes.loc[index[0]].copy()
         newPoint = coords[1]
         
-        newNode.geometry = Point(newPoint)
-        newNode.y = newPoint[1]
-        newNode.x = newPoint[0]
-        
-        newNodeName = round(int(str(index[0]) + str(index[1])) / 1e5)
-        
-        print(newNodeName in  nodes.index)
+        if(not ((nodes['x']==newPoint[0]) & (nodes['y']==newPoint[1])).any()):
+            newNode = nodes.loc[index[0]].copy()
+            newNode.geometry = Point(newPoint)
+            newNode.y = newPoint[1]
+            newNode.x = newPoint[0]
+            
+            newNodeName = round(int(str(index[0]) + str(index[1])) / 1e5)
+            nodes.loc[newNodeName] = newNode
+        else:
+            newNode = nodes[((nodes['x']==newPoint[0]) & (nodes['y']==newPoint[1]))].iloc[0]
+            newNodeName = newNode.name
         
         edges.loc[(index[0], newNodeName, 0)] = newEdge1
         edges.loc[(newNodeName, index[1], 0)] = newEdge2
         
-        nodes.loc[newNodeName] = newNode
+        # print((index[0], newNodeName, 0), (newNodeName, index[1], 0), newNodeName)
         
-        print((index[0], newNodeName, 0), (newNodeName, index[1], 0), newNodeName)
+        newIndecies.append((index[0], newNodeName, 0))
+        newIndecies.append((newNodeName, index[1], 0))
+
         
     edges.drop(edges.query('key == 1').index, inplace=True)
+    
+    nodes["x"] = nodes["geometry"].x
+    nodes["y"] = nodes["geometry"].y
 
-    G_new = ox.graph_from_gdfs(nodes, edges)
+    G_new = ox.graph_from_gdfs(nodes, edges, G.graph)
     
     return G_new
 
