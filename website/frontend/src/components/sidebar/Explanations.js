@@ -75,6 +75,12 @@ const Explanations = () => {
                     This specific problem is Infeasible - within our time limit.
                 </Typography>
             </>
+            : explanations[0] === 'No Target' ?
+            <>
+                <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
+                    Please finish your desired path, to the target node.
+                </Typography>
+            </>
             :
                 <>
                 </>

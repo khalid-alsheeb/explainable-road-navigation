@@ -89,20 +89,20 @@ const Markers = () => {
 
     return (
         <>
-            <Marker position={source} icon={sourceMarker} draggable={IsDraggableOriginal} eventHandlers={handleChangeS}>
+            <Marker position={nodes[0]} icon={sourceMarker} draggable={IsDraggableOriginal} eventHandlers={handleChangeS}>
                 <Popup >
                     Source
                 </Popup>
             </Marker>
 
-            <Marker position={target} icon={targetMarker} draggable={IsDraggableOriginal} eventHandlers={handleChangeT}>
+            <Marker position={nodes[2]} icon={targetMarker} draggable={IsDraggableOriginal} eventHandlers={handleChangeT}>
                 <Popup >
                     Target
                 </Popup>
             </Marker>
 
             { inputType === 2?
-                <Marker position={waypoint} icon={waypointMarker} draggable={IsDraggableWaypoint} eventHandlers={handleChangeW}>
+                <Marker position={nodes[1]} icon={waypointMarker} draggable={IsDraggableWaypoint} eventHandlers={handleChangeW}>
                     <Popup >
                         Waypoint
                     </Popup>

@@ -59,24 +59,36 @@ export const getResultsV1 = () => async (dispatch, getState) => {
     try {
         const state = getState()
         const desiredPath = state.desiredPathNodes
+        const originalSP = state.shortestPath
         const variablesToUse = state.variables
 
-        const { data } = await axios.get("/1/", {
-            params: {
-                desired_path: desiredPath,
-                variablesToUse: variablesToUse
-            },
-            paramsSerializer: params => {
-                return qs.stringify(params, { arrayFormat: 'repeat' })
-            }
-        })
 
-        const shortestPathNodes = data['shortest_path']
-        const explanations = data['explanations']
+        const goalNode = originalSP[originalSP.length - 1]['nodes'][1]
 
-        const shortestPath = getPathFormat(shortestPathNodes)
+        let request_SP = originalSP
+        let explanations = ['No Target']
 
-        dispatch({ type: GET_RESULTS_V1, payload: [ shortestPath, explanations ] });
+        if (goalNode === desiredPath[desiredPath.length - 1]) {
+
+            const { data } = await axios.get("/1/", {
+                params: {
+                    desired_path: desiredPath,
+                    variablesToUse: variablesToUse
+                },
+                paramsSerializer: params => {
+                    return qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            })
+    
+            const shortestPathNodes = data['shortest_path']
+            let explanations = data['explanations']
+            let request_SP = getPathFormat(shortestPathNodes)
+        }
+
+        console.log(request_SP);
+        console.log(explanations);
+
+        dispatch({ type: GET_RESULTS_V1, payload: [ request_SP, explanations ] });
     } catch (error) {
         console.log(error.message);
     }
