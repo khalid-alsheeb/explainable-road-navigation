@@ -13,7 +13,7 @@ const AlgorithmsSelector= () => {
 
     const algorithms = [
         { value: 2, label: 'Quick Algorithm' },
-        { value: 3, label: 'In-House optimal Algorithm' } 
+        { value: 3, label: 'Optimal Algorithm' } 
     ];
 
     const customStyles = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
 import { getExplanations } from '../../actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Button } from "@material-ui/core";
 import BetterLine from '../others/BetterLine';
 import Algorithms from './form/Algorithms';
@@ -13,16 +13,10 @@ const DataForm = () => {
 
     const dispatch = useDispatch();
 
+    const version = useSelector((state) => state.version);
+
     return(
         <Form className="mb-3" style={{margin: '5%'}} >
-            {/* <>
-                <Button style={{ backgroundColor: '#404040', border: '1px solid rgb(255, 145, 0)', width: '100%'}}>
-                    <Typography variant="button" color="textSecondary" style={{color: 'white'}} >
-                        Add start and end points
-                    </Typography>
-                </Button>
-            </> */}
-
 
             <Algorithms />
 
@@ -35,6 +29,17 @@ const DataForm = () => {
                     Why is my route worse
                 </Typography>
             </Button>
+            {
+            version === 2 ?
+                <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                    This will take around 6 seconds.
+                </Typography>
+            : version === 3 ?
+                <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                    This will take around 20 seconds.
+                </Typography>
+            : <></>
+            }
         </Form>
     );
 }

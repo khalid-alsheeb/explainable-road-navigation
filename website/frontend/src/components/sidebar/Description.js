@@ -9,6 +9,9 @@ const Description = () => {
     return (
         <Container >
             <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                This website is a demo for a paper in explainable navigation apps. It explains to the user why a certain path is not optimal, and more.
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                 Drag the source and target nodes around, and then press on the start a journey button, to get the fastest route from start to end.
             </Typography>
             <Row>

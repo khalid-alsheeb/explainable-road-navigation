@@ -11,7 +11,7 @@ G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
 variablesToUse = ['noWay', 'isClosed', 'maxSpeed', 'speed']
 variablesToUseFix(variablesToUse)
 
-data = pd.read_csv('./data/hundred_original_vs_anytime.csv')
+data = pd.read_csv('./data/hundred_original_vs_anytime_old2.csv')
 data.nodes = data.nodes.apply(literal_eval)
 
 nodes_100 = []
