@@ -67,6 +67,7 @@ export const getResultsV1 = () => async (dispatch, getState) => {
 
         let request_SP = originalSP
         let explanations = ['No Target']
+        let finishedExplanations = false
 
         if (goalNode === desiredPath[desiredPath.length - 1]) {
 
@@ -81,14 +82,13 @@ export const getResultsV1 = () => async (dispatch, getState) => {
             })
     
             const shortestPathNodes = data['shortest_path']
-            let explanations = data['explanations']
-            let request_SP = getPathFormat(shortestPathNodes)
+            explanations = data['explanations']
+            request_SP = getPathFormat(shortestPathNodes)
+            finishedExplanations = true
         }
 
-        console.log(request_SP);
-        console.log(explanations);
 
-        dispatch({ type: GET_RESULTS_V1, payload: [ request_SP, explanations ] });
+        dispatch({ type: GET_RESULTS_V1, payload: [ request_SP, explanations, finishedExplanations ] });
     } catch (error) {
         console.log(error.message);
     }

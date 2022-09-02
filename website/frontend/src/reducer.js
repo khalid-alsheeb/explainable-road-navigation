@@ -11,7 +11,7 @@ import {
 const Reducer = (state = [], action) => {
     switch (action.type) {
         case GET_RESULTS_V1:
-            return { ...state, shortestPath: [...action.payload[0]], explanations: [...action.payload[1]], finishedExplanations: true }
+            return { ...state, shortestPath: [...action.payload[0]], explanations: [...action.payload[1]], finishedExplanations: action.payload[2] }
 
         case GET_RESULTS_V2:
             return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]], finishedExplanations: true }
