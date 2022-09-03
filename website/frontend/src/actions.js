@@ -267,11 +267,7 @@ export const removeNodeFromDesiredPath = (edge) => async (dispatch, getState) =>
             }
 
             const len = desiredPathNodes.indexOf(node)
-            if (len === 0) {
-                desiredPathNodes.length = 1
-            } else {
-                desiredPathNodes.length = len
-            }   
+            desiredPathNodes.length = len + 1
         }
 
         dispatch({ type: REMOVE_NODE_FROM_DESIRED_PATH, payload: desiredPathNodes });
