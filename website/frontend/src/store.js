@@ -9,6 +9,7 @@ const initialState = {
     desiredPath: [],
     desiredPathNodes: [],
     shortestPath: [],
+    shortestPathNodes: [],
     explanations: [],
     variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
     markers: [],

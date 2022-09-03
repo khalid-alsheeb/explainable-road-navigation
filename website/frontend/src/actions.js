@@ -31,7 +31,9 @@ export const calculateSP = () => async (dispatch, getState) => {
         const shortestPathNodes = data['shortest_path']
         const shortestPath = getPathFormat(shortestPathNodes)
 
-        dispatch({ type: GET_SHORTEST_PATH, payload: shortestPath });
+        console.log(shortestPathNodes, shortestPath);
+
+        dispatch({ type: GET_SHORTEST_PATH, payload: [ shortestPath, shortestPathNodes ] });
     } catch (error) {
         console.log(error.message);
     }
@@ -180,7 +182,6 @@ export const addToDesiredPath = (edge) => async (dispatch, getState) => {
                 lastNodes = lastNodes.filter(item => item !== notCurrentNode)
                 let currentNode = lastNodes[0]
     
-                console.log(currentNode, newNodes[0], newNodes[1]);
                 if(newNodes.includes(currentNode)) {
                     desiredPath.push(edge)
                 }
@@ -266,7 +267,6 @@ export const removeNodeFromDesiredPath = (edge) => async (dispatch, getState) =>
             }
 
             const len = desiredPathNodes.indexOf(node)
-            console.log(len);
             if (len === 0) {
                 desiredPathNodes.length = 1
             } else {

@@ -18,6 +18,10 @@ const Reducer = (state = [], action) => {
 
         case GET_RESULTS_V3:
             return { ...state, desiredPath: [...action.payload[0]], shortestPath: [...action.payload[1]], explanations: [...action.payload[2]], finishedExplanations: true }
+    
+        case GET_SHORTEST_PATH:
+            //, desiredPathNodes: [action.payload[0]['nodes'][0]] 
+            return { ...state, shortestPath: action.payload[0], inputType: 1}
 
         case ADD_TO_DESIRED_PATH:
             return { ...state, desiredPath: [...action.payload] }
@@ -48,9 +52,6 @@ const Reducer = (state = [], action) => {
 
         case UPDATE_MARKERS:
             return { ...state, markers: action.payload }
-
-        case GET_SHORTEST_PATH:
-            return { ...state, shortestPath: action.payload, inputType: 1, desiredPathNodes: [action.payload[0]['nodes'][0]] }
 
         case CHANGE_INPUT_TYPE:
             return { ...state, inputType: action.payload }
