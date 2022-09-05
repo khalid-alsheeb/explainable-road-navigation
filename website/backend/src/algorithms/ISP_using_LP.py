@@ -238,33 +238,6 @@ def inverseShortestPath(graph, desiredPath, variablesToUse):
         
         
     updateGraphWeights(newGraph)
-    
-    
-    # Final checks
-    try:
-        sp = nx.shortest_path(newGraph, source=desiredPath[0], target=desiredPath[-1], weight="weight")
-        
-        desiredPathWeight = getPathWeight(desiredPath, newGraph)
-        optimalPathWeight = getPathWeight(sp, newGraph)
-        print('\n')
-        
-        if (desiredPathWeight - optimalPathWeight) <= epsilon:
-            print('The desired Path is equal to the Shortest Path')
-        elif desiredPathWeight < optimalPathWeight:
-            print('The desired Path is better than the Shortest Path')
-        elif desiredPathWeight > optimalPathWeight:
-            print('The desired Path is worse than the Shortest Path')
-        
-        
-        print('Optimal Path Weight = ', optimalPathWeight)
-        print('The path is: ', sp)
-        print('numbers after decimal point: ', len(str(optimalPathWeight).replace('.','')) - 1)
-        print('\n')
-        print('Desired Path Weight = ', desiredPathWeight)
-        print('The path is: ', desiredPath)
-        print('numbers after decimal point: ', len(str(desiredPathWeight).replace('.','')) - 1)
-    except:
-        pass
         
     return newGraph, float(round(prob.value))
 
