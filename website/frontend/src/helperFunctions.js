@@ -17,6 +17,24 @@ export const getPathFormat = (pathNodes) => {
     return path
 }
 
+
+export const getEdgeFormat = (edgesAsNodes) => {
+    let finalEdges = []
+    if (edgesAsNodes.length > 0) {
+        for (var i = 0; i < edgesAsNodes.length; ++i) {
+            finalEdges.push( originalEdges.find( edge =>
+                (
+                    (edge['nodes'][0] === edgesAsNodes[i][0] && edgesAsNodes[i][1] === edge['nodes'][1]) || 
+                    (edge['nodes'][1] === edgesAsNodes[i][0] && edgesAsNodes[i][1] === edge['nodes'][0])
+                )
+            ))
+        }
+    }
+
+    return finalEdges
+}
+
+
 export const getCorrectNodes = (originalData) => {
 
     let nodes = []

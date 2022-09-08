@@ -9,7 +9,7 @@ import {
 } from "./constants";
 import axios from 'axios';
 import * as qs from 'qs'
-import { getPathFormat, getCorrectNodes } from './helperFunctions'
+import { getPathFormat, getCorrectNodes, getEdgeFormat } from './helperFunctions'
 
 axios.defaults.baseURL = 'http://localhost:5000';
 
@@ -70,6 +70,7 @@ export const getResultsV1 = () => async (dispatch, getState) => {
         let request_SP = originalSP
         let explanations = ['No Target']
         let finishedExplanations = false
+        let changedEdges = []
 
         if (goalNode === desiredPath[desiredPath.length - 1]) {
 
@@ -87,10 +88,12 @@ export const getResultsV1 = () => async (dispatch, getState) => {
             explanations = data['explanations']
             request_SP = getPathFormat(shortestPathNodes)
             finishedExplanations = true
+            const changed_edges = data['changed_edges']
+            changedEdges = getEdgeFormat(changed_edges)
         }
 
 
-        dispatch({ type: GET_RESULTS_V1, payload: [ request_SP, explanations, finishedExplanations ] });
+        dispatch({ type: GET_RESULTS_V1, payload: [ request_SP, explanations, finishedExplanations, changedEdges ] });
     } catch (error) {
         console.log(error.message);
     }
@@ -117,11 +120,13 @@ export const getResultsV2 = () => async (dispatch, getState) => {
         const shortestPathNodes = data['shortest_path']
         const desiredPathNodes = data['desired_path']
         const explanations = data['explanations']
+        const changed_edges = data['changed_edges']
 
         const shortestPath = getPathFormat(shortestPathNodes)
         const desiredPath = getPathFormat(desiredPathNodes)
+        const changedEdges = getEdgeFormat(changed_edges)
 
-        dispatch({ type: GET_RESULTS_V2, payload: [ desiredPath, shortestPath, explanations ] });
+        dispatch({ type: GET_RESULTS_V2, payload: [ desiredPath, shortestPath, explanations, changedEdges ] });
     } catch (error) {
         console.log(error.message);
     }
@@ -148,11 +153,13 @@ export const getResultsV3 = () => async (dispatch, getState) => {
         const shortestPathNodes = data['shortest_path']
         const desiredPathNodes = data['desired_path']
         const explanations = data['explanations']
+        const changed_edges = data['changed_edges']
 
         const shortestPath = getPathFormat(shortestPathNodes)
         const desiredPath = getPathFormat(desiredPathNodes)
+        const changedEdges = getEdgeFormat(changed_edges)
 
-        dispatch({ type: GET_RESULTS_V3, payload: [ desiredPath, shortestPath, explanations ] });
+        dispatch({ type: GET_RESULTS_V3, payload: [ desiredPath, shortestPath, explanations, changedEdges ] });
     } catch (error) {
         console.log(error.message);
     }

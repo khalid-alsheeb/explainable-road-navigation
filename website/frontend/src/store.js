@@ -16,6 +16,7 @@ const initialState = {
     version: 1,
     inputType: 0,
     finishedExplanations: false,
+    changedEdges: []
 }
 
 const middleware = [thunk]
