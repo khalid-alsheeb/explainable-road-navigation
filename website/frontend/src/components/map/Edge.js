@@ -10,10 +10,12 @@ const Edge = ({ edge }) => {
     const spColor = 'red'
     const dpColor = 'Yellow'
     const mixPColor = 'orange'
+    const changedColor = 'magenta'
 
     const [color, setColor] = useState(normalEdge);
     const desiredPath = useSelector((state) => state.desiredPath)
     const shortestPath = useSelector((state) => state.shortestPath)
+    const changedEdges = useSelector((state) => state.changedEdges)
     const inputType = useSelector((state) => state.inputType)
     const finishedExplanations = useSelector((state) => state.finishedExplanations)
 
@@ -26,13 +28,17 @@ const Edge = ({ edge }) => {
             } else {
                 setColor(spColor)
             }
-        }else if (desiredPath.includes(edge)) {
-            setColor(dpColor)
+        } else if (desiredPath.includes(edge)) {
+            if (changedEdges.includes(edge)) {
+                setColor(changedColor)
+            }
+            else {
+                setColor(dpColor)
+            }
         } else{
             // To remove an edge that has the one before it removed.
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
-                    console.log('asjkhsadhjkdhjkashjkasdjkhasdhjkasdjkh');
                     colorChange()
                 }
             }
