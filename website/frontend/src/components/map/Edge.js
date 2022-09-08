@@ -39,6 +39,10 @@ const Edge = ({ edge }) => {
             // To remove an edge that has the one before it removed.
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
+                    if (color === changedColor) {
+                        setColor(normalEdge)
+                    }
+                    
                     colorChange()
                 }
             }
