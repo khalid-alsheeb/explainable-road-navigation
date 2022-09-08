@@ -31,8 +31,6 @@ export const calculateSP = () => async (dispatch, getState) => {
         const shortestPathNodes = data['shortest_path']
         const shortestPath = getPathFormat(shortestPathNodes)
 
-        console.log(shortestPathNodes, shortestPath);
-
         dispatch({ type: GET_SHORTEST_PATH, payload: [ shortestPath, shortestPathNodes ] });
     } catch (error) {
         console.log(error.message);
