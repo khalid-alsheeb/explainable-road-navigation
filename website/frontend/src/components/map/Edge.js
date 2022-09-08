@@ -6,11 +6,11 @@ import { addToDesiredPath, removeFromDesiredPath, addNodeToDesiredPath,  removeN
 
 const Edge = ({ edge }) => {
 
-    const normalEdge = 'blue'
-    const spColor = 'red'
-    const dpColor = 'Yellow'
-    const mixPColor = 'orange'
-    const changedColor = 'magenta'
+    const normalEdge = '#4169E1'
+    const spColor = '#FF0000'
+    const dpColor = '#FFFF00'
+    const mixPColor = '#FF8C00'
+    const changedColor = '#FF00FF'
 
     const [color, setColor] = useState(normalEdge);
     const desiredPath = useSelector((state) => state.desiredPath)

@@ -2,10 +2,14 @@ import React from "react";
 import { ListItem, Typography, List, ListItemIcon, ListItemText } from "@material-ui/core";
 import Container from 'react-bootstrap/Container';
 import CircleIcon from '@mui/icons-material/Circle';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import RoomIcon from '@mui/icons-material/Room';
 import { Col, Row } from "react-bootstrap";
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const Description = () => {
+    const normalEdge = '#4169E1'
+    const changedColor = '#FF00FF'
     return (
         <Container >
             <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
@@ -19,7 +23,7 @@ const Description = () => {
                     <List>
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}} >
-                            <CircleIcon sx={{color: '#ffeb3b'}}/>
+                            <HorizontalRuleIcon sx={{color: '#FFFF00'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
@@ -30,7 +34,7 @@ const Description = () => {
 
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <CircleIcon sx={{color: '#f44336'}}/>
+                            <HorizontalRuleIcon sx={{color: '#FF0000'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
@@ -41,11 +45,21 @@ const Description = () => {
 
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <CircleIcon sx={{color: '#ff9800'}}/>
+                            <HorizontalRuleIcon sx={{color: '#FF8C00'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                                     Both paths
+                                </Typography>
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem>
+                        <ListItemIcon style={{minWidth: '30px'}}>
+                            <HorizontalRuleIcon sx={{color: '#4169E1'}}/>
+                        </ListItemIcon>
+                            <ListItemText>
+                                <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                                    Roads used
                                 </Typography>
                             </ListItemText>
                         </ListItem>
@@ -66,7 +80,7 @@ const Description = () => {
 
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: '#f44336', fontSize: '200%'}}/>
+                            <RoomIcon sx={{color: '#FF0000', fontSize: '200%'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
@@ -77,11 +91,22 @@ const Description = () => {
 
                         <ListItem>
                         <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: 'orange', fontSize: '200%'}}/>
+                            <RoomIcon sx={{color: '#FF8C00', fontSize: '200%'}}/>
                         </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                                     Waypoint node
+                                </Typography>
+                            </ListItemText>
+                        </ListItem>
+
+                        <ListItem style={{paddingTop: '1%', paddingLeft: '11%'}}>
+                        <ListItemIcon style={{minWidth: '30px'}}>
+                            <HorizontalRuleIcon sx={{color: '#FF00FF'}}/>
+                        </ListItemIcon>
+                            <ListItemText>
+                                <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
+                                    Roads changed
                                 </Typography>
                             </ListItemText>
                         </ListItem>
