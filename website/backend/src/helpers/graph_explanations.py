@@ -1,5 +1,6 @@
 def getGraphExplanation(oldGraph, newGraph, path):
     explanations = {}
+    changedEdges = []
     
     for i in range(len(path) - 1):
         j = i + 1
@@ -10,6 +11,8 @@ def getGraphExplanation(oldGraph, newGraph, path):
         newEdge = newGraph.get_edge_data(source, target)[0]
         
         if(oldEdge != newEdge):
+            
+            changedEdges.append([source, target])
     
             if 'name' in oldEdge:
                 name = oldEdge['name']
@@ -32,7 +35,7 @@ def getGraphExplanation(oldGraph, newGraph, path):
                     explanations[nameX] = exp
                 count += 1
             
-    return explanations
+    return explanations, changedEdges
 
 
 def getEdgeExplanation(oldEdge, newEdge, name):

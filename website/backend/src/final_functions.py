@@ -54,33 +54,10 @@ def getPathExplanation(desired_path, variablesToUse):
     if(new_graph == None):
         explanations = ['Infeasible']
     else:
-        exp = getGraphExplanation(G, new_graph, desired_path)
+        exp, changedEdges = getGraphExplanation(G, new_graph, desired_path)
         explanations = makeExplanationsStrings(exp)
     
-    return shortest_path, explanations, optimal_value
-
-
-
-
-def getDesiredPathFromWaypoint(desired_path, variablesToUse):
-
-    G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
-
-    G = getOriginalAttributeTypes(G)
-
-    G = fixWrongDataG(G)
-    updateWeightMetric(G, variablesToUse)
-    
-    addReverseEdges(G)
-    updateGraphWeights(G)
-    G = getTimeOnlyWeightGraph(G)
-    
-    try:
-        dp = nx.shortest_path(G, source=desired_path[0], target=desired_path[1], weight="weight") + nx.shortest_path(G, source=desired_path[1], target=desired_path[2], weight="weight")[1:]
-    except:
-        dp = []
-    
-    return dp
+    return shortest_path, explanations, optimal_value, changedEdges
 
 
 def getAnytimeAlgorithmData(nodes, variablesToUse):
@@ -93,7 +70,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     source = nodes[0]
     waypoint = nodes[1]
     target = nodes[2]
-    minutes = 5
+    minutes = 1/3
     branchingFactor = 2
     ballRadius = 0.0001
     
@@ -107,7 +84,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
         explanations = ['NO SP']
     else:
         addReverseEdges(G)
-        desired_path, explanations, optimalValues = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
+        desired_path, explanations, optimalValues, changedEdges = anytimeAlgorithm(G, source, waypoint, target, minutes, branchingFactor, ballRadius, variablesToUse)
         if(optimalValues[len(optimalValues) - 1] == 0.0):
             explanations = ['SP=DP']
         elif(len(desired_path) == 0):
@@ -115,7 +92,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
         else:
             explanations = makeExplanationsStrings(explanations)
     
-    return shortest_path, desired_path, explanations, optimalValues
+    return shortest_path, desired_path, explanations, optimalValues, changedEdges
 
 
 def variablesToUseFix(variablesToUse):
@@ -139,3 +116,24 @@ def calculateShortestPath(source, target):
         shortestPath = []
         
     return shortestPath
+
+
+def getDesiredPathFromWaypoint(desired_path, variablesToUse):
+
+    G = ox.load_graphml('./data/graph-BH-1km-7-7-22-0130.graphml')
+
+    G = getOriginalAttributeTypes(G)
+
+    G = fixWrongDataG(G)
+    updateWeightMetric(G, variablesToUse)
+    
+    addReverseEdges(G)
+    updateGraphWeights(G)
+    G = getTimeOnlyWeightGraph(G)
+    
+    try:
+        dp = nx.shortest_path(G, source=desired_path[0], target=desired_path[1], weight="weight") + nx.shortest_path(G, source=desired_path[1], target=desired_path[2], weight="weight")[1:]
+    except:
+        dp = []
+    
+    return dp

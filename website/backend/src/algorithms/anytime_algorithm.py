@@ -89,11 +89,11 @@ def anytimeAlgorithm(originalGraph, source, waypoint, target, minutes, branching
                     else:
                         optimalValues.append(optimalValue)
                 
-    optimalExplanation = getGraphExplanation(originalGraph, optimalGraph, optimalShortestPath)
+    optimalExplanation, changedEdges = getGraphExplanation(originalGraph, optimalGraph, optimalShortestPath)
     
     print('times in {} minues = {}'.format(minutes, count))
             
-    return optimalShortestPath, optimalExplanation, optimalValues
+    return optimalShortestPath, optimalExplanation, optimalValues, changedEdges
 
 
 def getShortestPathWaypoint(graph, source, waypoint, target):

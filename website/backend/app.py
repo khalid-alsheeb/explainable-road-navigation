@@ -15,9 +15,9 @@ def get_explanations1():
     variablesToUse = [n for n in request.args.getlist('variablesToUse')]
     variablesToUseFix(variablesToUse)
     
-    shortest_path, explanations, optimalValue = getPathExplanation(desired_path, variablesToUse)
+    shortest_path, explanations, optimalValue, changedEdges = getPathExplanation(desired_path, variablesToUse)
     
-    return jsonify({ 'shortest_path': shortest_path, 'explanations': explanations })
+    return jsonify({ 'shortest_path': shortest_path, 'explanations': explanations, 'changed_edges': changedEdges })
 
 @app.route('/2/', methods = ['GET'])
 def get_explanations2():
@@ -35,10 +35,10 @@ def get_explanations2():
     
     print(desired_path)
     if (len(desired_path) > 0):
-        shortest_path, explanations, optimalValue = getPathExplanation(desired_path, variablesToUse)
+        shortest_path, explanations, optimalValue, changedEdges = getPathExplanation(desired_path, variablesToUse)
 
     
-    return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
+    return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations, 'changed_edges': changedEdges })
 
 
 @app.route('/3/', methods = ['GET'])
@@ -52,9 +52,9 @@ def get_explanations3():
     print(nodes)
     
     # Apply the anytime algorithm and get SP
-    shortest_path, desired_path, explanations, optimalValues = getAnytimeAlgorithmData(nodes, variablesToUse)
+    shortest_path, desired_path, explanations, optimalValues, changedEdges = getAnytimeAlgorithmData(nodes, variablesToUse)
     
-    return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations })
+    return jsonify({ 'desired_path': desired_path, 'shortest_path': shortest_path, 'explanations': explanations, 'changed_edges': changedEdges })
 
 if __name__ == "__main__":
     app.run(debug=True)
