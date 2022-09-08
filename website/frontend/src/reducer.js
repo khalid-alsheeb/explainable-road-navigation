@@ -66,7 +66,8 @@ const Reducer = (state = [], action) => {
                 variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
                 version: 1,
                 inputType: 0,
-                finishedExplanations: false
+                finishedExplanations: false,
+                changedEdges: [],
             }
 
         case RESET_PARTIAL_DATA:
@@ -77,7 +78,8 @@ const Reducer = (state = [], action) => {
                 desiredPathNodes: [],
                 explanations: [],
                 variables: ['speed', 'maxSpeed', 'noWay and isClosed'],
-                finishedExplanations: false
+                finishedExplanations: false,
+                changedEdges: [],
             }
 
         default:

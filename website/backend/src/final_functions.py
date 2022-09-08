@@ -53,6 +53,7 @@ def getPathExplanation(desired_path, variablesToUse):
     
     if(new_graph == None):
         explanations = ['Infeasible']
+        changedEdges = []
     else:
         exp, changedEdges = getGraphExplanation(G, new_graph, desired_path)
         explanations = makeExplanationsStrings(exp)
@@ -78,6 +79,7 @@ def getAnytimeAlgorithmData(nodes, variablesToUse):
     
     desired_path = []
     explanations = {}
+    changedEdges = []
     if(len(nodes) == 0):
         explanations = ['NO Nodes']
     elif(len(shortest_path) == 0):
