@@ -15,7 +15,7 @@ const initialState = {
     markers: [],
     version: 1,
     inputType: 0,
-    finishedExplanations: false
+    finishedExplanations: false,
 }
 
 const middleware = [thunk]

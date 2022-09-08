@@ -30,7 +30,7 @@ const DataForm = () => {
                 </Typography>
             </Button>
             {
-            version === 2 ?
+            version !== 3 ?
                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                     This will take around 6 seconds.
                 </Typography>

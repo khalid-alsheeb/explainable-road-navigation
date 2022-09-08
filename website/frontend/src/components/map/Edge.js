@@ -32,6 +32,7 @@ const Edge = ({ edge }) => {
             // To remove an edge that has the one before it removed.
             if (color !== normalEdge) {
                 if (!desiredPath.includes(edge)) {
+                    console.log('asjkhsadhjkdhjkashjkasdjkhasdhjkasdjkh');
                     colorChange()
                 }
             }
@@ -39,25 +40,31 @@ const Edge = ({ edge }) => {
 
     }, [desiredPath, shortestPath])
 
+    const colourChangeLogic = () => {
+        if (color === dpColor) {
+            setColor(normalEdge)
+            dispatch(removeNodeFromDesiredPath(edge))
+            dispatch(removeFromDesiredPath(edge))
+        } else if (color === normalEdge) {
+            setColor(dpColor)
+            dispatch(addToDesiredPath(edge))
+            dispatch(addNodeToDesiredPath(edge))
+        } else if (color === spColor) {
+            setColor(mixPColor)
+            dispatch(addToDesiredPath(edge))
+            dispatch(addNodeToDesiredPath(edge))
+        } else if (color === mixPColor) {
+            setColor(spColor)
+            dispatch(removeNodeFromDesiredPath(edge))
+            dispatch(removeFromDesiredPath(edge))
+        }
+    }
+
     const colorChange = () => {
-        if (inputType === 1 && !finishedExplanations) {
-            if (color === dpColor) {
-                setColor(normalEdge)
-                dispatch(removeNodeFromDesiredPath(edge))
-                dispatch(removeFromDesiredPath(edge))
-            } else if (color === normalEdge) {
-                setColor(dpColor)
-                dispatch(addToDesiredPath(edge))
-                dispatch(addNodeToDesiredPath(edge))
-            } else if (color === spColor) {
-                setColor(mixPColor)
-                dispatch(addToDesiredPath(edge))
-                dispatch(addNodeToDesiredPath(edge))
-            } else if (color === mixPColor) {
-                setColor(spColor)
-                dispatch(removeNodeFromDesiredPath(edge))
-                dispatch(removeFromDesiredPath(edge))
-            }
+        if (inputType === 1 && finishedExplanations) {
+            //pass
+        } else {
+            colourChangeLogic()
         }
         if (inputType === 0) {
             setColor(normalEdge)
