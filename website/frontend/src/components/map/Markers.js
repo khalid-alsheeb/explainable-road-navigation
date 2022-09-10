@@ -32,9 +32,16 @@ var waypointMarker = new L.Icon({
     shadowSize: [41, 41]
 });
 
-const source = { 'lat': 51.50586093478481, 'lng': -0.11213226405979884 } // waterloo campus
-const waypoint = { 'lat': 51.50957032449099, 'lng': -0.10437014485696673 } // blackfriars bridge
-const target = { 'lat': 51.51263530532304, 'lng': -0.11577497367932346 } // strand campus
+
+// OLD MARKERS LOCATIONS
+// const source = { 'lat': 51.50586093478481, 'lng': -0.11213226405979884 } // waterloo campus
+// const waypoint = { 'lat': 51.50957032449099, 'lng': -0.10437014485696673 } // blackfriars bridge
+// const target = { 'lat': 51.51263530532304, 'lng': -0.11577497367932346 } // strand campus
+
+// BETTER INITIAL LOCATIONS
+const source = { 'lat': 51.509777473800014, 'lng': -0.13104200877485764 } // waterloo campus
+const waypoint = { 'lat': 51.512668698590176, 'lng': -0.11252411488490656 } // blackfriars bridge
+const target = { 'lat': 51.51822322287526, 'lng': -0.11196735378422365 } // strand campus
 
 const Markers = () => {
     // make it not dragabble, if dp is calculated.
