@@ -32,7 +32,7 @@ const Explanations = () => {
                     <BetterLine />
 
                     <Typography variant="h6" color="textSecondary" align="left" style={{color: 'white'}}>
-                        If the following was true, then the desired path would be optimal:
+                        If the following changes (in pink) were true, then the desired path would be optimal:
                     </Typography>
                     <ol  style={{ listStyleType: "upper-roman", color: 'rgb(255, 145, 0)' }} >
 

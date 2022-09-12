@@ -21,45 +21,47 @@ const Description = () => {
             <Row>
                 <Col style={{padding: '0', paddingRight: '0'}}>
                     <List>
+
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}} >
-                            <HorizontalRuleIcon sx={{color: '#FFFF00'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <HorizontalRuleIcon sx={{color: '#4169E1'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                                    Desired Path
+                                    Roads
                                 </Typography>
                             </ListItemText>
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <HorizontalRuleIcon sx={{color: '#FF0000'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}} >
+                                <HorizontalRuleIcon sx={{color: '#FFFF00'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                                    Shortest Path
+                                    Desired path
                                 </Typography>
                             </ListItemText>
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <HorizontalRuleIcon sx={{color: '#FF8C00'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <HorizontalRuleIcon sx={{color: '#FF0000'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                                    Both paths
+                                    Shortest path
                                 </Typography>
                             </ListItemText>
                         </ListItem>
+
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <HorizontalRuleIcon sx={{color: '#4169E1'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <HorizontalRuleIcon sx={{color: '#FF8C00'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                                    Roads used
+                                    Overlap of desired and shortest path
                                 </Typography>
                             </ListItemText>
                         </ListItem>
@@ -68,9 +70,9 @@ const Description = () => {
                 <Col style={{padding: '0', paddingLeft: '0'}}>
                     <List>
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: '#1fcf48', fontSize: '200%'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <RoomIcon sx={{color: '#1fcf48', fontSize: '200%'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                                     Source node
@@ -79,9 +81,9 @@ const Description = () => {
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: '#FF0000', fontSize: '200%'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <RoomIcon sx={{color: '#FF0000', fontSize: '200%'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                                     Target node
@@ -90,9 +92,9 @@ const Description = () => {
                         </ListItem>
 
                         <ListItem>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <RoomIcon sx={{color: '#FF8C00', fontSize: '200%'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <RoomIcon sx={{color: '#FF8C00', fontSize: '200%'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
                                     Waypoint node
@@ -101,12 +103,12 @@ const Description = () => {
                         </ListItem>
 
                         <ListItem style={{paddingTop: '1%', paddingLeft: '11%'}}>
-                        <ListItemIcon style={{minWidth: '30px'}}>
-                            <HorizontalRuleIcon sx={{color: '#FF00FF'}}/>
-                        </ListItemIcon>
+                            <ListItemIcon style={{minWidth: '30px'}}>
+                                <HorizontalRuleIcon sx={{color: '#FF00FF'}}/>
+                            </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle2" color="textSecondary" align="left" style={{color: 'white'}}>
-                                    Roads changed
+                                    Explanation
                                 </Typography>
                             </ListItemText>
                         </ListItem>
