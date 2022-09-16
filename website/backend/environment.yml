@@ -1,0 +1,22 @@
+name: exp_env
+channels:
+  - conda-forge
+dependencies:
+  - cvxpy=1.2.1=py310h2ec42d9_0
+  - cvxpy-base=1.2.1=py310h3099161_0
+  - fiona=1.8.21=py310h5a20164_2
+  - flask=2.2.2=pyhd8ed1ab_0
+  - flask-cors=3.0.10=pyhd3eb1b0_0
+  - folium=0.12.1.post1=pyhd8ed1ab_1
+  - gurobi=9.5.2=py310_0
+  - ipykernel=6.15.2=pyh736e0ef_0
+  - matplotlib-base=3.5.3=py310h1bfeb8c_2
+  - matplotlib-inline=0.1.6=pyhd8ed1ab_0
+  - numpy=1.23.2=py310hf910466_0
+  - osmnx=1.2.2=pyhd8ed1ab_0
+  - pandas=1.4.3=py310he9d5cce_0
+  - pip=22.2.2=pyhd8ed1ab_0
+  - python=3.10.6=hc14f532_0_cpython
+  - scikit-learn=1.1.2=py310h3ba92a3_0
+  - scip=7.0.3=hc6291ea_1
+  - scipy=1.9.1=py310h240c617_0
