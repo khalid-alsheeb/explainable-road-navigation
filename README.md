@@ -12,6 +12,8 @@
 
 ## Starting the project
 - You need two terminal: one for the frontend and another for the backend.
+
+### Frontend
 - For the Frontend, you would need npm. If you hvae it, in the frontend directory, run:
     ```
     $ npm install
@@ -20,6 +22,8 @@
     ```
     $ npm start
     ```
+    
+### Backend
 - For the backend, having conda will make things easier. To create the conda virtual environment, in the backend directory (in another terminal), run:
     ```
     $ conda env create -f environment.yml
@@ -40,3 +44,16 @@
 
 
 ## Some screen shots of the demo
+
+
+### Startup
+<img width="1680" alt="screenshot1" src="https://user-images.githubusercontent.com/72269972/190700298-3faae1a6-4ffc-4357-a5f9-660d5e994bd3.png">
+
+
+### Getting the shortest path
+<img width="1680" alt="screenshot2" src="https://user-images.githubusercontent.com/72269972/190700439-8b0217d7-d313-468a-989b-ab260c48bfe7.png">
+
+
+### Getting the Explanation
+<img width="1680" alt="screenshot3" src="https://user-images.githubusercontent.com/72269972/190700478-62a2dd75-43b6-4eb5-8a75-c63401d4b6f6.png">
+
