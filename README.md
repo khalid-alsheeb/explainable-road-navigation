@@ -1,5 +1,5 @@
 # Explainable navigation apps. Why not this path/waypoint.
-- Author: Khalid Alsheeb
+- Authors: Khalid Alsheeb and Dr. Martim Brandão
 - Year: 2022
 
 ## What is this project.
