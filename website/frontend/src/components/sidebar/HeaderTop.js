@@ -16,7 +16,7 @@ const HeaderTop = () => {
     return (
         <>
             <Typography variant="h6" style={styles.white} >
-                Routing Explanations
+                Explainable Navigation
             </Typography>
             
             <InfoModal />
