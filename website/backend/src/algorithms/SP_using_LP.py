@@ -102,13 +102,10 @@ def shortestPath(graph, source, target):
     prob = cp.Problem(obj, constraints)
 
     # Solve the problem
-    #prob.solve(verbose=True)#Detailed
     prob.solve()  # Returns the optimal value.
     print("\nThe optimal value is", prob.value)
     print("A solution x is")
     print(x.value)
-    # print("A dual solution is")
-    # print(prob.constraints[0].dual_value)
     e = []
     n = []
     

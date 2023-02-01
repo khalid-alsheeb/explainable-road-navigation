@@ -57,8 +57,6 @@ def getPathExplanation(desired_path, variablesToUse):
     else:
         exp, changedEdges = getGraphExplanation(G, new_graph, desired_path)
         explanations = makeExplanationsStrings(exp)
-        
-    #print(changedEdges)
     
     return shortest_path, explanations, optimal_value, changedEdges
 
