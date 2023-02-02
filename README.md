@@ -1,7 +1,10 @@
 # Towards Explainable Road Navigation Systems
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Authors: Khalid Alsheeb and Dr. Martim Brandão
+### Authors:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Khalid Alsheeb 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Year: 2023
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dr. Martim Brandão
+
+### Year: 2023
 
 ## About the project:
 
@@ -59,13 +62,13 @@ We demonstrate the algorithms on real map and traffic data, and conduct an evalu
 
 
 ### Startup:
-<img width="1680" alt="screenshot1" src="https://user-images.githubusercontent.com/72269972/190700298-3faae1a6-4ffc-4357-a5f9-660d5e994bd3.png">
+<img width="1680" alt="1" src="https://user-images.githubusercontent.com/72269972/216442590-95254237-6780-4784-b78d-f066f420af74.png">
 
 
 ### Getting the shortest path:
-<img width="1680" alt="screenshot2" src="https://user-images.githubusercontent.com/72269972/190700439-8b0217d7-d313-468a-989b-ab260c48bfe7.png">
+<img width="1680" alt="2" src="https://user-images.githubusercontent.com/72269972/216442639-14c43b8c-bc1f-4fb1-bc25-ec4567fad0f5.png">
 
 
 ### Getting the Explanation:
-<img width="1680" alt="screenshot3" src="https://user-images.githubusercontent.com/72269972/190700478-62a2dd75-43b6-4eb5-8a75-c63401d4b6f6.png">
+<img width="1680" alt="3" src="https://user-images.githubusercontent.com/72269972/216442691-a4a780ca-c18d-4535-8bb5-d60e83669e0f.png">
 
