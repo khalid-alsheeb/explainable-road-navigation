@@ -35,6 +35,8 @@ const Edge = ({ edge }) => {
             else {
                 setColor(dpColor)
             }
+        }else if (changedEdges.includes(edge)) {
+                setColor(changedColor)
         } else{
             // To remove an edge that has the one before it removed.
             if (color !== normalEdge) {
