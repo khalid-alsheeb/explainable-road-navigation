@@ -1,6 +1,9 @@
 import InfoModal from "./InfoModal";
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Tooltip, Typography } from "@material-ui/core";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const HeaderTop = () => {
 
@@ -16,8 +19,17 @@ const HeaderTop = () => {
     return (
         <>
             <Typography variant="h6" style={styles.white} >
-                Explainable Navigation
+                Explainable Navigation Demo
             </Typography>
+
+            <Tooltip title='Source Code'>
+                <IconButton style={{ marginLeft: "auto", padding: 5}}>
+                    <GitHubIcon 
+                        color="action" fontSize="medium" 
+                        onClick={() => window.open("https://github.com/khalid-alsheeb/kurf", '_blank')}
+                    />
+                </IconButton>
+            </Tooltip>
             
             <InfoModal />
         </>

@@ -31,7 +31,6 @@ def getGraphExplanation(oldGraph, newGraph, path):
                             exp = getEdgeExplanation(oldEdge, newEdge, nameX)
                             explanations[nameX] = exp
                         count += 1
-    print(changedEdges)
             
     return explanations, changedEdges
 
@@ -43,13 +42,12 @@ def getEdgeExplanation(oldEdge, newEdge, name):
     
     if oldEdge['noWay'] != newEdge['noWay']:
         if oldEdge['noWay'] == 1:
-            reason = '{} is only a one way street (on the other side).'.format(name)
-            explanation = "{} was a two way street.".format(name)
+            reason = '{} is only a one-way road (on the other side).'.format(name)
+            explanation = "{} was a two-way road.".format(name)
         else:
-            reason = "{} is a two way street.".format(name)
-            explanation = '{} was only a one way street (on the other side).'.format(name)
+            reason = "{} is a two-way road.".format(name)
+            explanation = '{} was only a one-way road (on the other side).'.format(name)
     
-    #TODO: This could be changed to allow for changes from olpen to close, too.
     elif oldEdge['isClosed'] != newEdge['isClosed']:
         if oldEdge['isClosed'] == 1:
             reason = '{} is closed, rightnow.'.format(name)
@@ -91,42 +89,3 @@ def makeExplanationsStrings(explanations):
             exps.append(value[1])
         
     return [reasons, exps]
-
-
-
-def getGraphExplanation(oldGraph, newGraph, path):
-    explanations = {}
-    changedEdges = []
-    
-    for u, v, oldEdge in oldGraph.edges(data=True):
-        for u2, v2, newEdge in newGraph.edges(data=True):
-            if(u==u2 and v==v2):
-                if(oldEdge!=newEdge):
-                    source = u
-                    target = v
-                    
-                    changedEdges.append([source, target])
-            
-                    if 'name' in oldEdge:
-                        name = oldEdge['name']
-                    else:
-                        # If name is not in data, just use nodes
-                        name = '(' + str(source) + ', ' + str(target) + ')'
-                        
-                    if type(name) == list:
-                        name = "('" + "', '".join(name) + "')"
-                    
-                    # check for more than 1 edge in the same street need changes, if so, nunmber them.
-                    length = len(explanations)
-                    count = 1
-                    nameX = name
-                    while(length == len(explanations)):
-                        if (nameX in explanations):
-                            nameX = name +  " " + '(' + str(count) + ')'
-                        else:
-                            exp = getEdgeExplanation(oldEdge, newEdge, nameX)
-                            explanations[nameX] = exp
-                        count += 1
-    print(changedEdges)
-            
-    return explanations, changedEdges

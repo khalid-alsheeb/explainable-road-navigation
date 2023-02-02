@@ -8,9 +8,14 @@ const MapHolder = () => {
 
     return(
         <Container style={{ marginTop: '2%', height: '98vh', paddingBottom: '12%'}} >
-            <Row style={{justifyContent:'center', alignItems:'center', marginBottom: '3%'}}>
+            <Row style={{justifyContent:'center', alignItems:'center'}}>
                 <Typography variant="h3" style={{color: 'white'}} >
-                Explainable Navigation
+                Towards Explainable Road Navigation Systems
+                </Typography>
+            </Row>
+            <Row style={{justifyContent:'center', alignItems:'center', marginBottom: '1%'}}>
+                <Typography variant="h6" style={{color: 'white'}} >
+                Khalid Alsheeb & Martim Brandao
                 </Typography>
             </Row>
             <Map />

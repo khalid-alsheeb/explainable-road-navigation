@@ -42,7 +42,7 @@ const InfoModal = () => {
     return(
         <>
             <Tooltip title='General Information'>
-                <Button onClick={handleOpen} style={{ borderColor: '#404040', marginLeft: "auto",  backgroundColor: '#404040'}} >
+                <Button onClick={handleOpen} style={{ borderColor: '#404040',  backgroundColor: '#404040'}} >
                     <InfoIcon />
                 </Button>
             </Tooltip>

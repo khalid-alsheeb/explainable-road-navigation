@@ -102,7 +102,7 @@ const Description = () => {
                             </ListItemText>
                         </ListItem>
 
-                        <ListItem style={{paddingTop: '1%', paddingLeft: '11%'}}>
+                        <ListItem style={{minWidth: '30px', paddingLeft: '20px'}}>
                             <ListItemIcon style={{minWidth: '30px'}}>
                                 <HorizontalRuleIcon sx={{color: '#FF00FF'}}/>
                             </ListItemIcon>
