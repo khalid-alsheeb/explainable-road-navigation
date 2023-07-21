@@ -4,7 +4,11 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dr. Martim Brandão
 
-### Year: 2023
+### Citation
+
+If you use this work in your research, please cite:
+
+> Khalid Alsheeb, Martim Brandao, "**Towards Explainable Road Navigation Systems**", *IEEE International Conference on Intelligent Transportation Systems (ITSC)*, 2023.
 
 ## About the project:
 
@@ -57,18 +61,37 @@ We demonstrate the algorithms on real map and traffic data, and conduct an evalu
     http://localhost:3000
     ```
 
-
 ## Some screen shots of the demo:
-
 
 ### Startup:
 <img width="1680" alt="1" src="https://user-images.githubusercontent.com/72269972/216442590-95254237-6780-4784-b78d-f066f420af74.png">
 
-
 ### Getting the shortest path:
 <img width="1680" alt="2" src="https://user-images.githubusercontent.com/72269972/216442639-14c43b8c-bc1f-4fb1-bc25-ec4567fad0f5.png">
-
 
 ### Getting the Explanation:
 <img width="1680" alt="3" src="https://user-images.githubusercontent.com/72269972/216442691-a4a780ca-c18d-4535-8bb5-d60e83669e0f.png">
 
+
+## Requirements
+
+The package versions written under website/backend/environment.yml have been tested on macOS Big Sur.
+
+The software has also been tested on Ubuntu 18.04 with Python 3.10.6 and the following package versions:
+```
+cvxpy==1.3.1
+Fiona==1.9.3
+Flask==2.2.3
+Flask-Cors==3.0.10
+folium==0.14.0
+gurobipy==10.0.1
+ipykernel==6.22.0
+matplotlib==3.7.1
+matplotlib-inline==0.1.6
+numpy==1.23.5
+osmnx==1.3.0
+pandas==2.0.0
+scikit-learn==1.2.2
+scip==0.1.12
+scipy==1.10.1
+```
