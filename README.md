@@ -2,7 +2,7 @@
 ### Authors:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Khalid Alsheeb 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dr. Martim Brandão
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Martim Brandão
 
 ### Citation
 
